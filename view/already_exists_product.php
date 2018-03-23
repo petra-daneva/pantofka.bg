@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 <h1>The product is already exist, please check the details and try again</h1>
 <form action="index.php" method="post" enctype="multipart/form-data">
     Product name: <input type="text" name="product_name" placeholder="product name" required> <br>

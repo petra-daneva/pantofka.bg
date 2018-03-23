@@ -1,19 +1,3 @@
-<?php
-
-require_once "./view/../controller/productsController.php"
-?>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="./view/../assets/default.css">
-    <title>Document</title>
-</head>
-<body>
-
 <div class="products_page" >
 
     <div class="page_title">
@@ -58,7 +42,3 @@ require_once "./view/../controller/productsController.php"
         }
         ?>
     </div>
-
-</div>
-</body>
-</html>

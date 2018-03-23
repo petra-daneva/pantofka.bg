@@ -25,7 +25,18 @@ header{
     display: block;
 }
 
+#favorite-icon{
+    width: 18px;
+    height: 18px;
+    clear: both;
+}
 
+#add-product-icon{
+    width: 22px;
+    height: 22px;
+    margin-top: 5px;
+    clear: both;
+}
 footer{
     height: 70px;
     background-color: #000000;

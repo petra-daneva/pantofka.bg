@@ -1,0 +1,1 @@
+<h1 class="error center">Picture not uploaded successfully</h1>

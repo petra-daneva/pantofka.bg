@@ -1,6 +1,6 @@
 <?php
 
-//Ako neshto nqkyde,nqkoga v bazata ne ti trygva nai-veroqtno e na save-mode https://stackoverflow.com/questions/11448068/mysql-error-code-1175-during-update-in-mysql-workbench
+//Ako neshto nqkyde,nqkoga v bazata ne ti trygva, nai-veroqtno e na save-mode https://stackoverflow.com/questions/11448068/mysql-error-code-1175-during-update-in-mysql-workbench
 
 
 /**
@@ -28,7 +28,7 @@ function userExists($email , $password){
 }
 
 /**
- * Inserts data. Add new user in db table. Set function -> Return nothing
+ * Inserts data. Add new user in db table. Set function -> Returns nothing
  *
  * @param $first_name
  * @param $last_name
@@ -45,16 +45,16 @@ function saveNewUser($first_name , $last_name , $gender , $email , $password){
 }
 
 /**
- * Get data. Returns an array with (user_fname , user_lname , user_gender ) user info from db by given email.
+ * Get data. Returns an array with (user_id , user_fname , user_lname , user_gender , is_admin (mixed:1 or null) ) user info from db by given email.
  *
  * @param $email : Identify the user from the session
- * @return mixed : Array with user fname,lname,gender OR false if user does not exist
+ * @return mixed : Assoc array with keys user_id , user_fname , user_lname , user_gender , is_admin and corresponding values OR false if user does not exist
  */
 function getUserData($email){
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
     $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
-    $query = $pdo->prepare("SELECT  user_fname , user_lname , user_gender FROM pantofka.users WHERE user_email = ?");
+    $query = $pdo->prepare("SELECT user_id , user_fname , user_lname , user_gender , is_admin FROM pantofka.users WHERE user_email = ?");
     $query->execute(array($email));
     $query_result = $query->fetch(PDO::FETCH_ASSOC);
     return $query_result;
@@ -77,6 +77,6 @@ function updateUser($first_name , $last_name , $gender , $email_new , $password_
     $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
     $query = $pdo->prepare("UPDATE pantofka.users SET user_fname = ? ,user_lname = ? ,user_gender = ? ,user_email = ? ,user_password = ? WHERE (user_email = ? && user_password = ? )");
     $query->execute(array($first_name , $last_name , $gender , $email_new , $password_new , $logged_email , $password_old));
-}
 
+}
 

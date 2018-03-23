@@ -1,8 +1,3 @@
-<<?php
-
-require_once "./view/../controller/productsController.php"
-?>
-
 <div class="products_page" >
 
     <div class="page_title">
