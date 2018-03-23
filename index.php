@@ -13,6 +13,8 @@
         <div id="container" class="bottom-30">
             <?php
 
+            require_once 'controller/userController.php';
+            require_once 'controller/productsController.php';
 
             $not_triggered = true;
             $myErrorHandler = function ($errno, $errstr) use (&$not_triggered ){
@@ -33,7 +35,7 @@
             if (!isset($_SESSION["logged_user"])){
                     require_once "view/guest_navigation.html";
                 }else{
-                    require_once "view/user_navigation.html";
+                    require_once "view/user_navigation.php";
                 }
                 require_once "view/header.html";
 
@@ -43,29 +45,46 @@
 
             <?php
 
-                require_once 'controller/userController.php';
-                require_once 'controller/productsController.php';
 
 
             if (isset($_GET["page"])){
                     $page = htmlentities($_GET['page']);
 
-                    if ($page == 'logout' && isset($_SESSION["logged_user"])){
+                    if (isset($_SESSION["logged_user"])) {
+                        if ($page == "logout") {
+                            session_destroy();
+                            header("Location: index.php?page=main");
+                            die();
+                        }elseif ($page == "add_product") {
+                            if ($user_info["is_admin"] == 1) {
+                                include_once "./view/add_product.php";
+                            }else{
+                                include_once "./view/error_page.php";
+                            }
+                        }else{
+                            $page_link = './view/' . htmlentities($_GET['page']) . '.php';
+                            include_once $page_link;
+                        }
 
-                        session_destroy();
-                        header("Location: index.php?page=main");
-                        die();
-                    } else{
-
-                        $page_link = './view/' . htmlentities($_GET['page']) . '.php';
-                        include_once $page_link;
+                    }else{
+                        if ($page == "login" || $page == "register" ||$page == "logout" ||$page == "main"|| $page == "cart" ||$page == "favorites" || $page == "already_exists" || $page == "failed_login" || $page == "successful_registration"){
+                            $page_link = './view/' . htmlentities($_GET['page']) . '.php';
+                            include_once $page_link;
+                        }else{
+                           include_once "./view/error_page.php";
+                        }
                     }
-
                 }elseif (isset($_GET["products"])){
 
                     $type = htmlentities($_GET["products"]);
-                    $type_link = './view/' . htmlentities($_GET['products'] . ".php");
-                    include_once $type_link;
+                    
+                    if ($type == "men" || $type == "women" || $type == "girls" || $type == "boys"){
+                        $type_link = './view/' . htmlentities($_GET['products'] . ".php");
+                        include_once $type_link;
+                    }else{
+                        include_once "view/error_page.php";
+                    }
+
                 }
                 else{
                     include_once './view/main.php';

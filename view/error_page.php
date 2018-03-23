@@ -1,3 +1,5 @@
+<section>
 
-    <img src="./../assets/img/404.jpg" alt="">
+    <img src="./view/../assets/img/404.jpg" id="error-page">
 
+</section>
