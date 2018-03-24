@@ -5,17 +5,19 @@
     </div>
     <div class="show_products">
         <?php
+
         foreach ($products as $product) {
-            if ($product["subcategory"] === "men") {
+            if ($product["subcategory"] === "men"){
                 ?>
                 <div class="shown_products">
                     <div class="product_img">
-                        <img src="./view/../assets/products_imgs/<?= $product["product_img_name"] ?>" alt="picture of the product">                    </div>
+                        <img src="./view/../assets/products_imgs/<?= $product["product_img_name"] ?>" alt="picture of the product">
+                    </div>
                     <div class="product_name">
                         <h3><?= $product["product_name"] ?></h3>
                     </div>
                     <div class="product_type">
-                        <h4>Product type: <?= $product["product_style"] ?></h4>
+                        <h4>Product type: <?= $product["style"] ?></h4>
                     </div>
                     <div class="product_type">
                         <h4>Product color <?= $product["product_color"] ?></h4>
@@ -28,6 +30,21 @@
                     </div>
                     <form action=index.php?products=men method="post">
 
+
+                    <div>
+                        <?php
+                        foreach ($product["sizes"] as $size) {
+                            if ($size["size_quantity"] >0) {
+
+
+                                ?>
+                                <?= $size["size_number"] ?><input type="radio" name="size" value="<?= $size["size_number"]?>">
+
+                                <?php
+                            }
+                        }
+                        ?>
+                    </div>
                         <input type="hidden" name="product_id" value="<?= $product["product_id"] ?>">
 
                         <input class="buttons" type="submit" name="add_to_cart" value="Add to cart">
@@ -41,5 +58,3 @@
         }
         ?>
     </div>
-
-</div>
