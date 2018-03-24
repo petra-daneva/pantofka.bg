@@ -8,9 +8,11 @@
 <div id="add_product">
     <form action="index.php" method="post" enctype="multipart/form-data">
        Product name: <input type="text" name="product_name" placeholder="product name" required> <br>
-        Product size: <input type="number" name="product_size" placeholder="size" min="20" max="50" required> <br>
+        Product size: <input type="number" name="size_number" placeholder="size" min="20" max="50" required> <br>
+        Quantity: <input type="number" name="size_quantity" placeholder="quantity" min="0" max="50" required> <br>
 
-       Select product color: <select name="product_color" required>
+
+        Select product color: <select name="product_color" required>
             <option value="white">White</option>
             <option value="black">Black</option>
             <option value="brown">Brown</option>
@@ -30,7 +32,7 @@
 
         </select>
         <br>
-      Select product style:  <select name="product_style">
+      Select product style:  <select name="style">
             <option value="boots">Boots</option>
             <option value="sandals">Sandals</option>
             <option value="hills">Hills</option>
@@ -44,13 +46,13 @@
             <option value="boys">Boys</option>
             <option value="girls">Girls</option>
         </select>
+        <select name="sale_info_state" id="">
+            <option value="normal">Normal</option>
+            <option value="new">New product</option>
+        </select>
         <br>
         Product price: <input type="number" name="product_price" placeholder="price" required> <br>
-        Is it on promotion? <input type="checkbox" name="on_promotion"  > <br>
-        Price on promotio<input type="number" name="price_on_promotion"> <br>
-        Is it a new product? <input type="checkbox" name="new_product"> <br>
-        Quantity: <input type="number" name="quantity" placeholder="quantity">
-        Product image<input type="file" name="picture_url" accept="image/*">
+        Product image<input type="file" name="product_img_name" accept="image/*"><br>
         <input type="submit" name="add_product" value="Add product">
     </form>
 </div>
