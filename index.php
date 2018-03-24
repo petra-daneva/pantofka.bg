@@ -30,8 +30,6 @@
             };
 
             set_error_handler($myErrorHandler,E_ALL|E_STRICT);
-
-
             if (!isset($_SESSION["logged_user"])){
                     require_once "view/guest_navigation.html";
                 }else{
@@ -45,14 +43,12 @@
 
             <?php
 
-
-
             if (isset($_GET["page"])){
                     $page = htmlentities($_GET['page']);
 
                     if (isset($_SESSION["logged_user"])) {
                         if ($page == "logout") {
-                            session_destroy();
+                            unset($_SESSION["logged_user"]);
                             header("Location: index.php?page=main");
                             die();
                         }
@@ -80,7 +76,7 @@
 
                     $type = htmlentities($_GET["products"]);
                     
-                    if ($type == "men" || $type == "women" || $type == "girls" || $type == "boys"){
+                    if ($type == "men" ||$type == "new"   ||$type== "sale" || $type == "women" || $type == "girls" || $type == "boys"){
                         $type_link = './view/' . htmlentities($_GET['products'] . ".php");
                         include_once $type_link;
                     }else{

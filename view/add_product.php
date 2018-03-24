@@ -7,7 +7,7 @@
 <body>
 <div id="add_product">
     <form action="index.php" method="post" enctype="multipart/form-data">
-       Product name: <input type="text" name="product_name" placeholder="product name" required> <br>
+        Product name: <input type="text" name="product_name" placeholder="product name" required> <br>
         Product size: <input type="number" name="size_number" placeholder="size" min="20" max="50" required> <br>
         Quantity: <input type="number" name="size_quantity" placeholder="quantity" min="0" max="50" required> <br>
 
@@ -23,7 +23,7 @@
 
         </select>
         <br>
-            Select product material <select name="material">
+        Select product material <select name="material">
             <option value="leather">Leather</option>
             <option value="canvas">Canvas</option>
             <option value="rubber">Rubber</option>
@@ -32,7 +32,7 @@
 
         </select>
         <br>
-      Select product style:  <select name="style">
+        Select product style:  <select name="style">
             <option value="boots">Boots</option>
             <option value="sandals">Sandals</option>
             <option value="hills">Hills</option>
@@ -40,7 +40,7 @@
             <option value="athletic">Athletic</option>
         </select>
         <br>
-       Select subcategory: <select name="subcategory">
+        Select subcategory: <select name="subcategory">
             <option value="women">Women</option>
             <option value="men">Men</option>
             <option value="boys">Boys</option>

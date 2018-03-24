@@ -97,3 +97,6 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 ALTER TABLE `pantofka`.`products`
 ADD COLUMN `material` VARCHAR(45) NOT NULL AFTER `subcategory`;
+
+ALTER TABLE `pantofka`.`products`
+ADD COLUMN `sale_price` INT NULL DEFAULT NULL AFTER `material`;

@@ -1,13 +1,13 @@
 <div class="products_page" >
 
     <div class="page_title">
-        <h3 class="page_title">Women's page</h3>
+        <h3 class="page_title">Products on SALE</h3>
     </div>
     <div class="show_products">
         <?php
 
         foreach ($products as $product) {
-            if ($product["subcategory"] === "women"){
+            if ($product["sale_info_state"] === "sale"){
                 ?>
                 <div class="shown_products">
                     <div class="product_img">
@@ -26,23 +26,23 @@
                         <h4>Product material: <?= $product["material"] ?></h4>
                     </div>
                     <div class="price">
-                        <h3>Price: <?= $product["product_price"] ?> leva</h3>
+                        <h3>Price: <?= $product["product_price"] ?> levs</h3>
                     </div>
-                    <form action=index.php?products=women method="post">
-                    <div>
-                    <?php
-                    foreach ($product["sizes"] as $size) {
-                        if ($size["size_quantity"] >0) {
-
-
-                            ?>
-                            <?= $size["size_number"] ?><input type="radio" name="size" value="<?= $size["size_number"]?>">
-
+                    <form action=index.php?products=sale method="post">
+                        <div>
                             <?php
-                        }
-                    }
-                    ?>
-                    </div>
+                            foreach ($product["sizes"] as $size) {
+                                if ($size["size_quantity"] >0) {
+
+
+                                    ?>
+                                    <?= $size["size_number"] ?><input type="radio" name="size" value="<?= $size["size_number"]?>">
+
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </div>
 
                         <input type="hidden" name="product_id" value="<?= $product["product_id"] ?>">
 
@@ -56,7 +56,6 @@
                             <?php
                         }
                         ?>
-
                     </form>
 
                 </div>

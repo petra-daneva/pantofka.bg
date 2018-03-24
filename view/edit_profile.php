@@ -2,22 +2,33 @@
 
     <h1 class="success center"> <?= htmlentities($_COOKIE["message"]); ?> </h1>
 
+<?php  endif; ?>
+
+<?php if (isset($_COOKIE["error"])): ?>
+
+    <h1 class="error center"> <?= htmlentities($_COOKIE["error"]); ?> </h1>
+
+<?php  endif; ?>
+
     <?php
-var_dump($_COOKIE);
-    $first_name = htmlentities($_COOKIE["first_name"]);
 
-    $last_name = htmlentities($_COOKIE["last_name"]);
+       if (isset($_COOKIE["message"]) || isset($_COOKIE["error"])){
 
-    $gender = htmlentities($_COOKIE["gender"]);
+        $first_name = htmlentities($_COOKIE["first_name"]);
 
-    $email = htmlentities($_COOKIE["email"]);
+        $last_name = htmlentities($_COOKIE["last_name"]);
 
-endif;
-?>
+        $gender = htmlentities($_COOKIE["gender"]);
+
+        $email = htmlentities($_COOKIE["email"]);
+
+       }
+
+    ?>
 
 <form action="index.php" method="post">
 
-            <input type="text" name="first_name" placeholder="First name" value="<?= (empty($first_name))?($user_info["user_fname"]):($first_name) ?> " required> <br>
+            <input type="text" name="first_name" placeholder="First name" value="<?= (empty($first_name))?($user_info["user_fname"]):($first_name) ?>" required> <br>
 
             <input type="text" name="last_name" placeholder="Last name" value="<?= (empty($last_name))?$user_info["user_lname"]:$last_name ?>" required> <br>
 
@@ -45,24 +56,26 @@ endif;
 
 <?php
 
-setcookie("message");
+    setcookie("message");
 
-setcookie("first_name" );
+    setcookie("error");
 
-setcookie("last_name");
+    setcookie("first_name" );
 
-setcookie("gender");
+    setcookie("last_name");
 
-setcookie("email" );
+    setcookie("gender");
 
-$message = "";
+    setcookie("email" );
 
-$first_name = "";
+    $message = "";
 
-$last_name = "";
+    $first_name = "";
 
-$gender = "";
+    $last_name = "";
 
-$email = "";
+    $gender = "";
+
+    $email = "";
 
 ?>

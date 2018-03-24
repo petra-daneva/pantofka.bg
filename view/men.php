@@ -50,7 +50,14 @@
                         <input class="buttons" type="submit" name="add_to_cart" value="Add to cart">
                         <input class="buttons" type="submit" name="add_to_favourites" value="Add to favourites">
                     </form>
-
+                    <?php
+                    if  ($user_info["is_admin"] == 1) {
+                        ?>
+                        <input class="buttons" type="submit" name="edit_product" value="Edit product">
+                        <input class="buttons" type="submit" name="delete_product" value="Delete product">
+                        <?php
+                    }
+                    ?>
                 </div>
 
                 <?php
