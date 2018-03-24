@@ -3,11 +3,9 @@
 
 require_once "./controller/../model/productDao.php";
 
-<<<<<<< HEAD
+
 $products = getProducts();
 
-=======
->>>>>>> ad4c78ea3d375c8ce8a1e24a49cefec825707382
 try{
     if (isset($_POST["add_product"])){
         $product_name = htmlentities($_POST["product_name"]);
@@ -104,12 +102,12 @@ try {
 }catch(PDOException $e){
     echo "pdo exeption: " . $e->getMessage();
 
-<<<<<<< HEAD
+
 };
 // Add items into the cart. Pepsy was here, blame her if something went wrong :D  // NEVER! :D \\
-=======
+
 // Add items into the cart. Pepsy was here, blame her if something went wrong :D
->>>>>>> ad4c78ea3d375c8ce8a1e24a49cefec825707382
+
 try{
     if (isset($_SESSION["cart"])){
         $cart_items = &$_SESSION["cart"];
