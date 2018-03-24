@@ -3,7 +3,6 @@
 
 require_once "./controller/../model/productDao.php";
 
-
 $products = getProducts();
 
 try{
@@ -106,46 +105,88 @@ try {
 };
 // Add items into the cart. Pepsy was here, blame her if something went wrong :D  // NEVER! :D \\
 
-// Add items into the cart. Pepsy was here, blame her if something went wrong :D
+// Well, guess everything was okay then :D
 
-try{
     if (isset($_SESSION["cart"])){
         $cart_items = &$_SESSION["cart"];
+
     }else{
+        $_SESSION["cart_total_price"] = 0;
         $cart_items = array();
     }
 
-    if (isset($_POST["add_to_cart"]) || isset($_GET["add_to_cart"])){
-        $product_id = isset($_POST["add_to_cart"]) ? htmlentities($_POST["product_id"]): htmlentities($_GET["product_id"]);
-        $_SESSION["cart"][] = getProductData($product_id);
+    if (isset($_GET["remove_cart"])){
+        $item_no = htmlentities($_GET["remove_cart"]);
+        $_SESSION["cart_total_price"] -= $cart_items[$item_no]["product_price"];
+        unset($cart_items[$item_no]);
+        unset($_SESSION["cart"][$item_no]);
     }
-}catch (PDOException $e){
-    echo "pdo exception: " . $e->getMessage();
-}
 
-if (isset($_GET["remove_cart"])){
-    $item_no = htmlentities($_GET["remove_cart"]);
-    unset($cart_items[$item_no]);
-    unset($_SESSION["cart"][$item_no]);
-}
-
-try{
     if (isset($_SESSION["favorites"])){
         $favorites_items = &$_SESSION["favorites"];
     }else{
         $favorites_items = array();
     }
 
-    if (isset($_POST["add_to_favourites"])){
-        $product_id = htmlentities($_POST["product_id"]);
-        $_SESSION["favorites"][] = getProductData($product_id);
+    if (isset($_GET["remove_favorites"])){
+        $item_no = htmlentities($_GET["remove_favorites"]);
+        unset($favorites_items[$item_no]);
+        unset($_SESSION["favorites"][$item_no]);
     }
-}catch (PDOException $e){
-    echo "pdo exception: " . $e->getMessage();
-}
 
-if (isset($_GET["remove_favorites"])){
-    $item_no = htmlentities($_GET["remove_favorites"]);
-    unset($favorites_items[$item_no]);
-    unset($_SESSION["favorites"][$item_no]);
-}
+    try{
+            $product_id = "";
+            if (isset($_POST["add_to_cart"]) || isset($_GET["add_to_cart"])){
+                $product_id = isset($_GET["add_to_cart"]) ? htmlentities($_GET["id"]) : htmlentities($_POST["product_id"]);
+                $data = getProductData($product_id);
+                $_SESSION["cart_total_price"] += $data["product_price"];
+                $_SESSION["cart"][] = $data;
+
+            }
+
+            }catch (PDOException $e){
+                echo "pdo exception: " . $e->getMessage();
+            }
+
+    try{
+        if (isset($_POST["add_to_favourites"])){
+            $product_id = htmlentities($_POST["product_id"]);
+            $id_exists = false;
+            foreach ($favorites_items as $item) {
+                foreach ($item as $key=>$value) {
+                    if ($key == "product_id" && $value == $product_id ){
+                        $id_exists = true;
+                        break;
+                     }
+                }
+            }
+            if ($id_exists == false) {
+                $_SESSION["favorites"][] = getProductData($product_id);
+            }
+        }
+    }catch (PDOException $e){
+        echo "pdo exception: " . $e->getMessage();
+    }
+
+    try{
+        if (isset($_POST["buy_cart"])){
+            $items_to_buy = array();
+            foreach ($_SESSION["cart"] as $item) {
+                $items_to_buy[] = $item["product_id"];
+            }
+            if (isset($_SESSION["logged_user"])){
+                setOrder($items_to_buy , $user_info["user_id"]);
+                $_SESSION["cart"] = array();
+                $_SESSION["cart_total_price"] = 0;
+                header("Location: index.php?page=successful_order");
+                die();
+            }else{
+                setcookie("message" , "Log in to make an order");
+                header("Location: index.php?page=login");
+                die();
+            }
+        }}catch(PDOException $e){
+        echo "pdo exception: " . $e->getMessage();
+
+    }
+

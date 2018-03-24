@@ -14,12 +14,14 @@
         </tr>
     <?php
 
+
         foreach ($cart_items as $item_no=>$item_data){
             $picture_link = "./assets/products_imgs/" . $item_data["product_img_name"];
             echo "<tr class='center'>";
 
             foreach ($item_data as $title=>$info) {
                 if ($title === "product_id"){
+                    $product_id = $info;
                     continue;
                 }
                 if ($title === "product_img_name"){
@@ -31,12 +33,19 @@
             }
             echo "<td class='black'> <a href='index.php?page=cart&remove_cart=$item_no'> REMOVE </a> </td>";
             echo "</tr>";
+
         }
 
     ?>
     </table>
 
-    <?php ;else: ?>
+        <?php echo "Total: " . $_SESSION["cart_total_price"]; ?>
+
+            <form action="index.php" method="post">
+                <input type="submit" name="buy_cart" value="Buy">
+            </form>
+        <?php ;else: ?>
+
         <h1>Cart is empty. Go ahead and add something!!</h1>
     <?php endif; ?>
 

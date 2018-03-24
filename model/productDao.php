@@ -116,3 +116,18 @@ function getProductData($product_id){
     $query_result = $query->fetch(PDO::FETCH_ASSOC);
     return $query_result;
 }
+
+/**
+ * Insert an row in orders table. Missing sizes. Returns nothing.
+ * @param $items_to_buy
+ * @param $user_id
+ */
+function setOrder($items_to_buy , $user_id){
+    require_once "././model/dbmanager.php";
+    $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
+    $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
+    foreach ($items_to_buy as $product_id){
+        $query = $pdo->prepare("INSERT INTO pantofka.orders (user_id , date , product_id)  VALUES ( ? , ? , ?  )");
+        $query->execute(array($user_id , date('Y-m-d H:i:s') ,$product_id));
+    }
+}

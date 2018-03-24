@@ -20,6 +20,7 @@
 
                 foreach ($item_data as $title=>$info) {
                     if ($title === "product_id"){
+                        $product_id = $info;
                         continue;
                     }
                     if ($title === "product_img_name"){
@@ -30,7 +31,7 @@
 
                 }
                 echo "<td class='black'> <a href='index.php?page=favorites&remove_favorites=$item_no'> REMOVE </a> </td>";
-                echo "<td class='black'> <a href='index.php?page=favorites&add_to_cart=$item_no'> ADD TO CART </a> </td>";
+                echo "<td class='black'> <a href='index.php?page=favorites&add_to_cart=$item_no&id=$product_id'> ADD TO CART </a> </td>";
 
                 echo "</tr>";
             }
