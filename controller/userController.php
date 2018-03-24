@@ -148,7 +148,7 @@ try{
         if ($password_old !== $password_repeat){
             $error .= "Passwords mismatched! ";
         }
-        if (strlen($password_old) < 3 || strlen($password_repeat) < 5){
+        if (strlen($password_old) < 3 || strlen($password_repeat) < 3){
             $error .= "Password must be at least 5 symbols long! ";
         }
         if (!empty($password_new) && strlen($password_new) < 5){
@@ -156,29 +156,22 @@ try{
         }
 
         if (empty($error)){
-            (empty($password_new))?($add_password = $password_old):($add_password = $password_new);
-            var_dump( updateUser($first_name , $last_name , $gender , $email_new , sha1($add_password) , $logged_email , sha1($password_old)));
-           die();
+            $add_password = (empty($password_new))?($password_old):($password_new);
             updateUser($first_name , $last_name , $gender , $email_new , sha1($add_password) , $logged_email , sha1($password_old));
             $_SESSION["logged_user"] = $email_new;
             $message = "Successful edit";
-            setcookie("first_name" , $first_name);
-            setcookie("last_name" , $last_name);
-            setcookie("gender" , $gender);
-            setcookie("email" , $email_new);
-            setcookie("message", $message);
-            header("Location:index.php?page=edit_profile");
-            die();
-        }else{
+
+        }
             setcookie("first_name" , $first_name);
             setcookie("last_name" , $last_name);
             setcookie("gender" , $gender);
             setcookie("email" , $email_new);
             setcookie("error" , $error);
+            setcookie("message", $message);
             header("Location: index.php?page=edit_profile");
             die();
 
-        }
+
     }
 
 }catch (PDOException $e){
