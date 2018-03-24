@@ -30,8 +30,6 @@
             };
 
             set_error_handler($myErrorHandler,E_ALL|E_STRICT);
-
-
             if (!isset($_SESSION["logged_user"])){
                     require_once "view/guest_navigation.html";
                 }else{
@@ -45,14 +43,12 @@
 
             <?php
 
-
-
             if (isset($_GET["page"])){
                     $page = htmlentities($_GET['page']);
 
                     if (isset($_SESSION["logged_user"])) {
                         if ($page == "logout") {
-                            session_destroy();
+                            unset($_SESSION["logged_user"]);
                             header("Location: index.php?page=main");
                             die();
                         }

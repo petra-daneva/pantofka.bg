@@ -79,9 +79,11 @@ ul{
     list-style-type: none;
 }
 #logo{
-    font-size: 10em;
+    font-size: 7em;
     font-weight: 100;
     background-color: transparent;
+    margin-top: 25px;
+    position: absolute;
 }
 #logo:hover{
     background-color: transparent;
@@ -174,6 +176,12 @@ ul{
     margin-bottom: 30px;
 }
 
+.top-30{
+    margin-top: 30px;
+}
+.aside-5{
+    padding: 0 15px;
+}
 
 
 
@@ -242,4 +250,28 @@ ul{
     background: #ff000a;
 
 
+}
+
+.icon_img{
+    height: 100px;
+    width: auto;
+
+
+}
+
+.clear_link:link{
+    text-decoration: none;
+    background-color: transparent;
+    color: black;
+    padding: 0;
+    margin: 0;
+
+}
+
+table tr td{
+    border: 1px solid black;
+}
+
+.black{
+ background-color: black;
 }

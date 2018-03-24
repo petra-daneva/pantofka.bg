@@ -88,3 +88,21 @@ function sizeExists($product_name, $product_color , $material , $style, $subcate
     $query_result = $query->fetch(PDO::FETCH_ASSOC);
     return boolval($query_result["size_exists"]);
 }
+
+
+/**
+ * This function returns an array containing product_id , product_name , product_color , material, style , product_price , product_img_name of
+ * specific product (! ONE PRODUCT !) by given its id. If the id does not exists in db the function will return false.
+ *
+ * @param $product_id String
+ * @return mixed Array or False
+ */
+function getProductData($product_id){
+    require_once "././model/dbmanager.php";
+    $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
+    $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
+    $query = $pdo->prepare("SELECT product_id , product_name , product_color , material, style , product_price , product_img_name  FROM pantofka.products WHERE product_id = ?");
+    $query->execute(array($product_id));
+    $query_result = $query->fetch(PDO::FETCH_ASSOC);
+    return $query_result;
+}

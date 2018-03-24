@@ -2,7 +2,6 @@
 
 require_once "./controller/../model/productDao.php";
 
-
 try{
     if (isset($_POST["add_product"])){
         $product_name = htmlentities($_POST["product_name"]);
@@ -52,4 +51,45 @@ try{
 
 $products = getProducts();
 
+// Add items into the cart. Pepsy was here, blame her if something went wrong :D
+try{
+    if (isset($_SESSION["cart"])){
+        $cart_items = &$_SESSION["cart"];
+    }else{
+        $cart_items = array();
+    }
 
+    if (isset($_POST["add_to_cart"]) || isset($_GET["add_to_cart"])){
+        $product_id = isset($_POST["add_to_cart"]) ? htmlentities($_POST["product_id"]): htmlentities($_GET["product_id"]);
+        $_SESSION["cart"][] = getProductData($product_id);
+    }
+}catch (PDOException $e){
+    echo "pdo exception: " . $e->getMessage();
+}
+
+if (isset($_GET["remove_cart"])){
+    $item_no = htmlentities($_GET["remove_cart"]);
+    unset($cart_items[$item_no]);
+    unset($_SESSION["cart"][$item_no]);
+}
+
+try{
+    if (isset($_SESSION["favorites"])){
+        $favorites_items = &$_SESSION["favorites"];
+    }else{
+        $favorites_items = array();
+    }
+
+    if (isset($_POST["add_to_favourites"])){
+        $product_id = htmlentities($_POST["product_id"]);
+        $_SESSION["favorites"][] = getProductData($product_id);
+    }
+}catch (PDOException $e){
+    echo "pdo exception: " . $e->getMessage();
+}
+
+if (isset($_GET["remove_favorites"])){
+    $item_no = htmlentities($_GET["remove_favorites"]);
+    unset($favorites_items[$item_no]);
+    unset($_SESSION["favorites"][$item_no]);
+}
