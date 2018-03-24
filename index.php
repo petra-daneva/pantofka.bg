@@ -55,8 +55,7 @@
                             session_destroy();
                             header("Location: index.php?page=main");
                             die();
-                        }
-                       elseif ($page == "add_product") {
+                        }elseif ($page == "add_product") {
                             if ($user_info["is_admin"] == 1) {
                                 include_once "./view/add_product.php";
                             }else{
@@ -67,9 +66,8 @@
                             include_once $page_link;
                         }
 
-
                     }else{
-                        if ($page == "login"||  $page == "register" ||$page == "logout" ||$page == "main"|| $page == "cart" ||$page == "favorites" || $page == "already_exists" || $page == "failed_login" || $page == "successful_registration"){
+                        if ($page == "login" || $page == "register" ||$page == "logout" ||$page == "main"|| $page == "cart" ||$page == "favorites" || $page == "already_exists" || $page == "failed_login" || $page == "successful_registration"){
                             $page_link = './view/' . htmlentities($_GET['page']) . '.php';
                             include_once $page_link;
                         }else{

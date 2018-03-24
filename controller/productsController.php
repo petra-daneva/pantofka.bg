@@ -6,17 +6,29 @@ require_once "./controller/../model/productDao.php";
 try{
     if (isset($_POST["add_product"])){
         $product_name = htmlentities($_POST["product_name"]);
+        $product_size = htmlentities($_POST["product_size"]);
         $product_color = htmlentities($_POST["product_color"]);
         $material = htmlentities($_POST["material"]);
-        $style = htmlentities($_POST["style"]);
+        $product_style = htmlentities($_POST["product_style"]);
         $subcategory= htmlentities($_POST["subcategory"]);
         $product_price = htmlentities($_POST["product_price"]);
-        $sale_info_state = htmlentities($_POST["sale_info_state"]);
-        $size_number=htmlentities($_POST["size_number"]);
-        $size_quantity=htmlentities($_POST["size_quantity"]);
+        if (isset($_POST["on_promotion"])){
+            $on_promotion = true;
+            $price_on_promotion = htmlentities($_POST["price_on_promotion"]);
+        }
+        else{
+            $on_promotion = false;
+            $price_on_promotion = null;
+        }
+        if (isset($_POST["new_product"])){
+            $new_product = true;
+        }
+        else{
+            $new_product = false;
+        }
 
-        $tmp_name = $_FILES["product_img_name"]["tmp_name"];
-        $orig_name = $_FILES["product_img_name"]["name"];
+        $tmp_name = $_FILES["picture_url"]["tmp_name"];
+        $orig_name = $_FILES["picture_url"]["name"];
 
         if(is_uploaded_file($tmp_name)){
             $product_img_name = "$product_name-" . date("Ymdhisa") . ".png";
@@ -32,8 +44,8 @@ try{
             // error The picture is not uploaded
         }
         // Checking if the product already exist
-        if (!productExists( $product_name,$size_number, $product_color , $material , $style, $subcategory)){
-            saveProduct( $product_name, $size_number, $size_quantity, $product_color , $material , $style, $subcategory, $product_price,$sale_info_state, $product_img_name);
+        if (!productExists( $product_name, $product_size, $product_color , $material , $product_style, $subcategory)){
+            saveProduct( $product_name, $product_size, $product_color , $material , $product_style, $subcategory, $product_price,$on_promotion, $price_on_promotion, $new_product, $product_img_name);
             header("Location:index.php?page=successful_adding_product");
 
         }else{

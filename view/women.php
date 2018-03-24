@@ -5,7 +5,6 @@
     </div>
     <div class="show_products">
         <?php
-
         foreach ($products as $product) {
             if ($product["subcategory"] === "women"){
                 ?>
@@ -17,7 +16,7 @@
                         <h3><?= $product["product_name"] ?></h3>
                     </div>
                     <div class="product_type">
-                        <h4>Product type: <?= $product["style"] ?></h4>
+                        <h4>Product type: <?= $product["product_style"] ?></h4>
                     </div>
                     <div class="product_type">
                         <h4>Product color <?= $product["product_color"] ?></h4>
@@ -29,26 +28,11 @@
                         <h3>Price: <?= $product["product_price"] ?> leva</h3>
                     </div>
                     <form action=index.php?products=women method="post">
-                    <div>
-                    <?php
-                    foreach ($product["sizes"] as $size) {
-                        if ($size["size_quantity"] >0) {
-
-
-                            ?>
-                            <?= $size["size_number"] ?><input type="radio" name="size" value="<?= $size["size_number"]?>">
-
-                            <?php
-                        }
-                    }
-                    ?>
-                    </div>
 
                         <input type="hidden" name="product_id" value="<?= $product["product_id"] ?>">
 
                         <input class="buttons" type="submit" name="add_to_cart" value="Add to cart">
                         <input class="buttons" type="submit" name="add_to_favourites" value="Add to favourites">
-
                     </form>
 
                 </div>
