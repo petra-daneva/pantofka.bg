@@ -66,7 +66,23 @@
         <input type="hidden" name="product_img_name" value="<?= $_SESSION["edit_product"]["product_img_name"] ?>">
         Choose another image: <input type="file" name="product_img_name" accept="image/*"><br>
 
+
+
+        <?php
+        $i=0;
+            foreach ($_SESSION["edit_product"]["sizes"] as $size){
+                ?>
+              Size : <?= $size["size_number"] ?>  Quantity: <input type="number" name="<?=$i?>" value="<?= $size["size_quantity"]?>">
+                <br>
+            <?php
+            }
+        ?>
+        Add new size: <input type="number" name="new_size">
+        Quantity: <input type="number" name="new_quantity"> <br>
+
+
         <input type="submit" name="change_product" value="Change product">
+
     </form>
 </div>
 </body>

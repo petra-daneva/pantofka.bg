@@ -75,6 +75,7 @@ try {
          $product_price = htmlentities($_POST["product_price"]);
          $sale_info_state = htmlentities($_POST["sale_info_state"]);
          $sale_price = htmlentities($_POST["sale_price"]);
+         $product_img_name = htmlentities($_POST["product_img_name"]);
 
          if (isset($_FILES["product_img_name"])) {
              $tmp_name = $_FILES["product_img_name"]["tmp_name"];
@@ -91,9 +92,8 @@ try {
              } else {
                  // error The picture is not uploaded
              }
-         } else {
-             $product_img_name = htmlentities($_POST["product_img_name"]);
          }
+
          changeProduct($product_id, $product_name, $product_color, $material, $style , $subcategory , $product_price, $sale_info_state, $product_img_name, $sale_price );
 
 }

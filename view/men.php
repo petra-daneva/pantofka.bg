@@ -48,10 +48,10 @@
                         </select>
                     </div>
                         <input type="hidden" name="product_id" value="<?= $product["product_id"] ?>">
+                        <input type="hidden" name="product_img_name" value="<?= $product["product_img_name"] ?>">
 
                         <input class="buttons" type="submit" name="add_to_cart" value="Add to cart">
                         <input class="buttons" type="submit" name="add_to_favourites" value="Add to favourites">
-                    </form>
                     <?php
 
                         if (isset($_SESSION["logged_user"])) {
@@ -63,6 +63,7 @@
                             }
                         }
                         ?>
+                    </form>
 
                 </div>
 
