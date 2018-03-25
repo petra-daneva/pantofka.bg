@@ -30,8 +30,9 @@
             };
 
             set_error_handler($myErrorHandler,E_ALL|E_STRICT);
+
             if (!isset($_SESSION["logged_user"])){
-                    require_once "view/guest_navigation.html";
+                    require_once "view/guest_navigation.php";
                 }else{
                     require_once "view/user_navigation.php";
                 }

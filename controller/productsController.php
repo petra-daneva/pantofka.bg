@@ -1,7 +1,6 @@
 <?php
-
-
 require_once "./controller/../model/productDao.php";
+
 
 $products = getProducts();
 
@@ -27,7 +26,7 @@ try{
 
             }
             else{
-             // error The picture not moved
+                // error The picture not moved
             }
         }
         else{
@@ -52,50 +51,50 @@ try{
 
 };
 
- if (isset($_POST["edit_product"])) {
-     $_SESSION["edit_product"] = [];
-     foreach ($products as $product){
-         if ($product["product_id"] == $_POST["product_id"]){
-             $_SESSION["edit_product"] = $product;
-             break;
-         }
-     }
-        header("location:index.php?page=edit_product");
- }
+if (isset($_POST["edit_product"])) {
+    $_SESSION["edit_product"] = [];
+    foreach ($products as $product){
+        if ($product["product_id"] == $_POST["product_id"]){
+            $_SESSION["edit_product"] = $product;
+            break;
+        }
+    }
+    header("location:index.php?page=edit_product");
+}
 
 try {
-     if(isset($_POST["change_product"])) {
-         $product_id = htmlentities($_POST["product_id"]);
-         $product_name = htmlentities($_POST["product_name"]);
-         $product_color = htmlentities($_POST["product_color"]);
-         $material = htmlentities($_POST["material"]);
-         $style = htmlentities($_POST["style"]);
-         $subcategory = htmlentities($_POST["subcategory"]);
-         $product_price = htmlentities($_POST["product_price"]);
-         $sale_info_state = htmlentities($_POST["sale_info_state"]);
-         $sale_price = htmlentities($_POST["sale_price"]);
+    if(isset($_POST["change_product"])) {
+        $product_id = htmlentities($_POST["product_id"]);
+        $product_name = htmlentities($_POST["product_name"]);
+        $product_color = htmlentities($_POST["product_color"]);
+        $material = htmlentities($_POST["material"]);
+        $style = htmlentities($_POST["style"]);
+        $subcategory = htmlentities($_POST["subcategory"]);
+        $product_price = htmlentities($_POST["product_price"]);
+        $sale_info_state = htmlentities($_POST["sale_info_state"]);
+        $sale_price = htmlentities($_POST["sale_price"]);
+        $product_img_name = htmlentities($_POST["product_img_name"]);
 
-         if (isset($_FILES["product_img_name"])) {
-             $tmp_name = $_FILES["product_img_name"]["tmp_name"];
-             $orig_name = $_FILES["product_img_name"]["name"];
+        if (isset($_FILES["product_img_name"])) {
+            $tmp_name = $_FILES["product_img_name"]["tmp_name"];
+            $orig_name = $_FILES["product_img_name"]["name"];
 
-             if (is_uploaded_file($tmp_name)) {
-                 $product_img_name = "$product_name-" . date("Ymdhisa") . ".png";
-                 $picture_url = "assets/products_imgs/$product_img_name";
-                 if (move_uploaded_file($tmp_name, $picture_url)) {
+            if (is_uploaded_file($tmp_name)) {
+                $product_img_name = "$product_name-" . date("Ymdhisa") . ".png";
+                $picture_url = "assets/products_imgs/$product_img_name";
+                if (move_uploaded_file($tmp_name, $picture_url)) {
 
-                 } else {
-                     // error The picture not moved
-                 }
-             } else {
-                 // error The picture is not uploaded
-             }
-         } else {
-             $product_img_name = htmlentities($_POST["product_img_name"]);
-         }
-         changeProduct($product_id, $product_name, $product_color, $material, $style , $subcategory , $product_price, $sale_info_state, $product_img_name, $sale_price );
+                } else {
+                    // error The picture not moved
+                }
+            } else {
+                // error The picture is not uploaded
+            }
+        }
 
-}
+        changeProduct($product_id, $product_name, $product_color, $material, $style , $subcategory , $product_price, $sale_info_state, $product_img_name, $sale_price );
+
+    }
 
 
 }catch(PDOException $e){
@@ -128,6 +127,19 @@ try {
         $favorites_items = array();
     }
 
+    //Terry
+    if (isset($_GET["move_to_cart"])){
+        $product_id = htmlentities($_GET["product_id"]);
+        $product_size = htmlentities($_GET["size"]);
+        $product_to_cart = [];
+        $product_to_cart = getProductData($product_id);
+        $product_to_cart["size"]=$product_size;
+        var_dump($product_to_cart);
+        $_SESSION["cart"][] = $product_to_cart;
+        $item_no = htmlentities($_GET["move_to_cart"]);
+        $_SESSION["cart_total_price"] += $product_to_cart["product_price"];
+    }
+
     if (isset($_GET["remove_favorites"])){
         $item_no = htmlentities($_GET["remove_favorites"]);
         unset($favorites_items[$item_no]);
@@ -135,20 +147,23 @@ try {
     }
 
     try{
-            $product_id = "";
-            if (isset($_POST["add_to_cart"]) || isset($_GET["add_to_cart"])){
-                $product_id = isset($_GET["add_to_cart"]) ? htmlentities($_GET["id"]) : htmlentities($_POST["product_id"]);
-                $data = getProductData($product_id);
-                $_SESSION["cart_total_price"] += $data["product_price"];
-                $_SESSION["cart"][] = $data;
-
+            if (isset($_POST["add_to_cart"])){
+                //Terry
+                $product_id = htmlentities($_POST["product_id"]);
+                $product_size = htmlentities($_POST["size"]);
+                $product_to_cart = [];
+                $product_to_cart = getProductData($product_id);
+                $product_to_cart["size"]=$product_size;
+                $_SESSION["cart_total_price"] += $product_to_cart["product_price"];
+                $_SESSION["cart"][] = $product_to_cart;
             }
 
-            }catch (PDOException $e){
+    }catch (PDOException $e){
                 echo "pdo exception: " . $e->getMessage();
             }
 
     try{
+        $product_size = "";
         if (isset($_POST["add_to_favourites"])){
             $product_id = htmlentities($_POST["product_id"]);
             $id_exists = false;
@@ -161,32 +176,47 @@ try {
                 }
             }
             if ($id_exists == false) {
-                $_SESSION["favorites"][] = getProductData($product_id);
+                // Terry
+                $product_size = htmlentities( $_POST["size"]);
+                $product_to_fav = [];
+                $product_to_fav = getProductData($product_id);
+                $product_to_fav["size"]=$product_size;
+                $_SESSION["favorites"][] = $product_to_fav;
             }
         }
+
     }catch (PDOException $e){
         echo "pdo exception: " . $e->getMessage();
     }
 
+    //TODO sort by date and put inside the view. 4 Pepsy!
     try{
         if (isset($_POST["buy_cart"])){
             $items_to_buy = array();
             foreach ($_SESSION["cart"] as $item) {
-                $items_to_buy[] = $item["product_id"];
+                echo "<hr>";
+                var_dump($item);
+                $items_to_buy[] = ["product_id" => $item["product_id"] , "product_size" => $item["size"]];
             }
             if (isset($_SESSION["logged_user"])){
-                setOrder($items_to_buy , $user_info["user_id"]);
+                $user_id = $user_info["user_id"];
+
+                setOrder($items_to_buy , $user_id );
                 $_SESSION["cart"] = array();
                 $_SESSION["cart_total_price"] = 0;
-                header("Location: index.php?page=successful_order");
-                die();
-            }else{
-                setcookie("message" , "Log in to make an order");
-                header("Location: index.php?page=login");
+                $orders_history = getOrdersHistory($user_id);
+                $_SESSION["orders_history"] = $orders_history;
+                header("Location: index.php?page=history");
                 die();
             }
-        }}catch(PDOException $e){
+
+        }
+    }catch(PDOException $e){
         echo "pdo exception: " . $e->getMessage();
 
     }
+
+
+
+
 

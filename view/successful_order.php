@@ -1,1 +1,0 @@
-<h1>Yoooohoooo. Order was successful! </h1>

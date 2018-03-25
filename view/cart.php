@@ -3,15 +3,20 @@
     <?php if(isset($_SESSION["cart"]) && !empty($_SESSION["cart"])): ?>
 
     <table class="bottom-30 clear center">
+
         <tr  class="bottom-30 clear center aside-5">
+
+            <th class="aside-5">Image</th>
             <th class="aside-5">Product name</th>
             <th class="aside-5">Product color </th>
             <th class="aside-5">Meterial </th>
             <th class="aside-5">Shoe type</th>
             <th class="aside-5">Price</th>
-            <th class="aside-5">Image</th>
+            <th class="aside-5">Size</th>
+
 
         </tr>
+
     <?php
 
 
@@ -41,10 +46,19 @@
 
         <?php echo "Total: " . $_SESSION["cart_total_price"]; ?>
 
+            <?php if (isset($_SESSION["logged_user"])): ?>
+
             <form action="index.php" method="post">
                 <input type="submit" name="buy_cart" value="Buy">
             </form>
-        <?php ;else: ?>
+
+                <?php ;else: ?>
+            <a href="index.php?page=login">You must login to order!</a>
+
+            <?php ;endif; ?>
+
+
+            <?php ;else: ?>
 
         <h1>Cart is empty. Go ahead and add something!!</h1>
     <?php endif; ?>

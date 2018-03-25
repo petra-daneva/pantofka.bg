@@ -116,7 +116,7 @@ try{
             }
 
         }catch(PDOException $e){
-            echo "pdo exeption: " . $e->getMessage();
+            echo "pdo exception: " . $e->getMessage();
 
         };
 

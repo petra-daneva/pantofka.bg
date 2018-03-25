@@ -1,7 +1,4 @@
 <?php
-
-
-
 function productExists($product_name, $product_color , $material , $style, $subcategory){
 
     require_once "././model/dbmanager.php";
@@ -39,7 +36,6 @@ function  changeProduct($product_id, $product_name, $product_color, $material, $
     $query->execute(array($product_name, $product_color, $material, $style, $subcategory, $product_price, $sale_info_state, $product_img_name, $sale_price, $product_id));
 }
 
-
 function saveSize($product_name, $size_number, $size_quantity, $product_color , $material , $style, $subcategory)
 {
     require_once "././model/dbmanager.php";
@@ -71,7 +67,6 @@ function getProducts(){
     return $products;
 }
 
-
 function getSizesQuantity ($product_id){
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
@@ -87,7 +82,6 @@ function getSizesQuantity ($product_id){
 
 }
 
-
 function sizeExists($product_name, $product_color , $material , $style, $subcategory, $size_number){
 
     require_once "././model/dbmanager.php";
@@ -101,7 +95,7 @@ function sizeExists($product_name, $product_color , $material , $style, $subcate
 
 
 /**
- * This function returns an array containing product_id , product_name , product_color , material, style , product_price , product_img_name of
+ * This function returns an array containing product_img_name , product_id , product_name , product_color , material, style , product_price of
  * specific product (! ONE PRODUCT !) by given its id. If the id does not exists in db the function will return false.
  *
  * @param $product_id String
@@ -111,7 +105,7 @@ function getProductData($product_id){
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
     $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
-    $query = $pdo->prepare("SELECT product_id , product_name , product_color , material, style , product_price , product_img_name  FROM pantofka.products WHERE product_id = ?");
+    $query = $pdo->prepare("SELECT product_img_name , product_id , product_name , product_color , material, style , product_price  FROM pantofka.products WHERE product_id = ?");
     $query->execute(array($product_id));
     $query_result = $query->fetch(PDO::FETCH_ASSOC);
     return $query_result;
@@ -119,15 +113,19 @@ function getProductData($product_id){
 
 /**
  * Insert an row in orders table. Missing sizes. Returns nothing.
- * @param $items_to_buy
+ * @param $items_to_buy array with product id and size
  * @param $user_id
  */
 function setOrder($items_to_buy , $user_id){
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
     $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
-    foreach ($items_to_buy as $product_id){
-        $query = $pdo->prepare("INSERT INTO pantofka.orders (user_id , date , product_id)  VALUES ( ? , ? , ?  )");
-        $query->execute(array($user_id , date('Y-m-d H:i:s') ,$product_id));
+    foreach ($items_to_buy as $item){
+        $product_id = $item["product_id"];
+        $product_size = $item["product_size"];
+
+        $query = $pdo->prepare("INSERT INTO pantofka.orders (user_id ,date, size_id , product_id) 
+        VALUES ( ?  , ? , (SELECT s.size_id FROM pantofka.sizes as s WHERE (s.size_number = ? && product_id = ?)) , ? );");
+        $query->execute(array($user_id , date('Ymdhis') , $product_size ,$product_id , $product_id));
     }
 }
