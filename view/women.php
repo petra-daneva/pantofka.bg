@@ -30,18 +30,19 @@
                     </div>
                     <form action=index.php?products=women method="post">
                     <div>
-                    <?php
-                    foreach ($product["sizes"] as $size) {
-                        if ($size["size_quantity"] >0) {
-
-
-                            ?>
-                            <?= $size["size_number"] ?><input type="radio" name="size" value="<?= $size["size_number"]?>">
-
+                        Choose Size: <select name="size" id="">
                             <?php
-                        }
-                    }
-                    ?>
+                            foreach ($product["sizes"] as $size) {
+                                if ($size["size_quantity"] >0) {
+                                    ?>
+
+                                    <option value="<?= $size["size_number"]?>" > <?= $size["size_number"]?></option>>
+
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </select>
                     </div>
 
                         <input type="hidden" name="product_id" value="<?= $product["product_id"] ?>">

@@ -10,6 +10,7 @@
             <th class="aside-5">Shoe type</th>
             <th class="aside-5">Price</th>
             <th class="aside-5">Image</th>
+            <th class="aside-5">Size</th>
 
         </tr>
     <?php

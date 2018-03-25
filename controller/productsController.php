@@ -115,12 +115,28 @@ try{
         $cart_items = array();
     }
 
-    if (isset($_POST["add_to_cart"]) || isset($_GET["add_to_cart"])){
-        $product_id = isset($_POST["add_to_cart"]) ? htmlentities($_POST["product_id"]): htmlentities($_GET["product_id"]);
-        $_SESSION["cart"][] = getProductData($product_id);
+    if (isset($_POST["add_to_cart"])){
+        $product_id = htmlentities($_POST["product_id"]);
+        $product_size = htmlentities($_POST["size"]);
+        $product_to_cart = [];
+        $product_to_cart = getProductData($product_id);
+        $product_to_cart["size"]=$product_size;
+        $_SESSION["cart"][] = $product_to_cart;
     }
 }catch (PDOException $e){
     echo "pdo exception: " . $e->getMessage();
+}
+if (isset($_GET["move_to_cart"])){
+    $product_id = htmlentities($_GET["product_id"]);
+    $product_size = htmlentities($_GET["size"]);
+    $product_to_cart = [];
+    $product_to_cart = getProductData($product_id);
+    $product_to_cart["size"]=$product_size;
+    $_SESSION["cart"][] = $product_to_cart;
+
+    $item_no = htmlentities($_GET["move_to_cart"]);
+
+    unset($_SESSION["favorites"][$item_no]);
 }
 
 if (isset($_GET["remove_cart"])){
@@ -138,7 +154,11 @@ try{
 
     if (isset($_POST["add_to_favourites"])){
         $product_id = htmlentities($_POST["product_id"]);
-        $_SESSION["favorites"][] = getProductData($product_id);
+        $product_size = htmlentities( $_POST["size"]);
+        $product_to_fav = [];
+        $product_to_fav = getProductData($product_id);
+        $product_to_fav["size"]=$product_size;
+        $_SESSION["favorites"][] = $product_to_fav;
     }
 }catch (PDOException $e){
     echo "pdo exception: " . $e->getMessage();
