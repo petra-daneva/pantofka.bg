@@ -34,9 +34,9 @@
 
             <select name="gender" required>
 
-                <option value="m" selected=<?php ($user_info["user_gender"] === "m" )?"selected":""; ?> >Male</option>
+                <option value="m" <?php if($user_info["user_gender"] === "m" ){?> selected <?php } ?> >Male</option>
 
-                <option value="f" selected=<?php ($user_info["user_gender"] === "f" )?"selected":""; ?> >Female</option>
+                <option value="f" <?php if($user_info["user_gender"] === "f" ){?> selected <?php } ?> >Female</option>
 
             </select><br>
 
@@ -79,3 +79,4 @@
     $email = "";
 
 ?>
+

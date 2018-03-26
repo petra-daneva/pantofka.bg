@@ -31,28 +31,28 @@
                     <form action=index.php?products=men method="post">
 
 
-                    <div>
-                        Choose Size:   <select name="size" id="">
-                            <?php
-                            foreach ($product["sizes"] as $size) {
-                                if ($size["size_quantity"] >0) {
+                        <div>
+                            Choose Size:   <select name="size" id="">
+                                <?php
+                                foreach ($product["sizes"] as $size) {
+                                    if ($size["size_quantity"] >0) {
 
 
-                                    ?>
-                                    <option value="<?= $size["size_number"]?>" > <?= $size["size_number"]?></option>>
+                                        ?>
+                                        <option value="<?= $size["size_number"]?>" > <?= $size["size_number"]?></option>>
 
-                                    <?php
+                                        <?php
+                                    }
                                 }
-                            }
-                            ?>
-                        </select>
-                    </div>
+                                ?>
+                            </select>
+                        </div>
                         <input type="hidden" name="product_id" value="<?= $product["product_id"] ?>">
                         <input type="hidden" name="product_img_name" value="<?= $product["product_img_name"] ?>">
 
                         <input class="buttons" type="submit" name="add_to_cart" value="Add to cart">
                         <input class="buttons" type="submit" name="add_to_favourites" value="Add to favourites">
-                    <?php
+                        <?php
 
                         if (isset($_SESSION["logged_user"])) {
                             if ($user_info["is_admin"] == 1) {

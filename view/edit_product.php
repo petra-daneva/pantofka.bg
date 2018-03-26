@@ -1,61 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>EditProduct</title>
-</head>
-<body>
-
-
 <div id="add_product">
-    <form action="index.php" method="post" enctype="multipart/form-data">
-        <input type="hidden" name= "product_id" value="<?= $_SESSION["edit_product"]["product_id"] ?>">
+    <form action="index.php?page=main" method="post" enctype="multipart/form-data">
         Product name: <input type="text" name="product_name" value="<?= $_SESSION["edit_product"]["product_name"] ?>" required> <br>
 
 
         Product color : <select name="product_color" required>
-            <option value="white" selected=<?php ($_SESSION["edit_product"]["product_color"] === "white" )?"selected":""; ?> >White</option>
-            <option value="black" selected=<?php ($_SESSION["edit_product"]["product_color"] === "black" )?"selected":""; ?> >Black</option>
-            <option value="brown" selected=<?php ($_SESSION["edit_product"]["product_color"] === "brown" )?"selected":""; ?> >Brown</option>
-            <option value="blue" selected=<?php ($_SESSION["edit_product"]["product_color"] === "blue" )?"selected":""; ?> >Blue</option>
-            <option value="red" selected=<?php ($_SESSION["edit_product"]["product_color"] === "red" )?"selected":""; ?> >Red</option>
-            <option value="pink" selected=<?php ($_SESSION["edit_product"]["product_color"] === "pink" )?"selected":""; ?> >Pink</option>
-            <option value="green" selected=<?php ($_SESSION["edit_product"]["product_color"] === "green" )?"selected":""; ?> >Green</option>
+            <option value="white" <?php if($_SESSION["edit_product"]["product_color"] === "white" ){?> selected <?php } ?> >White</option>
+            <option value="black" <?php if($_SESSION["edit_product"]["product_color"] === "black" ){?> selected <?php } ?> >Black</option>
+            <option value="brown" <?php if($_SESSION["edit_product"]["product_color"] === "brown" ){?> selected <?php } ?> >Brown</option>
+            <option value="blue" <?php if($_SESSION["edit_product"]["product_color"] === "blue" ){?> selected <?php } ?> >Blue</option>
+            <option value="red" <?php if($_SESSION["edit_product"]["product_color"] === "red" ){?> selected <?php } ?> >Red</option>
+            <option value="pink" <?php if($_SESSION["edit_product"]["product_color"] === "pink" ){?> selected <?php } ?> >Pink</option>
+            <option value="green" <?php if($_SESSION["edit_product"]["product_color"] === "green" ){?> selected <?php } ?> >Green</option>
 
         </select>
         <br>
         Product material :
         <select name="material">
-            <option value="leather" selected=<?php ($_SESSION["edit_product"]["material"] === "leather" )?"selected":""; ?>>Leather</option>
-            <option value="canvas" selected=<?php ($_SESSION["edit_product"]["material"] === "canvas" )?"selected":""; ?>>Canvas</option>
-            <option value="rubber" selected=<?php ($_SESSION["edit_product"]["material"] === "rubber" )?"selected":""; ?>>Rubber</option>
-            <option value="eco-leather" selected=<?php ($_SESSION["edit_product"]["material"] === "eco-leather" )?"selected":""; ?>>Eco leather</option>
-            <option value="synthetic" selected=<?php ($_SESSION["edit_product"]["material"] === "synthetic" )?"selected":""; ?>>Synthetic</option>
+            <option value="leather" <?php if($_SESSION["edit_product"]["material"] === "leather" ){?> selected <?php } ?>>Leather</option>
+            <option value="canvas" <?php if($_SESSION["edit_product"]["material"] === "canvas" ){?> selected <?php } ?>>Canvas</option>
+            <option value="rubber" <?php if($_SESSION["edit_product"]["material"] === "rubber" ){?> selected <?php } ?>>Rubber</option>
+            <option value="eco-leather" <?php if($_SESSION["edit_product"]["material"] === "eco-leather" ){?> selected <?php } ?>>Eco leather</option>
+            <option value="synthetic" <?php if($_SESSION["edit_product"]["material"] === "synthetic" ){?> selected <?php } ?>>Synthetic</option>
 
         </select>
         <br>
         Product style :
         <select name="style">
-            <option value="boots" selected=<?php ($_SESSION["edit_product"]["style"] === "boots" )?"selected":""; ?>>Boots</option>
-            <option value="sandals" selected=<?php ($_SESSION["edit_product"]["style"] === "sandals" )?"selected":""; ?>>Sandals</option>
-            <option value="hills" selected=<?php ($_SESSION["edit_product"]["style"] === "hills" )?"selected":""; ?>>Hills</option>
-            <option value="casual" selected=<?php ($_SESSION["edit_product"]["style"] === "casual" )?"selected":""; ?>>Casual</option>
-            <option value="athletic" selected=<?php ($_SESSION["edit_product"]["style"] === "athletic" )?"selected":""; ?>>Athletic</option>
+            <option value="boots" <?php if($_SESSION["edit_product"]["style"] === "boots" ){?> selected <?php } ?>>Boots</option>
+            <option value="sandals" <?php if($_SESSION["edit_product"]["style"] === "sandals" ){?> selected <?php } ?>>Sandals</option>
+            <option value="hills" <?php if($_SESSION["edit_product"]["style"] === "hills" ){?> selected <?php } ?>>Hills</option>
+            <option value="casual" <?php if($_SESSION["edit_product"]["style"] === "casual" ){?> selected <?php } ?>>Casual</option>
+            <option value="athletic" <?php if($_SESSION["edit_product"]["style"] === "athletic" ){?> selected <?php } ?>>Athletic</option>
         </select>
         <br>
         Product subcategory :
         <select name="subcategory">
-            <option value="women" selected=<?php ($_SESSION["edit_product"]["subcategory"] === "women" )?"selected":""; ?>>Women</option>
-            <option value="men" selected=<?php ($_SESSION["edit_product"]["subcategory"] === "men" )?"selected":""; ?>>Men</option>
-            <option value="boys" selected=<?php ($_SESSION["edit_product"]["subcategory"] === "boys" )?"selected":""; ?>>Boys</option>
-            <option value="girls" selected=<?php ($_SESSION["edit_product"]["subcategory"] === "girls" )?"selected":""; ?>>Girls</option>
+                <option value="women" <?php if($_SESSION["edit_product"]["subcategory"] === "women" ){?> selected <?php } ?>>Women</option>
+                <option value="men" <?php if($_SESSION["edit_product"]["subcategory"] === "men" ){?> selected <?php } ?>>Men</option>
+                    <option value="boys" <?php if($_SESSION["edit_product"]["subcategory"] === "boys" ){?> selected <?php } ?>>Boys</option>
+            <option value="girls" <?php if($_SESSION["edit_product"]["subcategory"] === "girls" ){?> selected <?php } ?>>Girls</option>
         </select>
         <br>
         The sale info state :
         <select name="sale_info_state" id="">
-            <option value="normal" selected=<?php ($_SESSION["edit_product"]["sale_info_state"] === "normal" )?"selected":""; ?>>Normal</option>
-            <option value="new" selected=<?php ($_SESSION["edit_product"]["sale_info_state"] === "new" )?"selected":""; ?>>New product</option>
-            <option value="sale" selected=<?php ($_SESSION["edit_product"]["sale_info_state"] === "sale" )?"selected":""; ?>>Product on SALE</option>
+            <option value="normal" <?php if($_SESSION["edit_product"]["sale_info_state"] === "normal" ){ ?> selected <?php } ?>>Normal</option>
+            <option value="new" <?php if($_SESSION["edit_product"]["sale_info_state"] === "new" ){ ?> selected <?php } ?>>New product</option>
+            <option value="sale" <?php if($_SESSION["edit_product"]["sale_info_state"] === "sale" ){?> selected <?php } ?>>Product on SALE</option>
         </select>
         Price on sale <input type="number" name="sale_price" value="<?= $_SESSION["edit_product"]["sale_price"] ?>">
         <br>
@@ -69,13 +59,14 @@
 
 
         <?php
-        $i=0;
-            foreach ($_SESSION["edit_product"]["sizes"] as $size){
-                ?>
-              Size : <?= $size["size_number"] ?>  Quantity: <input type="number" name="<?=$i?>" value="<?= $size["size_quantity"]?>">
-                <br>
+
+        foreach ($_SESSION["edit_product"]["sizes"] as $size){
+            ?>
+            Size : <?= $size["size_number"] ?>  Quantity: <input type="number" name="<?= $size["size_number"] ?>" value="<?= $size["size_quantity"]?>">
+            <br>
             <?php
-            }
+
+        }
         ?>
         Add new size: <input type="number" name="new_size">
         Quantity: <input type="number" name="new_quantity"> <br>
@@ -85,5 +76,3 @@
 
     </form>
 </div>
-</body>
-</html>

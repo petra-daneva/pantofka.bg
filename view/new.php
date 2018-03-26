@@ -30,7 +30,7 @@
                     </div>
                     <form action=index.php?products=new method="post">
                         <div>
-                          Choose Size: <select name="size" id="">
+                            Choose Size: <select name="size" id="">
                                 <?php
                                 foreach ($product["sizes"] as $size) {
                                     if ($size["size_quantity"] >0) {

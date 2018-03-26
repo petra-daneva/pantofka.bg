@@ -30,22 +30,22 @@
                     </div>
                     <form action=index.php?products=girls method="post">
 
-                    <div>
-                        Choose Size:    <select name="size" id="">
-                            <?php
-                            foreach ($product["sizes"] as $size) {
-                                if ($size["size_quantity"] >0) {
+                        <div>
+                            Choose Size:    <select name="size" id="">
+                                <?php
+                                foreach ($product["sizes"] as $size) {
+                                    if ($size["size_quantity"] >0) {
 
 
-                                    ?>
-                                    <option value="<?= $size["size_number"]?>" > <?= $size["size_number"]?></option>>
+                                        ?>
+                                        <option value="<?= $size["size_number"]?>" > <?= $size["size_number"]?></option>>
 
-                                    <?php
+                                        <?php
+                                    }
                                 }
-                            }
-                            ?>
-                        </select>
-                    </div>
+                                ?>
+                            </select>
+                        </div>
 
                         <input type="hidden" name="product_id" value="<?= $product["product_id"] ?>">
                         <input type="hidden" name="product_img_name" value="<?= $product["product_img_name"] ?>">

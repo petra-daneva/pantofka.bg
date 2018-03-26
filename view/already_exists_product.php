@@ -46,5 +46,3 @@
     Product image<input type="file" name="picture_url" accept="image/*">
     <input type="submit" name="add_product" value="Add product">
 </form>
-</body>
-</html>
