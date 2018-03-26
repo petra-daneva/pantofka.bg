@@ -17,10 +17,10 @@ function saveProduct( $product_name, $size_number, $size_quantity, $product_colo
     $query = $pdo->prepare('INSERT INTO pantofka.products ( product_name, product_color , material , style, subcategory, product_price, sale_info_state, product_img_name) VALUES (?, ?, ? ,? , ?, ?, ?, ?)');
     $query->execute(array( $product_name, $product_color , $material , $style, $subcategory, $product_price, $sale_info_state, $product_img_name));
 
-    $query = $pdo->prepare('SELECT p.product_id FROM pantofka.products as p WHERE (p.product_name = ?  AND p.product_color= ?  AND p.material= ?  AND p.style= ?  AND p.subcategory= ? )');
-    $query->execute(array($product_name, $product_color, $material, $style, $subcategory));
-    $product_id = $query->fetch(PDO::FETCH_ASSOC);
-
+//    $query = $pdo->prepare('SELECT p.product_id FROM pantofka.products as p WHERE (p.product_name = ?  AND p.product_color= ?  AND p.material= ?  AND p.style= ?  AND p.subcategory= ? )');
+//    $query->execute(array($product_name, $product_color, $material, $style, $subcategory));
+//    $product_id = $query->fetch(PDO::FETCH_ASSOC);
+    $product_id = $pdo->lastInsertId("product_id");
     $query = $pdo->prepare('INSERT INTO sizes (size_number, size_quantity, product_id) Values (?, ?, ?)');
     $query->execute(array($size_number, $size_quantity, $product_id["product_id"]));
 

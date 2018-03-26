@@ -195,6 +195,7 @@ ul{
 }
 .shown_products{
     width:18%;
+
     min-height: 400px;
     display: inline-block;
     float: left;

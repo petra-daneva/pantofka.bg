@@ -157,7 +157,7 @@ try {
         $product_to_cart["size"]=$product_size;
         $_SESSION["cart"][] = $product_to_cart;
         $item_no = htmlentities($_GET["move_to_cart"]);
-        unset($_SESSION["favorites"][$item_no]);
+
 
     }
 
@@ -165,6 +165,7 @@ try {
         $item_no = htmlentities($_GET["remove_favorites"]);
         unset($favorites_items[$item_no]);
         unset($_SESSION["favorites"][$item_no]);
+
     }
 
     try{
