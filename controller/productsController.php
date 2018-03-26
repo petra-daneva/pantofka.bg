@@ -3,6 +3,8 @@ require_once "./controller/../model/productDao.php";
 
 
 $products = getProducts();
+$error = "";
+
 
 try{
     if (isset($_POST["add_product"])){
@@ -30,20 +32,35 @@ try{
             }
         }
         else{
-            // error The picture is not uploaded
-        }
-        // Checking if the product already exist
-        if (!productExists( $product_name,$size_number, $product_color , $material , $style, $subcategory)){
-            saveProduct( $product_name, $size_number, $size_quantity, $product_color , $material , $style, $subcategory, $product_price,$sale_info_state, $product_img_name);
-            header("Location:index.php?page=successful_adding_product");
-
-        }else{
-            //If the product exist, try again
-
-            header("Location:index.php?page=already_exists_product");
+            // error The picture is not uploade
+            $error .= "Picture not uploaded! ";
 
         }
+        if (empty($error)){
+            // Checking if the product already exist
+            if (!productExists( $product_name,$size_number, $product_color , $material , $style, $subcategory)){
+                saveProduct( $product_name, $size_number, $size_quantity, $product_color , $material , $style, $subcategory, $product_price,$sale_info_state, $product_img_name);
+                setcookie("product_added_successfully" , "Product added successfully");
+                header("Location:index.php?page=add_product");
+                die();
+            }else{
+                $error .= "Product already exists! ";
 
+        }
+
+        }
+
+        setcookie("product_name" ,$product_name );
+        setcookie("product_color" ,$product_color );
+        setcookie("material" ,$material );
+        setcookie("style" ,$style );
+        setcookie("subcategory" ,$subcategory );
+        setcookie("product_price" ,$product_price );
+        setcookie("sale_info_state" ,$sale_info_state );
+        setcookie("size_number" ,$size_number );
+        setcookie("size_quantity" ,$size_quantity );
+        header("Location:index.php?page=add_product");
+        die();
     }
 
 }catch(PDOException $e){

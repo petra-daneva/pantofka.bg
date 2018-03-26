@@ -63,7 +63,7 @@ try{
 
 // Button pressed. $_POST . Check if user exists and if not - add him inside db . Registration
 try{
-    if (isset($_POST["register_button"])){
+    if (isset($_POST["register_button"])) {
         //Take data from form
         $first_name = htmlentities($_POST["first_name"]);
         $last_name = htmlentities($_POST["last_name"]);
@@ -73,49 +73,50 @@ try{
         $password_repeat = htmlentities($_POST["password_repeat"]);
 
         //validate data
-        if (empty($first_name) || empty($last_name) || empty($gender) || empty($email) || empty($password) || empty($password_repeat)){
+        if (empty($first_name) || empty($last_name) || empty($gender) || empty($email) || empty($password) || empty($password_repeat)) {
             $error .= "You must fill all the blankets! ";
         }
-        if (strlen($first_name) > 45 || strlen($last_name) > 45 || strlen($email) > 45 || strlen($password) > 45 || strlen($password_repeat) > 45){
+        if (strlen($first_name) > 45 || strlen($last_name) > 45 || strlen($email) > 45 || strlen($password) > 45 || strlen($password_repeat) > 45) {
             $error .= "Input value is too long! ";
         }
-        if (strpos($email , "@") === false){
+        if (strpos($email, "@") === false) {
             $error .= "This is not a valid email! ";
         }
-        if ($password !== $password_repeat){
+        if ($password !== $password_repeat) {
             $error .= "Passwords mismatched! ";
         }
-        if (strlen($password) < 5 || strlen($password_repeat) < 5){
+        if (strlen($password) < 5 || strlen($password_repeat) < 5) {
             $error .= "Password must be at least 5 symbols long! ";
         }
 
-        if (empty($error)){
+        if (empty($error)) {
 
-        //Check if those exist with function from userDa0
-            if (!userExists($email , sha1($password))){
-                saveNewUser($first_name , $last_name , $gender , $email , sha1($password));
+            //Check if those exist with function from userDa0
+            if (!userExists($email, sha1($password))) {
+                saveNewUser($first_name, $last_name, $gender, $email, sha1($password));
                 header("Location:index.php?page=successful_registration");
 
-            }else{
+            } else {
                 //If such user exist -> he must log in
-                header("Location:index.php?page=already_exists");
+                setcookie("email_exists", "Email already exists!!");
 
             }
 
-         }else{
-            setcookie("first_name" , $first_name);
-            setcookie("last_name" , $last_name);
-            setcookie("gender" , $gender);
-            setcookie("email" , $email);
-            setcookie("error" , $error);
+        }
+
+        if (!empty($error) || isset($_COOKIE["email_exists"])) {
+            setcookie("first_name", $first_name);
+            setcookie("last_name", $last_name);
+            setcookie("gender", $gender);
+            setcookie("email", $email);
+            setcookie("error", $error);
             header("Location: index.php?page=register");
             die();
+        }
 
-
-                }
-            }
-
-        }catch(PDOException $e){
+    }
+}
+catch(PDOException $e){
             echo "pdo exception: " . $e->getMessage();
 
         };

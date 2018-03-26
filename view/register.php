@@ -1,6 +1,7 @@
-<?php if (isset($_COOKIE["error"])): ?>
+<?php if (isset($_COOKIE["error"]) || isset($_COOKIE["email_exists"])): ?>
 
-    <h1 class="error center"> <?= htmlentities($_COOKIE["error"]); ?> </h1>
+    <h1 class="error center"> <?= isset($_COOKIE["error"])?htmlentities($_COOKIE["error"]):"" ?> </h1>
+    <h1 class="error center"> <?= isset($_COOKIE["email_exists"])?htmlentities($_COOKIE["email_exists"]):"" ?> </h1>
 
     <?php
 
@@ -51,6 +52,8 @@
 
     setcookie("error");
 
+    setcookie("email_exists");
+
     setcookie("first_name" );
 
     setcookie("last_name");
@@ -60,6 +63,8 @@
     setcookie("email" );
 
     $error = "";
+
+    $email_exists = "";
 
     $first_name = "";
 

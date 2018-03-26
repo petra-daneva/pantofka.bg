@@ -1,3 +1,6 @@
+<h1 class="error center"> <?= isset($_COOKIE["error"])?htmlentities($_COOKIE["error"]):"" ?> </h1>
+
+
 <section>
     <div id="add_product">
         <form action="index.php" method="post" enctype="multipart/form-data">
