@@ -21,7 +21,7 @@
                 ?>
                 <div class="shown_products">
                     <div class="product_img">
-                        <a href= <?= $img_src ?> target="_blank" class="clear_link"> <img src= <?= $img_src ?> alt="picture of the product">  </a>
+                        <img onclick="showInfo()" src=  <?= $img_src ?> alt="Picture of the product">
                     </div>
                     <div class="product_name">
                         <h3><?= $product["product_name"] ?></h3>
@@ -82,3 +82,10 @@
         ?>
     </div>
 </div>
+
+<script>
+    function showInfo(){
+     alert(this.name);
+    }
+
+</script>

@@ -79,7 +79,7 @@
                     
                     if ($type == "men" ||$type == "new"   ||$type== "sale" || $type == "women" || $type == "girls" || $type == "boys"){
                       //  $type_link = './view/' . htmlentities($_GET['products'] . ".php");
-                        include_once ".view/display_subgategory_page.php";
+                        include_once "./view/display_subcategory_page.php";
                     }else{
                         include_once "view/error_page.php";
                     }
