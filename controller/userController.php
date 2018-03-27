@@ -43,17 +43,16 @@ try{
             header("Location: index.php?page=edit_profile");
             die();
         }else{
-            header("Location: index.php?page=failed_login");
-            die();
+            $error = "Wrong username or password!! ";
           }
 
-        }else{
-            setcookie("savedData" , $email);
+        }
+            setcookie("email" , $email);
             setcookie("error" , $error);
             header("Location: index.php?page=login");
             die();
         }
-    }
+
     }catch(PDOException $e){
         header("Location: index.php?page=error_page");
         die();
@@ -94,7 +93,10 @@ try{
             //Check if those exist with function from userDa0
             if (!userExists($email, sha1($password))) {
                 saveNewUser($first_name, $last_name, $gender, $email, sha1($password));
-                header("Location:index.php?page=successful_registration");
+                setcookie("email", $email);
+                setcookie("message", "Registration was successful! You can now log in. ");
+                header("Location:index.php?page=login");
+                die();
 
             } else {
                 //If such user exist -> he must log in
@@ -104,23 +106,20 @@ try{
 
         }
 
-        if (!empty($error) || isset($_COOKIE["email_exists"])) {
-            setcookie("first_name", $first_name);
-            setcookie("last_name", $last_name);
-            setcookie("gender", $gender);
-            setcookie("email", $email);
-            setcookie("error", $error);
-            header("Location: index.php?page=register");
-            die();
-        }
+        setcookie("first_name", $first_name);
+        setcookie("last_name", $last_name);
+        setcookie("gender", $gender);
+        setcookie("email", $email);
+        setcookie("error", $error);
+        header("Location: index.php?page=register");
+        die();
+
 
     }
-}
-catch(PDOException $e){
+} catch(PDOException $e){
             echo "pdo exception: " . $e->getMessage();
 
         };
-
 
 
 //Button pressed. $_POST . Edit profile - save changes
@@ -161,6 +160,9 @@ try{
             updateUser($first_name , $last_name , $gender , $email_new , sha1($add_password) , $logged_email , sha1($password_old));
             $_SESSION["logged_user"] = $email_new;
             $message = "Successful edit";
+            setcookie("message", $message);
+            header("Location: index.php?page=edit_profile");
+            die();
 
         }
             setcookie("first_name" , $first_name);
@@ -168,7 +170,6 @@ try{
             setcookie("gender" , $gender);
             setcookie("email" , $email_new);
             setcookie("error" , $error);
-            setcookie("message", $message);
             header("Location: index.php?page=edit_profile");
             die();
 
@@ -176,7 +177,17 @@ try{
     }
 
 }catch (PDOException $e){
-    header("Location: index.php?page=error_page");
-    die();
+    echo "pdo exception: " . $e->getMessage();
+
 }
 
+// Take history of orders from db
+try{
+    if (isset($_SESSION["logged_user"])){
+        $user_id = $user_info["user_id"];
+        $orders_history = getOrdersHistory($user_id);
+    }
+}catch (PDOException $e){
+    echo "pdo exception: " . $e->getMessage();
+
+}

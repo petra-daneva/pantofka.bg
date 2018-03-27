@@ -1,13 +1,16 @@
 <div id="login-form">
 
-        <?php if (isset($_COOKIE["error"])): ?>
+        <?php if (isset($_COOKIE["error"]) || isset($_COOKIE["message"])): ?>
 
-            <h1 class="error center"> <?= htmlentities($_COOKIE["error"]); ?> </h1>
+            <h1 class="error center"> <?= isset($_COOKIE["error"])?htmlentities($_COOKIE["error"]):""; ?> </h1>
+            <h1 class="message center"> <?= isset($_COOKIE["message"])?htmlentities($_COOKIE["message"]):""; ?> </h1>
 
         <?php
-            $email = htmlentities($_COOKIE["savedData"]);
-            endif;
+            $email = isset($_COOKIE["email"])?htmlentities($_COOKIE["email"]):"";
+                endif;
         ?>
+
+
 
         <form action="index.php" method="post" class="bottom-30">
 
@@ -27,9 +30,13 @@
 
     setcookie("error");
 
-    setcookie("savedData");
+    setcookie("message");
+
+    setcookie("email");
 
     $error = "";
+
+    $message = "";
 
     $email = "";
 

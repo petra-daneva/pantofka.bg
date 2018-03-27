@@ -81,7 +81,7 @@ function updateUser($first_name , $last_name , $gender , $email_new , $password_
 }
 
 /**
- * Return array containing product_id , size_id , size value , date . by given user id. Every order is accessed through its date which is a key.
+ * Return array containing o.date , p.product_name ,p.product_color,p.product_price,p.style , p.subcategory , p.material , s.size_number,p.product_img_name. by given user id. Every order is accessed through its date which is a key.
  *
  *
  * @param $user_id
@@ -91,11 +91,16 @@ function getOrdersHistory($user_id){
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
     $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
-    $query = $pdo->prepare("SELECT o.product_id , o.size_id ,s.size_number, o.date FROM pantofka.orders as o JOIN pantofka.sizes as s USING (size_id) WHERE user_id = ?");
+    $query = $pdo->prepare("SELECT  o.date , p.product_name ,p.product_color,p.product_price,
+            p.style , p.subcategory , p.material , s.size_number,p.product_img_name
+            FROM pantofka.orders as o 
+            JOIN pantofka.sizes as s USING (size_id)
+            JOIN pantofka.products as p ON (o.product_id = p.product_id) 
+            WHERE user_id = ? ORDER BY o.date DESC");
     $query->execute(array($user_id));
     $user_orders = array();
     while($order = $query->fetch(PDO::FETCH_ASSOC)){
-        $user_orders[] = [$order['date'] => $order];
+        $user_orders[] = $order;
     }
     return $user_orders;
 }
