@@ -276,3 +276,10 @@ table tr td{
 .black {
     background-color: black;
 }
+.error{
+    color: #db768d;
+}
+
+.message{
+    color: cornflowerblue;
+}
