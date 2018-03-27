@@ -122,7 +122,6 @@ try{
         };
 
 
-
 //Button pressed. $_POST . Edit profile - save changes
 try{
     if (isset($_POST["save_profile_button"])){

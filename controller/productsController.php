@@ -2,8 +2,8 @@
 require_once "./controller/../model/productDao.php";
 
 
-$products = getProducts();
-$error = "";
+    $products = getProducts();
+    $error = "";
 
 
     try{
@@ -246,6 +246,21 @@ $error = "";
 
     }
 
+
+    try{
+        if (isset($_POST["delete_product"])){
+            $product_id = htmlentities($_POST["product_id"]);
+            removeProduct($product_id);
+            $current_page = $_SERVER['REQUEST_URI'];
+            setcookie("message" , "Product was removed successfully! ");
+            header("Location:" . $current_page);
+            die();
+        }
+
+    }catch(PDOException $e){
+    echo "pdo exception: " . $e->getMessage();
+
+}
 
 
 

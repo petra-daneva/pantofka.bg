@@ -64,21 +64,29 @@ function saveSize($product_name, $size_number, $size_quantity, $product_color , 
 
 }
 
+/**
+ * This function returns all the data for products that are in stock (size quantity > 0)!
+ *
+ * @return array
+ */
 function getProducts(){
-
-    require_once "././model/dbmanager.php";
-    $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
-
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $row = $pdo->query('SELECT * FROM pantofka.products');
-    $products = [];
-    While ($query_result = $row->fetch(PDO::FETCH_ASSOC)) {
-        $query_result["sizes"] = getSizesQuantity($query_result["product_id"]);
-        $products[] = $query_result;
-
+    try{
+        require_once "././model/dbmanager.php";
+        $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->beginTransaction();
+        $row = $pdo->query('SELECT product_id , product_name , product_color , product_price , product_img_name , sale_info_state , style , subcategory , material FROM pantofka.products as p JOIN pantofka.sizes as s USING (product_id) WHERE s.size_quantity > 0;');
+        $products = [];
+        while ($query_result = $row->fetch(PDO::FETCH_ASSOC)) {
+            $query_result["sizes"] = getSizesQuantity($query_result["product_id"]);
+            $products[] = $query_result;
+        }
+        $pdo->commit();
+        return $products;
+    }catch (PDOException $e){
+        $pdo->rollback();
+        throw $e;
     }
-    return $products;
 }
 
 function getSizesQuantity ($product_id){
@@ -142,4 +150,22 @@ function setOrder($items_to_buy , $user_id){
         VALUES ( ?  , ? , (SELECT s.size_id FROM pantofka.sizes as s WHERE (s.size_number = ? && product_id = ?)) , ? );");
         $query->execute(array($user_id , date('Ymdhis') , $product_size ,$product_id , $product_id));
     }
+}
+
+/**
+ * Uptades sizes table by seting a value of Zero for a product id, that was passed by the controller.
+ * It does not delete it from db, just unset its quantity.
+ *
+ * @param $product_id
+ */
+function removeProduct($product_id){
+    require_once "././model/dbmanager.php";
+    $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
+
+    //Error handling
+    $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
+    // Write query
+    $query = $pdo->prepare('UPDATE pantofka.sizes as s SET s.size_quantity = 0 WHERE s.product_id = ?');
+    // Put values
+    $query->execute(array($product_id));
 }
