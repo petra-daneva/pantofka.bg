@@ -134,7 +134,7 @@ function getProductData($product_id){
 }
 
 /**
- * Insert an row in orders table. Missing sizes. Returns nothing.
+ * Insert an row in orders table. Returns nothing.
  * @param $items_to_buy array with product id and size
  * @param $user_id
  */
