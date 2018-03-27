@@ -212,6 +212,7 @@ ul{
     width: 90%;
     text-align: center;
     margin: 5px;
+    min-height: 200px ;
 }
 .product_img img{
     width: 100%;
@@ -276,3 +277,5 @@ table tr td{
 .black {
     background-color: black;
 }
+
+
