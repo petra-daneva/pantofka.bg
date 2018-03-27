@@ -6,7 +6,7 @@
             <h1 class="message center"> <?= isset($_COOKIE["message"])?htmlentities($_COOKIE["message"]):""; ?> </h1>
 
         <?php
-            $email = htmlentities($_COOKIE["email"]);
+            $email = isset($_COOKIE["email"])?htmlentities($_COOKIE["email"]):"";
                 endif;
         ?>
 
@@ -35,6 +35,8 @@
     setcookie("email");
 
     $error = "";
+
+    $message = "";
 
     $email = "";
 

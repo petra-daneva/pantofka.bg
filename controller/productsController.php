@@ -233,8 +233,6 @@ require_once "./controller/../model/productDao.php";
                 setOrder($items_to_buy , $user_id );
                 $_SESSION["cart"] = array();
                 $_SESSION["cart_total_price"] = 0;
-                $orders_history = getOrdersHistory($user_id);
-                $_SESSION["orders_history"] = $orders_history;
                 header("Location: index.php?page=history");
                 die();
             }

@@ -139,16 +139,24 @@ function getProductData($product_id){
  * @param $user_id
  */
 function setOrder($items_to_buy , $user_id){
+    try{
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
+    $pdo->beginTransaction();
     $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
     foreach ($items_to_buy as $item){
         $product_id = $item["product_id"];
         $product_size = $item["product_size"];
-
-        $query = $pdo->prepare("INSERT INTO pantofka.orders (user_id ,date, size_id , product_id) 
-        VALUES ( ?  , ? , (SELECT s.size_id FROM pantofka.sizes as s WHERE (s.size_number = ? && product_id = ?)) , ? );");
-        $query->execute(array($user_id , date('Ymdhis') , $product_size ,$product_id , $product_id));
+        $query_order = $pdo->prepare("INSERT INTO pantofka.orders (user_id ,date, size_id , product_id) 
+        VALUES ( ?  , ? , (SELECT s.size_id FROM pantofka.sizes as s WHERE (s.size_number = ? && product_id = ?)) , ? )");
+        $query_order->execute(array($user_id , date('Ymdhis') , $product_size ,$product_id , $product_id));
+        $query_decrease_quantity = $pdo->prepare("UPDATE pantofka.sizes as s SET s.size_quantity = s.size_quantity - 1 WHERE (s.size_number = ? && s.product_id = ?)");
+        $query_decrease_quantity->execute(array($product_size , $product_id));
+    }
+    $pdo->commit();
+    }catch (PDOException $e){
+        $pdo->rollBack();
+        throw $e;
     }
 }
 

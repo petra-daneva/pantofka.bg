@@ -177,7 +177,17 @@ try{
     }
 
 }catch (PDOException $e){
-    header("Location: index.php?page=error_page");
-    die();
+    echo "pdo exception: " . $e->getMessage();
+
 }
 
+// Take history of orders from db
+try{
+    if (isset($_SESSION["logged_user"])){
+        $user_id = $user_info["user_id"];
+        $orders_history = getOrdersHistory($user_id);
+    }
+}catch (PDOException $e){
+    echo "pdo exception: " . $e->getMessage();
+
+}
