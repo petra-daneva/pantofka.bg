@@ -1,4 +1,3 @@
-
 <section>
 
     <?php if(!empty($orders_history)):  ?>
@@ -65,7 +64,7 @@
 
 
         <?php
-            echo "<a href='index.php?page=history&load_history=".($history_count+5)."'>LOAD MORE!</a>";
+            echo "<a href='index.php?page=history&load_history=".($history_count + 5)."'>LOAD MORE!</a>";
 
                             ;else:
         ?>

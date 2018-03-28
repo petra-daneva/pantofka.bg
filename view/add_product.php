@@ -1,13 +1,8 @@
-<h1 class="error center"> <?= isset($_COOKIE["error"])?htmlentities($_COOKIE["error"]):"" ?> </h1>
-
-
 <section>
     <div id="add_product">
         <form action="index.php" method="post" enctype="multipart/form-data">
+            Product subcategory : <?= $subcategory ?>
             Product name: <input type="text" name="product_name" placeholder="product name" required> <br>
-            Product size: <input type="number" name="size_number" placeholder="size" min="20" max="50" required> <br>
-            Quantity: <input type="number" name="size_quantity" placeholder="quantity" min="0" max="50" required> <br>
-
 
             Select product color: <select name="product_color" required>
                 <option value="white">White</option>
@@ -37,17 +32,39 @@
                 <option value="athletic">Athletic</option>
             </select>
             <br>
-            Select subcategory: <select name="subcategory">
-                <option value="women">Women</option>
-                <option value="men">Men</option>
-                <option value="boys">Boys</option>
-                <option value="girls">Girls</option>
-            </select>
+
             <select name="sale_info_state" id="">
                 <option value="normal">Normal</option>
                 <option value="new">New product</option>
             </select>
             <br>
+
+            <?php
+            $min_size = 0;
+            $max_size = 0;
+            if ($_GET["subcategory"] === "girls" || $_GET["subcategory"] === "boys"){
+                $min_size = 25;
+                $max_size = 34;
+            }
+            elseif ($_GET["subcategory"] === "women"){
+                $min_size = 35;
+                $max_size = 42;
+            }
+            elseif ($_GET["subcategory"] === "men"){
+                $min_size = 40;
+                $max_size = 48;
+            }
+            for ($i = $min_size; $i <= $max_size; $i ++){
+                ?>
+                Size : <?= $i ?>  Quantity: <input type="number" name="<?= $i ?>" min="0" max="100" required>
+                <br>
+                <?php
+
+            }
+
+            ?>
+
+
             Product price: <input type="number" name="product_price" placeholder="price" required> <br>
             Product image<input type="file" name="product_img_name" accept="image/*"><br>
             <input type="submit" name="add_product" value="Add product">

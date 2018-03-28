@@ -1,9 +1,14 @@
 <?php
     $subcategory_name = htmlentities($_GET['products']);
-    $message = isset($_COOKIE["message"])?htmlentities($_COOKIE["message"]):"";
-?>
-<h1 class="success center"><?= $message ?></h1>
+ ?>
+
 <div class="products_page" >
+
+    <?php if( isset($_SESSION["logged_user"]) && $user_info["is_admin"] == 1 && ($subcategory_name === "women" || $subcategory_name === "men" || $subcategory_name === "girls" || $subcategory_name === "boys")): ?>
+
+        <a href="index.php?page=add_product&subcategory=<?=$subcategory_name?>"><img src="assets/icons/add.png" id="add-product-icon">  Add product </a>
+
+    <?php endif; ?>
 
     <div class="page_title">
         <h3 class="page_title"> <?= strtoupper(htmlentities($subcategory_name) ) ?> products</h3>
@@ -36,7 +41,19 @@
                         <h4>Product material: <?= $product["material"] ?></h4>
                     </div>
                     <div class="price">
-                        <h3>Price: <?= $product["product_price"] ?> leva</h3>
+
+                            <?php
+                            if ($product["sale_info_state"] === "sale"){
+                                ?>
+                           <h3> Was <span class="line-trough"> <?= $product["product_price"] ?></span> Now: <span class="price"> <?= $product["sale_price"] ?></span> levs </h3>
+                            <?php
+                            }
+                            else {
+                                ?>
+                               <h3> Price:  <span class="price "> <?= $product["product_price"] ?> levs</span> </h3>
+                                <?php
+                            }
+                            ?>
                     </div>
 
                     <form action="" method="post">
@@ -77,18 +94,8 @@
 
                 </div>
 
-                <?php endif;
+            <?php endif;
         } // End foreach
         ?>
     </div>
 </div>
-<?php
-setcookie("message");
-$message = "";
-?>
-<script>
-    function showInfo(){
-     alert(this.name);
-    }
-
-</script>

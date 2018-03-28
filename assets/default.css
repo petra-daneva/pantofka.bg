@@ -212,6 +212,7 @@ ul{
     width: 90%;
     text-align: center;
     margin: 5px;
+    min-height: 200px ;
 }
 .product_img img{
     width: 100%;
@@ -276,10 +277,18 @@ table tr td{
 .black {
     background-color: black;
 }
+
 .error{
     color: #db768d;
 }
 
 .message{
     color: cornflowerblue;
+}
+.line-trough{
+    text-decoration: line-through;
+    color: #9d9d9d;
+}
+.price{
+    color: #ff000a;
 }

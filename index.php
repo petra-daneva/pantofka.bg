@@ -1,5 +1,40 @@
 <?php
     session_start();
+    require_once 'controller/userController.php';
+    require_once 'controller/productsController.php';
+
+    $message = "";
+    $error = "";
+
+    $message = isset($COOKIE["message"])?htmlentities($_COOKIE["message"]):"";
+    $error = isset($_COOKIE["error"])?htmlentities($_COOKIE["error"]):"";
+    if (isset($_GET["subcategory"])){
+        $subcategory = htmlentities($_GET["subcategory"]);
+        setcookie("add_to_subcategory", $subcategory);
+    }
+
+        $first_name = "";
+        $last_name = "";
+        $gender = "";
+        $email = "";
+        $email_exists = "";
+
+        $first_name = isset($_COOKIE["first_name"])?htmlentities($_COOKIE["first_name"]):"";
+        $last_name = isset($_COOKIE["last_name"])?htmlentities($_COOKIE["last_name"]):"";
+        $gender = isset($_COOKIE["gender"])?htmlentities($_COOKIE["gender"]):"";
+        $email = isset($_COOKIE["email"])?htmlentities($_COOKIE["email"]):"";
+        $email_exists = isset($_COOKIE["email_exists"])?htmlentities($_COOKIE["email_exists"]):"";
+
+
+    setcookie("error");
+    setcookie("message");
+    setcookie("email");
+    setcookie("email_exists");
+    setcookie("first_name");
+    setcookie("last_name");
+    setcookie("gender");
+
+
 ?>
 
 <!DOCTYPE html>
@@ -13,8 +48,7 @@
         <div id="container" class="bottom-30">
             <?php
 
-            require_once 'controller/userController.php';
-            require_once 'controller/productsController.php';
+
 
             $not_triggered = true;
             $myErrorHandler = function ($errno, $errstr) use (&$not_triggered ){
@@ -42,7 +76,12 @@
 
             <main class="bottom-30">
 
-            <?php
+            <?php if (!empty($error) || !empty($message)): ?>
+
+                <h1 class="error center"> <?= $error ?> </h1>
+                <h1 class="message center"> <?= $message ?> </h1>
+
+            <?php endif;
 
             if (isset($_GET["page"])){
                     $page = htmlentities($_GET['page']);

@@ -10,24 +10,34 @@ function productExists($product_name, $product_color , $material , $style, $subc
     return boolval($query_result["product_exists"]);
 }
 
-function saveProduct( $product_name, $size_number, $size_quantity, $product_color , $material , $style, $subcategory, $product_price,$sale_info_state, $product_img_name){
-    require_once "././model/dbmanager.php";
-    $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
-    $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
-    $query = $pdo->prepare('INSERT INTO pantofka.products ( product_name, product_color , material , style, subcategory, product_price, sale_info_state, product_img_name) VALUES (?, ?, ? ,? , ?, ?, ?, ?)');
-    $query->execute(array( $product_name, $product_color , $material , $style, $subcategory, $product_price, $sale_info_state, $product_img_name));
+function saveProduct( $product_name, $sizes, $product_color , $material , $style, $subcategory, $product_price,$sale_info_state, $product_img_name){
+   try {
+
+       require_once "././model/dbmanager.php";
+       $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
+       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+       $query = $pdo->prepare('INSERT INTO pantofka.products ( product_name, product_color , material , style, subcategory, product_price, sale_info_state, product_img_name) VALUES (?, ?, ? ,? , ?, ?, ?, ?)');
+       $query->execute(array($product_name, $product_color, $material, $style, $subcategory, $product_price, $sale_info_state, $product_img_name));
 
 //    $query = $pdo->prepare('SELECT p.product_id FROM pantofka.products as p WHERE (p.product_name = ?  AND p.product_color= ?  AND p.material= ?  AND p.style= ?  AND p.subcategory= ? )');
 //    $query->execute(array($product_name, $product_color, $material, $style, $subcategory));
 //    $product_id = $query->fetch(PDO::FETCH_ASSOC);
-    $product_id = $pdo->lastInsertId("product_id");
-    $query = $pdo->prepare('INSERT INTO sizes (size_number, size_quantity, product_id) Values (?, ?, ?)');
-    $query->execute(array($size_number, $size_quantity, $product_id["product_id"]));
+       $product_id = $pdo->lastInsertId("product_id");
+       foreach ($sizes as $size) {
+           $query = $pdo->prepare('INSERT INTO sizes (size_number, size_quantity, product_id) Values (?, ?, ?)');
+           $query->execute(array($size["size_number"], $size["size_quantity"], $product_id));
+       }
+   $pdo->commit();
+    }
+    catch (PDOException $e){
+    $pdo->rollBack();
+    throw $e;
+}
 
 }
 
 function  changeProduct($product_id, $product_name, $product_color, $material, $style , $subcategory , $product_price, $sale_info_state, $product_img_name, $sale_price, $sizes, $new_size ){
-
+try{
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -47,11 +57,17 @@ function  changeProduct($product_id, $product_name, $product_color, $material, $
         $query = $pdo->prepare('INSERT INTO sizes (size_number, size_quantity, product_id) Values (?, ?, ?)');
         $query->execute(array($size_number, $size_quantity, $product_id));
     }
+    $pdo->commit();
+}catch (PDOException $e){
+    $pdo->rollBack();
+    throw $e;
+}
 
 }
 
 function saveSize($product_name, $size_number, $size_quantity, $product_color , $material , $style, $subcategory)
 {
+    try{
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -61,6 +77,11 @@ function saveSize($product_name, $size_number, $size_quantity, $product_color , 
 
     $query = $pdo->prepare('INSERT INTO sizes (size_number, size_quantity, product_id) Values (?, ?, ?)');
     $query->execute(array($size_number, $size_quantity, $product_id));
+        $pdo->commit();
+    }catch (PDOException $e){
+        $pdo->rollBack();
+        throw $e;
+    }
 
 }
 
@@ -70,23 +91,20 @@ function saveSize($product_name, $size_number, $size_quantity, $product_color , 
  * @return array
  */
 function getProducts(){
-    try{
-        require_once "././model/dbmanager.php";
-        $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $pdo->beginTransaction();
-        $row = $pdo->query('SELECT product_id , product_name , product_color , product_price , product_img_name , sale_info_state , style , subcategory , material FROM pantofka.products as p JOIN pantofka.sizes as s USING (product_id) WHERE s.size_quantity > 0;');
-        $products = [];
-        while ($query_result = $row->fetch(PDO::FETCH_ASSOC)) {
-            $query_result["sizes"] = getSizesQuantity($query_result["product_id"]);
-            $products[] = $query_result;
-        }
-        $pdo->commit();
-        return $products;
-    }catch (PDOException $e){
-        $pdo->rollback();
-        throw $e;
+
+    require_once "././model/dbmanager.php";
+    $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
+
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $row = $pdo->query('SELECT * FROM pantofka.products');
+    $products = [];
+    While ($query_result = $row->fetch(PDO::FETCH_ASSOC)) {
+        $query_result["sizes"] = getSizesQuantity($query_result["product_id"]);
+        $products[] = $query_result;
+
     }
+    return $products;
 }
 
 function getSizesQuantity ($product_id){

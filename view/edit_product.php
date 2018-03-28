@@ -68,8 +68,9 @@
 
         }
         ?>
-        Add new size: <input type="number" name="new_size">
-        Quantity: <input type="number" name="new_quantity"> <br>
+<!---->
+<!--        Add new size: <input type="number" name="new_size">-->
+<!--        Quantity: <input type="number" name="new_quantity"> <br>-->
 
 
         <input type="submit" name="change_product" value="Change product">
