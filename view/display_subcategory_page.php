@@ -1,8 +1,8 @@
 <?php
     $subcategory_name = htmlentities($_GET['products']);
-
+    $message = isset($_COOKIE["message"])?htmlentities($_COOKIE["message"]):"";
 ?>
-
+<h1 class="success center"><?= $message ?></h1>
 <div class="products_page" >
 
     <div class="page_title">
@@ -82,7 +82,10 @@
         ?>
     </div>
 </div>
-
+<?php
+setcookie("message");
+$message = "";
+?>
 <script>
     function showInfo(){
      alert(this.name);
