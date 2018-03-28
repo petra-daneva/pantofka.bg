@@ -1,4 +1,5 @@
 <div id="add_product">
+    <a href="index.php?products=out_of_stock"> Out of stock </a>
     <form action="index.php?page=main" method="post" enctype="multipart/form-data">
         Product name: <input type="text" name="product_name" value="<?= $_SESSION["edit_product"]["product_name"] ?>" required> <br>
 
@@ -35,10 +36,10 @@
         <br>
         Product subcategory :
         <select name="subcategory">
-                <option value="women" <?php if($_SESSION["edit_product"]["subcategory"] === "women" ){?> selected <?php } ?>>Women</option>
+                <option value="women" <?php if($_SESSION["edit_product"]["subcategory"] === "women"){?> selected <?php } ?>>Women</option>
                 <option value="men" <?php if($_SESSION["edit_product"]["subcategory"] === "men" ){?> selected <?php } ?>>Men</option>
-                    <option value="boys" <?php if($_SESSION["edit_product"]["subcategory"] === "boys" ){?> selected <?php } ?>>Boys</option>
-            <option value="girls" <?php if($_SESSION["edit_product"]["subcategory"] === "girls" ){?> selected <?php } ?>>Girls</option>
+                <option value="boys" <?php if($_SESSION["edit_product"]["subcategory"] === "boys" ){?> selected <?php } ?>>Boys</option>
+                <option value="girls" <?php if($_SESSION["edit_product"]["subcategory"] === "girls" ){?> selected <?php } ?>>Girls</option>
         </select>
         <br>
         The sale info state :
@@ -60,17 +61,21 @@
 
         <?php
 
-        foreach ($_SESSION["edit_product"]["sizes"] as $size){
+     foreach ($_SESSION["edit_product"]["sizes"] as $size){
             ?>
             Size : <?= $size["size_number"] ?>  Quantity: <input type="number" name="<?= $size["size_number"] ?>" value="<?= $size["size_quantity"]?>">
             <br>
             <?php
 
         }
+
         ?>
+
 <!---->
 <!--        Add new size: <input type="number" name="new_size">-->
 <!--        Quantity: <input type="number" name="new_quantity"> <br>-->
+
+
 
 
         <input type="submit" name="change_product" value="Change product">

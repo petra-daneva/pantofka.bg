@@ -1,7 +1,10 @@
 <?php
-$subcategory_name = htmlentities($_GET['products']);
 
-?>
+
+    $subcategory_name = htmlentities($_GET['products']);
+    $name = str_replace("_" , " " , $subcategory_name);
+ ?>
+
 
 <div class="products_page" >
 
@@ -12,12 +15,11 @@ $subcategory_name = htmlentities($_GET['products']);
     <?php endif; ?>
 
     <div class="page_title">
-        <h3 class="page_title"> <?= strtoupper(htmlentities($subcategory_name) ) ?> products</h3>
+        <h3 class="page_title"> <?= strtoupper($name) ?> products</h3>
     </div>
 
     <div class="show_products">
         <?php
-
         foreach ($products as $product) {
             $subcategory_sale_state = $product["sale_info_state"];
 
@@ -78,7 +80,7 @@ $subcategory_name = htmlentities($_GET['products']);
                         <input type="hidden" name="product_img_name" value="<?= $product["product_img_name"] ?>">
 
                         <input class="buttons" type="submit" name="add_to_cart" value="Add to cart">
-                        <input class="buttons" type="submit" name="add_to_favourites" value="Add to favourites">
+                        <input class="buttons" type="submit" name="add_to_favorites" value="Add to favorites">
                         <?php
 
                         if (isset($_SESSION["logged_user"])) {
@@ -100,6 +102,7 @@ $subcategory_name = htmlentities($_GET['products']);
         ?>
     </div>
 </div>
+
 
 <script>
     function showInfo(){

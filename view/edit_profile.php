@@ -1,31 +1,3 @@
-<?php if (isset($_COOKIE["message"])): ?>
-
-    <h1 class="success center"> <?= htmlentities($_COOKIE["message"]); ?> </h1>
-
-<?php  endif; ?>
-
-<?php if (isset($_COOKIE["error"])): ?>
-
-    <h1 class="error center"> <?= htmlentities($_COOKIE["error"]); ?> </h1>
-
-<?php  endif; ?>
-
-    <?php
-
-       if (isset($_COOKIE["message"]) || isset($_COOKIE["error"])){
-
-        $first_name = htmlentities($_COOKIE["first_name"]);
-
-        $last_name = htmlentities($_COOKIE["last_name"]);
-
-        $gender = htmlentities($_COOKIE["gender"]);
-
-        $email = htmlentities($_COOKIE["email"]);
-
-       }
-
-    ?>
-
 <form action="index.php" method="post">
 
             <input type="text" name="first_name" placeholder="First name" value="<?= (empty($first_name))?($user_info["user_fname"]):($first_name) ?>" required> <br>
@@ -52,31 +24,4 @@
 
 </form>
 
-
-
-<?php
-
-    setcookie("message");
-
-    setcookie("error");
-
-    setcookie("first_name" );
-
-    setcookie("last_name");
-
-    setcookie("gender");
-
-    setcookie("email" );
-
-    $message = "";
-
-    $first_name = "";
-
-    $last_name = "";
-
-    $gender = "";
-
-    $email = "";
-
-?>
 

@@ -9,7 +9,7 @@
                 <th class="aside-5">Image</th>
                 <th class="aside-5">Product name</th>
                 <th class="aside-5">Product color </th>
-                <th class="aside-5">Meterial </th>
+                <th class="aside-5">Material </th>
                 <th class="aside-5">Shoe type</th>
                 <th class="aside-5">Price</th>
                 <th class="aside-5">Size</th>
@@ -17,29 +17,34 @@
             </tr>
             <?php
 
-            foreach ($favorites_items as $item_no=>$item_data){
+            foreach ($favorites_items as $item_no=>$item_data) {
                 $picture_link = "./assets/products_imgs/" . $item_data["product_img_name"];
-                echo "<tr class='center'>";
-                $product_size = $item_data["size"];
+                ?>
+                <tr class='center'>
 
-                foreach ($item_data as $title=>$info) {
-                    if ($title === "product_id"){
-                        $product_id = $info;
-                        continue;
-                    }
-                    if ($title === "product_img_name"){
-                        echo "<td> <a href=$picture_link target='_blank' class='clear_link'> <img src=$picture_link class='icon_img'> </a> </td>";
-                        continue;
-                    }
-                    echo "<td>" . $info . "</td>";
+                    <td class="aside-5"><a href=<?= $picture_link ?>target='_blank' class='clear_link'> <img
+                                    src=<?= $picture_link ?> class='icon_img'> </a></td>
+                    <td class="aside-5"><?= $item_data["product_name"] ?></td>
+                    <td class="aside-5"><?= $item_data["product_color"] ?> </td>
+                    <td class="aside-5"><?= $item_data["material"] ?> </td>
+                    <td class="aside-5"><?= $item_data["style"] ?></td>
+                    <td class="aside-5"><?php if ($item_data["sale_info_state"] === "sale") {
+                            echo $item_data["sale_price"];
+                        } else {
+                            echo $item_data["product_price"];
+                        } ?>  </td>
+                    <td class="aside-5"><?= $item_data["size"] ?></td>
 
-                }
-                echo "<td class='black'> <a href='index.php?page=favorites&remove_favorites=$item_no'> REMOVE </a> </td>";
-                echo "<td class='black'> <a href='index.php?page=favorites&move_to_cart=$item_no&size=$product_size&product_id=$product_id'> MOVE TO CART </a> </td> ";
 
-                echo "</tr>";
+                    <td class='black'><a href='index.php?page=favorites&remove_favorites=<?=$item_no?>'> REMOVE </a></td>
+                    <td class='black'><a
+                                href='index.php?page=favorites&move_to_cart=<?= $item_no ?>&size=<?= $item_data["size"] ?>&product_id=<?= $item_data["product_id"] ?>'>
+                            MOVE TO CART </a></td>
+
+                </tr>
+
+                <?php
             }
-
             ?>
         </table>
 

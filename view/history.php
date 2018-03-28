@@ -1,4 +1,3 @@
-
 <section>
 
     <?php if(!empty($orders_history)):  ?>
@@ -41,31 +40,53 @@
                     $load_count = count($orders_history);
                 }
             }
-            foreach ($orders_history as $order){
+            foreach ($orders_history as $order) {
                 // Show only the first 15 items.
-                if ($load_count == $history_count){
+                if ($load_count == $history_count) {
                     break;
                 }
                 $load_count++;
+                $picture_link = "./assets/products_imgs/" . $order["product_img_name"];
+                ?>
+                <tr>
+                    <td class="aside-5"><?= $order["date"] ?></td>
+                    <td class="aside-5"><?= $order["product_name"] ?></td>
+                    <td class="aside-5"><?= $order["product_color"] ?> </td>
+                    <td class="aside-5"><?php if ($order["sale_info_state"] === "sale") {
+                            echo $order["sale_price"];
+                        } else {
+                            echo $order["product_price"];
+                        } ?>
+                    </td>
 
-                echo "<tr>";
-                foreach ($order as $key=>$value){
-                   if ($key == "product_img_name"){
-                       $picture_link = "./assets/products_imgs/" . $value;
-                       echo "<td> <a href=$picture_link target='_blank' class='clear_link'> <img src=$picture_link class='icon_img'> </a> </td>";
-                       continue;
-                   }
-                   echo "<td> $value </td>";
+                    <td class="aside-5"><?= $order["style"] ?></td>
+                    <td class="aside-5"><?= $order["subcategory"] ?> </td>
+                    <td class="aside-5"><?= $order["material"] ?> </td>
+                    <td class="aside-5"><?= $order["size_number"] ?> </td>
 
-                }
+                    <td><a href=<?= $picture_link ?>target='_blank' class='clear_link'> <img
+                                    src=<?= $picture_link ?> class='icon_img'> </a></td>
+                </tr>
+                <!--//                echo "<tr>";-->
+                <!--//                foreach ($order as $key=>$value){-->
+                <!--//                   if ($key == "product_img_name"){-->
+                <!--//                       $picture_link = "./assets/products_imgs/" . $value;-->
+                <!--//                       echo "<td> <a href=$picture_link target='_blank' class='clear_link'> <img src=$picture_link class='icon_img'> </a> </td>";-->
+                <!--//                       continue;-->
+                <!--//                   }-->
+                <!--//                   echo "<td> $value </td>";-->
+                <!--//-->
+                <!--//                }-->
+                <!--            }-->
+                <!--                echo "</tr>";-->
+                <?php
             }
-                echo "</tr>";
             ?>
         </table>
 
 
         <?php
-            echo "<a href='index.php?page=history&load_history=".($history_count+5)."'>LOAD MORE!</a>";
+            echo "<a href='index.php?page=history&load_history=".($history_count + 5)."'>LOAD MORE!</a>";
 
                             ;else:
         ?>
