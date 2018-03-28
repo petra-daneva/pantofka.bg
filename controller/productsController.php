@@ -12,11 +12,32 @@ require_once "./controller/../model/productDao.php";
             $product_color = htmlentities($_POST["product_color"]);
             $material = htmlentities($_POST["material"]);
             $style = htmlentities($_POST["style"]);
-            $subcategory= htmlentities($_POST["subcategory"]);
+            $subcategory = $_COOKIE["add_to_subcategory"];
             $product_price = htmlentities($_POST["product_price"]);
             $sale_info_state = htmlentities($_POST["sale_info_state"]);
-            $size_number=htmlentities($_POST["size_number"]);
-            $size_quantity=htmlentities($_POST["size_quantity"]);
+            $product_img_name="no_image.jpg";
+            $sizes = [];
+            $min_size = 0;
+            $max_size = 0;
+            if ($subcategory === "girls" || $_GET["subcategory"] === "boys"){
+                $min_size = 25;
+                $max_size = 33;
+            }
+            elseif ($subcategory === "women"){
+                $min_size = 34;
+                $max_size = 42;
+            }
+            elseif ($subcategory === "men"){
+                $min_size = 40;
+                $max_size = 48;
+            }
+            for ($i = $min_size; $i <= $max_size; $i ++) {
+                $size = [];
+                $size["size_number"] = $i;
+                $size["size_quantity"]=htmlentities($_POST["$i"]);
+                $sizes[]=$size;
+
+            }
 
             $tmp_name = $_FILES["product_img_name"]["tmp_name"];
             $orig_name = $_FILES["product_img_name"]["name"];
@@ -32,16 +53,16 @@ require_once "./controller/../model/productDao.php";
                 }
             }
             else{
-                // error The picture is not uploade
+                // error The picture is not uploaded
                 $error .= "Picture not uploaded! ";
 
             }
             if (empty($error)){
                 // Checking if the product already exist
-                if (!productExists( $product_name,$size_number, $product_color , $material , $style, $subcategory)){
-                    saveProduct( $product_name, $size_number, $size_quantity, $product_color , $material , $style, $subcategory, $product_price,$sale_info_state, $product_img_name);
+                if (!productExists( $product_name, $product_color , $material , $style, $subcategory)){
+                    saveProduct( $product_name, $sizes, $product_color , $material , $style, $subcategory, $product_price,$sale_info_state, $product_img_name);
                     setcookie("product_added_successfully" , "Product added successfully");
-                    header("Location:index.php?page=add_product");
+                    header("Location:index.php?page=display_subcategory_page&products=$subcategory");
                     die();
                 }else{
                     $error .= "Product already exists! ";
@@ -57,8 +78,8 @@ require_once "./controller/../model/productDao.php";
             setcookie("subcategory" ,$subcategory );
             setcookie("product_price" ,$product_price );
             setcookie("sale_info_state" ,$sale_info_state );
-            setcookie("size_number" ,$size_number );
-            setcookie("size_quantity" ,$size_quantity );
+//            setcookie("size_number" ,$size_number );
+//            setcookie("size_quantity" ,$size_quantity );
             header("Location:index.php?page=add_product");
             die();
         }
@@ -133,6 +154,7 @@ require_once "./controller/../model/productDao.php";
             unset($_SESSION["edit_product"]);
             changeProduct($product_id, $product_name, $product_color, $material, $style , $subcategory , $product_price, $sale_info_state, $product_img_name, $sale_price,$sizes, $new_size );
             unset($_SESSION["edit_product"]);
+            header("location: index.php?page=display_subcategory_page&products=$subcategory");
         }
 
     }catch(PDOException $e){
@@ -145,7 +167,6 @@ require_once "./controller/../model/productDao.php";
         $cart_items = &$_SESSION["cart"];
 
     }else{
-        $_SESSION["cart_total_price"] = 0;
         $cart_items = array();
     }
 
