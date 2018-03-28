@@ -12,7 +12,7 @@
                 <th class="aside-5">Prize </th>
                 <th class="aside-5">Style </th>
                 <th class="aside-5">Category </th>
-                <th class="aside-5">Material </th>
+                <th class="aside-5"> Material </th>
                 <th class="aside-5">Size </th>
                 <th class="aside-5">Picture </th>
 

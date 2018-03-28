@@ -9,7 +9,7 @@
                 <th class="aside-5">Image</th>
                 <th class="aside-5">Product name</th>
                 <th class="aside-5">Product color </th>
-                <th class="aside-5">Material </th>
+                <th class="aside-5"> Material </th>
                 <th class="aside-5">Shoe type</th>
                 <th class="aside-5">Price</th>
                 <th class="aside-5">Size</th>
