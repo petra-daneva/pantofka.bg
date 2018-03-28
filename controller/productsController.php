@@ -98,6 +98,7 @@ require_once "./controller/../model/productDao.php";
             }
         }
         header("location:index.php?page=edit_product");
+        die();
     }
 
     try {
@@ -220,23 +221,33 @@ require_once "./controller/../model/productDao.php";
         $product_size = "";
         if (isset($_POST["add_to_favourites"])){
             $product_id = htmlentities($_POST["product_id"]);
+            $product_size = htmlentities( $_POST["size"]);
             $id_exists = false;
+            $size_exists = false;
             foreach ($favorites_items as $item) {
+
                 foreach ($item as $key=>$value) {
                     if ($key == "product_id" && $value == $product_id ){
                         $id_exists = true;
-                        break;
+                        continue;
                      }
+                    if ($key == "size" && $value == $product_size ){
+                       var_dump($product_size);
+                       var_dump($value);
+                        $size_exists = true;
+                        continue;
+                    }
+                }
+                if ($id_exists === false || $size_exists === false) {
+                    // Terry
+                    $product_to_fav = [];
+                    $product_to_fav = getProductData($product_id);
+                    $product_to_fav["size"]=$product_size;
+                    $_SESSION["favorites"][] = $product_to_fav;
+                    break;
                 }
             }
-            if ($id_exists == false) {
-                // Terry
-                $product_size = htmlentities( $_POST["size"]);
-                $product_to_fav = [];
-                $product_to_fav = getProductData($product_id);
-                $product_to_fav["size"]=$product_size;
-                $_SESSION["favorites"][] = $product_to_fav;
-            }
+
         }
 
     }catch (PDOException $e){
