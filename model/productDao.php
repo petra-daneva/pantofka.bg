@@ -40,6 +40,7 @@ function  changeProduct($product_id, $product_name, $product_color, $material, $
 try{
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
+    $pdo->beginTransaction();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $query = $pdo -> prepare('UPDATE pantofka.products SET product_name =?, product_color = ?, material = ?, style = ?, subcategory = ?, product_price =?, sale_info_state = ?, product_img_name =?, sale_price = ? WHERE product_id = ?');
@@ -185,13 +186,35 @@ function setOrder($items_to_buy , $user_id){
  * @param $product_id
  */
 function removeProduct($product_id){
+
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
 
-    //Error handling
+     //Error handling
     $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
     // Write query
     $query = $pdo->prepare('UPDATE pantofka.sizes as s SET s.size_quantity = 0 WHERE s.product_id = ?');
     // Put values
     $query->execute(array($product_id));
 }
+
+function getProductsOutOfStock(){
+   try{
+       require_once "././model/dbmanager.php";
+       $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
+       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+       $pdo->beginTransaction();
+       $row = $pdo->query('SELECT product_img_name , product_id , product_name , product_color , material, style , product_price  FROM pantofka.products
+JOIN pantofka.sizes as s USING (product_id) WHERE s.size_quantity <= 0 &&  product_id = ?;');
+       $products = [];
+       while ($query_result = $row->fetch(PDO::FETCH_ASSOC)) {
+           $query_result["sizes"] = getSizesQuantity($query_result["product_id"]);
+           $products[] = $query_result;
+         }
+     $pdo->commit();
+     return $products;
+ }catch (PDOException $e){
+       $pdo->rollback();
+       throw $e;
+     }
+ }

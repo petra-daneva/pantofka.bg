@@ -5,25 +5,25 @@
 
     $message = "";
     $error = "";
+    $subcategory = "";
 
     $message = isset($COOKIE["message"])?htmlentities($_COOKIE["message"]):"";
     $error = isset($_COOKIE["error"])?htmlentities($_COOKIE["error"]):"";
-    if (isset($_GET["subcategory"])){
-        $subcategory = htmlentities($_GET["subcategory"]);
-        setcookie("add_to_subcategory", $subcategory);
-    }
 
-        $first_name = "";
-        $last_name = "";
-        $gender = "";
-        $email = "";
-        $email_exists = "";
+    $subcategory = isset($_GET["subcategory"])? htmlentities($_GET["subcategory"]):"men";
+    setcookie("add_to_subcategory", $subcategory);
 
-        $first_name = isset($_COOKIE["first_name"])?htmlentities($_COOKIE["first_name"]):"";
-        $last_name = isset($_COOKIE["last_name"])?htmlentities($_COOKIE["last_name"]):"";
-        $gender = isset($_COOKIE["gender"])?htmlentities($_COOKIE["gender"]):"";
-        $email = isset($_COOKIE["email"])?htmlentities($_COOKIE["email"]):"";
-        $email_exists = isset($_COOKIE["email_exists"])?htmlentities($_COOKIE["email_exists"]):"";
+    $first_name = "";
+    $last_name = "";
+    $gender = "";
+    $email = "";
+    $email_exists = "";
+
+    $first_name = isset($_COOKIE["first_name"])?htmlentities($_COOKIE["first_name"]):"";
+    $last_name = isset($_COOKIE["last_name"])?htmlentities($_COOKIE["last_name"]):"";
+    $gender = isset($_COOKIE["gender"])?htmlentities($_COOKIE["gender"]):"";
+    $email = isset($_COOKIE["email"])?htmlentities($_COOKIE["email"]):"";
+    $email_exists = isset($_COOKIE["email_exists"])?htmlentities($_COOKIE["email_exists"]):"";
 
 
     setcookie("error");
@@ -116,7 +116,7 @@
 
                     $type = htmlentities($_GET["products"]);
                     
-                    if ($type == "men" ||$type == "new"   ||$type== "sale" || $type == "women" || $type == "girls" || $type == "boys"){
+                    if ($type == "men" ||$type == "new"   ||$type== "sale" || $type == "women" || $type == "girls" || $type == "boys" || $type="out_of_stock"){
                       //  $type_link = './view/' . htmlentities($_GET['products'] . ".php");
                         include_once "./view/display_subcategory_page.php";
                     }else{

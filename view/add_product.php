@@ -42,17 +42,22 @@
             <?php
             $min_size = 0;
             $max_size = 0;
-            if ($_GET["subcategory"] === "girls" || $_GET["subcategory"] === "boys"){
+            if (!isset($_GET["subcategory"])){ // Chupi se kogato se dostypi samo add_product rychno, za tova mu slagam default-na stoinost
                 $min_size = 25;
-                $max_size = 34;
-            }
-            elseif ($_GET["subcategory"] === "women"){
-                $min_size = 35;
-                $max_size = 42;
-            }
-            elseif ($_GET["subcategory"] === "men"){
-                $min_size = 40;
                 $max_size = 48;
+            }else{
+                if ($_GET["subcategory"] === "girls" || $_GET["subcategory"] === "boys"){
+                    $min_size = 25;
+                    $max_size = 34;
+                }
+                elseif ($_GET["subcategory"] === "women"){
+                    $min_size = 35;
+                    $max_size = 42;
+                }
+                elseif ($_GET["subcategory"] === "men"){
+                    $min_size = 40;
+                    $max_size = 48;
+                }
             }
             for ($i = $min_size; $i <= $max_size; $i ++){
                 ?>

@@ -103,6 +103,7 @@ require_once "./controller/../model/productDao.php";
 
     try {
         if(isset($_POST["change_product"])) {
+
             $product_id = $_SESSION["edit_product"]["product_id"];
             $product_name = htmlentities($_POST["product_name"]);
             $product_color = htmlentities($_POST["product_color"]);
@@ -293,5 +294,12 @@ require_once "./controller/../model/productDao.php";
 }
 
 
-
+try{
+        if (isset($_GET["products"]) === "out_of_stock"){
+            $products = array();
+            $products = getProductsOutOfStock();
+        }
+}catch (PDOException $e){
+        $e->getMessage();
+}
 

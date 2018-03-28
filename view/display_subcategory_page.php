@@ -1,5 +1,6 @@
 <?php
     $subcategory_name = htmlentities($_GET['products']);
+    $name = str_replace("_" , " " , $subcategory_name);
  ?>
 
 <div class="products_page" >
@@ -11,12 +12,11 @@
     <?php endif; ?>
 
     <div class="page_title">
-        <h3 class="page_title"> <?= strtoupper(htmlentities($subcategory_name) ) ?> products</h3>
+        <h3 class="page_title"> <?= strtoupper($name) ?> products</h3>
     </div>
 
     <div class="show_products">
         <?php
-
         foreach ($products as $product) {
             $subcategory_sale_state = $product["sale_info_state"];
 
