@@ -1,5 +1,6 @@
 <nav class="clear right">
 
+    <a href="index.php?page=search">Search</a>
 
     <a href="index.php?page=edit_profile">Edit profile</a>
 

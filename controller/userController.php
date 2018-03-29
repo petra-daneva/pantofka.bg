@@ -191,3 +191,20 @@ try{
     echo "pdo exception: " . $e->getMessage();
 
 }
+try{
+    if (isset($_POST["search_data_advanced"])){
+        $product_color = htmlentities($_POST["product_color"]);
+        $style = htmlentities($_POST["style"]);
+        $subcategory =htmlentities($_POST["subcategory"]) ;
+        $material = htmlentities($_POST["material"]);
+        $size_number = htmlentities($_POST["size_number"]);
+        $sale_info_state = htmlentities($_POST["sale_info_state"]);
+        $order = htmlentities($_POST["order"]);
+
+        $search_data_advanced_result = searchDataAdvanced( $product_color , $style , $subcategory , $material , $size_number , $sale_info_state , $order);
+        $products = array();
+        $products = $search_data_advanced_result;
+    }
+}catch (PDOException $e){
+    $e->getMessage();
+}

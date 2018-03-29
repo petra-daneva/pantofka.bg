@@ -20,28 +20,24 @@
             </tr>
 
             <?php
-            if (!isset($_GET["load_history"])){
-                // Create load_count counter that corresponds to number of rows shown in history table.
-                // By default there are 5 iterations if the link was not clicked.
-                //History count is the argument passed in the url. It is the new value of the counter
 
-                $load_count = 0;
-                $history_count = 5;
+            $load_count = 0; // counter for each item
+
+            if (!isset($_GET["load_history"])){
+                $history_count = 5; // items to show
 
             }else{
-                $history_count = htmlentities($_GET["load_history"]);
-                $load_count = 5;
-                //Validate data from $_GET.
-                if ($history_count < 0 || (int)$history_count != $history_count ){
-                    $load_count = 5;
+                if (count($orders_history) < 25){
+                    $history_count = count($orders_history); // show all items in order history if their count is no greater than 25
+                }else{
+                    $history_count = 25; // else show only latest 25 TODO load all 
+                    ?>
+                    echo "<a href='index.php?page=history&load_history=all'>LOAD ALL!</a>";
+                    <?php
                 }
 
-                if ($history_count > count($orders_history) + 5){
-                    $load_count = count($orders_history);
-                }
             }
             foreach ($orders_history as $order) {
-                // Show only the first 15 items.
                 if ($load_count == $history_count) {
                     break;
                 }
@@ -86,7 +82,7 @@
 
 
         <?php
-            echo "<a href='index.php?page=history&load_history=".($history_count + 5)."'>LOAD MORE!</a>";
+            echo "<a href='index.php?page=history&load_history'>LOAD MORE!</a>";
 
                             ;else:
         ?>

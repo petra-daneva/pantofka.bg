@@ -1,5 +1,7 @@
 <nav class="clear right">
 
+    <a href="index.php?page=search">Search</a>
+
     <a href="index.php?page=login">LOGIN</a>
 
     <a href="index.php?page=register">REGISTER</a>
