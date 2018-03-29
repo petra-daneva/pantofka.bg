@@ -292,3 +292,51 @@ table tr td{
 .price{
     color: #ff000a;
 }
+
+#show_product{
+    text-decoration: none;
+    background-color: transparent;
+    color: black;
+    padding: 0;
+    margin: 0;
+
+}
+.product_info{
+    width: 80%;
+    margin: auto;
+    min-height: 500px;
+
+}
+.img {
+    display: inline-block;
+    float: left;
+    width: 50%;
+}
+.img img{
+width: 100%;
+}
+.name {
+    display: inline-block;
+    width: 45%;
+    float: right;
+    color: #ff000a;
+    font-size: 3em;
+    text-align: center;
+
+}
+.info {
+    display: inline-block;
+    width: 45%;
+    float: right;
+    font-size: 2em;
+}
+
+.prices{
+    color: #ff000a;
+    float: right;
+    text-align: center;
+    font-size:  1.5em;
+    width: 45%;
+
+
+}

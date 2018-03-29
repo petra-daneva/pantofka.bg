@@ -10,7 +10,7 @@
 
     <?php if( isset($_SESSION["logged_user"]) && $user_info["is_admin"] == 1 && ($subcategory_name === "women" || $subcategory_name === "men" || $subcategory_name === "girls" || $subcategory_name === "boys")): ?>
 
-        <a href="index.php?page=add_product&subcategory=<?=$subcategory_name?>"><img src="assets/icons/add.png" id="add-product-icon">  Add product </a>
+        <a id="link" href="index.php?page=add_product&subcategory=<?=$subcategory_name?>"><img src="assets/icons/add.png" id="add-product-icon">  Add product </a>
 
     <?php endif; ?>
 
@@ -27,9 +27,12 @@
 
                 $img_src = "./view/../assets/products_imgs/" . $product['product_img_name'];
                 ?>
+
                 <div class="shown_products">
                     <div class="product_img">
-                        <img onclick="showInfo()" src=  <?= $img_src ?> alt="Picture of the product">
+                        <a id="show_product" href="index.php?page=product_info&product_id=<?=$product["product_id"]?>">
+                            <img onclick="" src=  <?= $img_src ?> alt="Picture of the product">
+                        </a>
                     </div>
                     <div class="product_name">
                         <h3><?= $product["product_name"] ?></h3>
