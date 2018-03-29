@@ -104,3 +104,24 @@ function getOrdersHistory($user_id){
     }
     return $user_orders;
 }
+
+function searchDataAdvanced( $product_color , $style , $subcategory , $material , $size_number , $sale_info_state , $order){
+    require_once "././model/dbmanager.php";
+    $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
+    $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
+
+            $query = $pdo->prepare('SELECT p.product_id , s.size_number FROM pantofka.products as p
+                    JOIN pantofka.sizes as s ON (s.product_id = p.product_id)
+                    WHERE  (p.product_color = ? OR p.product_color IS NULL)
+                    AND     (p.style = ? OR p.style IS NULL)
+                    AND     (p.subcategory = ? OR p.subcategory IS NULL)
+                    AND     (p.material = ? OR p.material IS NULL)
+                    AND     (s.size_number = ? OR s.size_number IS NULL) 
+                    AND     (p.sale_info_state = ? OR p.sale_info_state IS NULL) 
+                    AND     (s.size_quantity > 0)
+                    ORDER BY p.product_price ?;');
+            $query->execute(array($product_color , $style , $subcategory , $material , $size_number , $sale_info_state , $order));
+            $search_result = $query->fetch(PDO::FETCH_ASSOC);
+            return $search_result;
+}
+

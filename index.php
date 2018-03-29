@@ -3,6 +3,7 @@
     require_once 'controller/userController.php';
     require_once 'controller/productsController.php';
 
+
     $message = "";
     $error = "";
     $subcategory = "";
@@ -105,7 +106,7 @@
 
 
                     }else{
-                        if ($page == "login"||  $page == "register" ||$page == "logout" ||$page == "main"|| $page == "cart" ||$page == "favorites" || $page == "already_exists" || $page == "failed_login" || $page == "successful_registration"){
+                        if ($page == "login"||  $page == "register" ||$page == "logout" ||$page == "main"|| $page == "cart" ||$page == "favorites" || $page == "search" ){
                             $page_link = './view/' . htmlentities($_GET['page']) . '.php';
                             include_once $page_link;
                         }else{
@@ -116,7 +117,7 @@
 
                     $type = htmlentities($_GET["products"]);
                     
-                    if ($type == "men" ||$type == "new"   ||$type== "sale" || $type == "women" || $type == "girls" || $type == "boys" || $type="out_of_stock"){
+                    if ($type == "men" ||$type == "new"   ||$type== "sale" || $type == "women" || $type == "girls" || $type == "boys" || $type="out_of_stock" || $type="result"){
                       //  $type_link = './view/' . htmlentities($_GET['products'] . ".php");
                         include_once "./view/display_subcategory_page.php";
                     }else{
