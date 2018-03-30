@@ -106,7 +106,7 @@
 
 
                     }else{
-                        if ($page == "login"||  $page == "register" ||$page == "logout" ||$page == "main"|| $page == "cart" ||$page == "favorites" || $page == "search" ){
+                        if ($page == "login"||  $page == "register" ||$page == "logout" ||$page == "main"|| $page == "cart" ||$page == "favorites" || $page == "search"|| $page == "search_result" ){
                             $page_link = './view/' . htmlentities($_GET['page']) . '.php';
                             include_once $page_link;
                         }else{
