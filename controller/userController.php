@@ -191,20 +191,163 @@ try{
     echo "pdo exception: " . $e->getMessage();
 
 }
-try{
-    if (isset($_POST["search_data_advanced"])){
-        $product_color = htmlentities($_POST["product_color"]);
-        $style = htmlentities($_POST["style"]);
-        $subcategory =htmlentities($_POST["subcategory"]) ;
-        $material = htmlentities($_POST["material"]);
-        $size_number = htmlentities($_POST["size_number"]);
-        $sale_info_state = htmlentities($_POST["sale_info_state"]);
-        $order = htmlentities($_POST["order"]);
 
-        $search_data_advanced_result = searchDataAdvanced( $product_color , $style , $subcategory , $material , $size_number , $sale_info_state , $order);
-        $products = array();
-        $products = $search_data_advanced_result;
+// Get all data needed for search
+if (isset($_GET["page"] )){
+    if ($_GET["page"] == "search_result" || $_GET["page"] == "search" ){
+
+    try{
+        $all_colors  = getAllColors();
+    }catch (PDOException $e){
+        $all_colors = $e->getMessage();
+    }
+
+    try{
+        $all_materials  = getAllMaterials();
+    }catch (PDOException $e){
+        $all_materials = $e->getMessage();
+    }
+
+    try{
+        $all_collections  = getAllCollections();
+    }catch (PDOException $e){
+        $all_collections = $e->getMessage();
+    }
+
+    try{
+        $all_styles  = getAllStyles();
+    }catch (PDOException $e){
+        $all_styles = $e->getMessage();
+    }
+
+    try{
+        $all_subcategories  = getAllSubcategories();
+    }catch (PDOException $e){
+        $all_subcategories = $e->getMessage();
+    }
+    }
+}
+
+
+try{
+    if (isset($_POST["advanced_search"])){
+        $product_color = array();
+        if (isset($_POST["colors"])){
+            $product_color = ($_POST["colors"]);
+        }else{
+            foreach ($all_colors as $single_color) {
+                foreach ($single_color as $item) {
+                    $val =  $single_color["product_color"];
+
+                    $product_color[$val] = $single_color["product_color"];
+                }
+            }
+
+        }
+
+        $material = array();
+        if (isset($_POST["materials"])){
+            $material = ($_POST["materials"]);
+        }else{
+
+            foreach ($all_materials as $single_material) {
+                foreach ($single_material as $item) {
+                    $val = $single_material["material"];
+                    $material[$val] = $val;
+                }
+            }
+
+
+        }
+
+        $subcategory = array();
+        if (isset($_POST["subcategory"])){
+            $subcategory = ($_POST["subcategory"]);
+        }else{
+            foreach ($all_subcategories as $single_subcategory) {
+                foreach ($single_subcategory as $item) {
+                    $val = $single_subcategory["subcategory"];
+                    $subcategory[$val] = $val;
+                }
+            }
+        }
+
+        $styles = array();
+        if (isset($_POST["style"])){
+            $styles = ($_POST["style"]);
+        }else{
+            foreach ($all_styles as $single_style) {
+                foreach ($single_style as $item) {
+                    $val = $single_style["style"];
+                    $styles[$val] = $val;
+                }
+            }
+
+        }
+
+
+        $collections = array();
+        if (isset($_POST["sale_info_state"])){
+            $collections = ($_POST["sale_info_state"]);
+        }else{
+
+            foreach ($all_collections as $single_collection) {
+                foreach ($single_collection as $item) {
+                    $val = $single_collection["sale_info_state"];
+                    $collections[$val] = $val;
+                }
+            }
+        }
+
+        $advanced_search_result = getSearchResults($product_color, $material , $subcategory , $styles , $collections);
     }
 }catch (PDOException $e){
     $e->getMessage();
+}
+
+
+
+try{
+if (isset($_POST["search_history_button"])){
+    $input = htmlentities($_POST["search_history_input"]);
+    if (strlen($input) > 30){
+        setcookie("error" , "Input too long!");
+        header("Location:index.php?page=history");
+        die();
+    }
+
+    $input = explode(" " , $input);
+    $history_by_name_str = getHistoryByKeywords($input , "product_name");
+    $history_by_collection_str = getHistoryByKeywords($input , "sale_info_state");
+    $history_by_material_str = getHistoryByKeywords($input , "material");
+
+
+
+
+}
+}catch (PDOException $e){
+
+}
+
+
+try{
+    if (isset($_POST["search_bar_button"])){
+        $input = htmlentities($_POST["search_bar_input"]);
+        if (strlen($input) > 30){
+            setcookie("error" , "Input too long!");
+            header("Location:index.php?page=search");
+            die();
+        }
+
+        $input = explode(" " , $input);
+        $search_by_name_str = getResultsByKeywords($input , "product_name");
+        $search_by_collection_str = getResultsByKeywords($input , "sale_info_state");
+        $search_by_material_str = getResultsByKeywords($input , "material");
+
+
+
+
+    }
+}catch (PDOException $e){
+
 }

@@ -1,7 +1,5 @@
 <?php
-
 //Ako neshto nqkyde,nqkoga v bazata ne ti trygva, nai-veroqtno e na save-mode https://stackoverflow.com/questions/11448068/mysql-error-code-1175-during-update-in-mysql-workbench
-
 
 /**
  * Check if user exists by given email and password. Returns true if the user exists and false otherwise
@@ -105,23 +103,215 @@ function getOrdersHistory($user_id){
     return $user_orders;
 }
 
-function searchDataAdvanced( $product_color , $style , $subcategory , $material , $size_number , $sale_info_state , $order){
+function getAllColors(){
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
     $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
-
-            $query = $pdo->prepare('SELECT p.product_id , s.size_number FROM pantofka.products as p
-                    JOIN pantofka.sizes as s ON (s.product_id = p.product_id)
-                    WHERE  (p.product_color = ? OR p.product_color IS NULL)
-                    AND     (p.style = ? OR p.style IS NULL)
-                    AND     (p.subcategory = ? OR p.subcategory IS NULL)
-                    AND     (p.material = ? OR p.material IS NULL)
-                    AND     (s.size_number = ? OR s.size_number IS NULL) 
-                    AND     (p.sale_info_state = ? OR p.sale_info_state IS NULL) 
-                    AND     (s.size_quantity > 0)
-                    ORDER BY p.product_price ?;');
-            $query->execute(array($product_color , $style , $subcategory , $material , $size_number , $sale_info_state , $order));
-            $search_result = $query->fetch(PDO::FETCH_ASSOC);
-            return $search_result;
+    $query = $pdo->prepare("SELECT DISTINCT product_color FROM pantofka.products");
+    $query->execute();
+    while($color = $query->fetch(PDO::FETCH_ASSOC)){
+        $colors[] = $color;
+    }
+    return $colors;
 }
 
+function getAllMaterials(){
+    require_once "././model/dbmanager.php";
+    $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
+    $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
+    $query = $pdo->prepare("SELECT DISTINCT material FROM pantofka.products");
+    $query->execute();
+    while($material = $query->fetch(PDO::FETCH_ASSOC)){
+        $materials[] = $material;
+    }
+    return $materials;
+}
+
+function getAllStyles(){
+    require_once "././model/dbmanager.php";
+    $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
+    $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
+    $query = $pdo->prepare("SELECT DISTINCT style FROM pantofka.products");
+    $query->execute();
+    while($style = $query->fetch(PDO::FETCH_ASSOC)){
+        $styles[] = $style;
+    }
+    return $styles;
+}
+
+function getAllCollections(){
+    require_once "././model/dbmanager.php";
+    $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
+    $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
+    $query = $pdo->prepare("SELECT DISTINCT sale_info_state FROM pantofka.products");
+    $query->execute();
+    while($collection = $query->fetch(PDO::FETCH_ASSOC)){
+        $collections[] = $collection;
+    }
+    return $collections;
+}
+
+function getAllSubcategories(){
+    require_once "././model/dbmanager.php";
+    $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
+    $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
+    $query = $pdo->prepare("SELECT DISTINCT subcategory FROM pantofka.products");
+    $query->execute();
+    while($subcategory = $query->fetch(PDO::FETCH_ASSOC)){
+        $subcategories[] = $subcategory;
+    }
+    return $subcategories;
+}
+
+/**
+ *
+ * @param $colors
+ * @param $materials
+ * @param $subcategories
+ * @param $styles
+ * @param $collections
+ * @return array
+ */
+function getSearchResults($colors , $materials , $subcategories , $styles , $collections)
+{
+    require_once "././model/dbmanager.php";
+    $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    /* Create a string for the parameter placeholders filled to the number of params */
+    $place_holder_colors = implode(',', array_fill(0, count($colors), '?'));
+    $place_holder_materials = implode(',', array_fill(0, count($materials), '?'));
+    $place_holder_subcategories = implode(',', array_fill(0, count($subcategories), '?'));
+    $place_holder_styles = implode(',', array_fill(0, count($styles), '?'));
+    $place_holder_collections = implode(',', array_fill(0, count($collections), '?'));
+    $query = $pdo->prepare('SELECT DISTINCT product_id 
+                                    FROM pantofka.products 
+                                    WHERE product_color IN ('.$place_holder_colors.') 
+                                    AND material IN ('.$place_holder_materials.')
+                                    AND subcategory IN ('.$place_holder_subcategories.') 
+                                    AND sale_info_state IN ('.$place_holder_collections.')
+                                    AND style IN ('.$place_holder_styles.') 
+                                  ');
+
+    $merged = array_merge($colors , $materials , $subcategories ,$collections, $styles); // Assoc
+    $merged = array_values($merged); // Numeric
+    $query->execute($merged);
+    $search_result = array();
+    while ($some_product = $query->fetch(PDO::FETCH_ASSOC)){
+        $search_result[] = $some_product ;
+    };
+    return $search_result;
+}
+
+//example use:  $colors_result = getSearchResultsFor($colors , "product_color"); This is 1D version of getSearchResult
+function getSearchResultsFor($characteristic_value , $characteristic_name)
+{
+    require_once "././model/dbmanager.php";
+    $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    /* Execute a prepared statement using an array of values for an IN clause */
+    $params = $characteristic_value;
+
+    /* Create a string for the parameter placeholders filled to the number of params */
+    $place_holders = implode(',', array_fill(0, count($params), '?'));
+
+    /*
+        This prepares the statement with enough unnamed placeholders for every value
+        in our $params array. The values of the $params array are then bound to the
+        placeholders in the prepared statement when the statement is executed.
+        This is not the same thing as using PDOStatement::bindParam() since this
+        requires a reference to the variable. PDOStatement::execute() only binds
+        by value instead.
+    */
+    $query = $pdo->prepare('SELECT product_id FROM pantofka.products where '.$characteristic_name .' IN ('.$place_holders.')');
+    $query->execute($params);
+    while ($some_product  = $query->fetch(PDO::FETCH_ASSOC)){
+        $search_result[] = $some_product ;
+    }
+
+    return $search_result;
+
+}
+
+//$input , "product_name"
+function getResultsByKeywords($input , $table_name)
+{
+    try{
+        if ($table_name != "product_name" &&
+            $table_name != "product_color" &&
+            $table_name != "sale_info_state" &&
+            $table_name != "style" &&
+            $table_name != "subcategory" &&
+            $table_name != "material" ){
+
+            throw new Exception("Not cool. Check data in controller for searching by string  input is - " . var_dump($table_name));
+        }
+    require_once "././model/dbmanager.php";
+    $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->beginTransaction();
+    $search_result = array();
+    foreach ($input as $key_word) {
+        $key_word = "%".$key_word."%";
+        //name coll color size material , "product_color" , "sale_info_state" , "style" , "subcategory" , "material"
+        $query = $pdo->prepare("SELECT product_id FROM pantofka.products as p WHERE p.$table_name LIKE ? ");
+        var_dump($query);
+        $query->execute(array($key_word));
+        while ($some_product  = $query->fetch(PDO::FETCH_ASSOC)){
+            $search_result[] = $some_product ;
+        }
+    }
+    $pdo->commit();
+    return $search_result;
+    }catch (PDOException $e){
+      echo $e->getMessage();
+      $e->rollback();
+        throw $e;
+    }catch (Exception $ex){
+       echo $ex->getMessage();
+    }
+
+}
+
+function getHistoryByKeywords($input , $table_name){
+
+    try{
+        if ($table_name != "product_name" &&
+            $table_name != "product_color" &&
+            $table_name != "sale_info_state" &&
+            $table_name != "style" &&
+            $table_name != "subcategory" &&
+            $table_name != "material" ){
+
+            throw new Exception("Not cool. Check data in controller for searching by string  input is - " . var_dump($table_name));
+        }
+        require_once "././model/dbmanager.php";
+        $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->beginTransaction();
+        $search_result = array();
+        foreach ($input as $key_word) {
+            $key_word = "%".$key_word."%";
+            //name coll color size material , "product_color" , "sale_info_state" , "style" , "subcategory" , "material"
+            $query = $pdo->prepare("SELECT product_id 
+                                             FROM pantofka.orders as o 
+                                             JOIN pantofka.products as p USING (product_id) 
+                                             WHERE p.$table_name LIKE ? ");
+            $query->execute(array($key_word));
+            while ($some_product  = $query->fetch(PDO::FETCH_ASSOC)){
+                $search_result[] = $some_product ;
+            }
+        }
+        $pdo->commit();
+        return $search_result;
+    }catch (PDOException $e){
+       // $e->rollback();
+        throw $e;
+        echo $e->getMessage();
+
+    }catch (Exception $ex){
+        echo $ex->getMessage();
+    }
+
+}

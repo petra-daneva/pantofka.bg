@@ -2,6 +2,13 @@
 
     <?php if(!empty($orders_history)):  ?>
 
+        <form action="index.php?page=history" method="post">
+
+            <input type="text" name="search_history_input" placeholder="search for keywords" >
+            <input type="submit" name="search_history_button" value="Search">
+
+        </form>
+
         <table class="bottom-30 clear center">
 
             <tr  class="bottom-30 clear center aside-5">
@@ -20,6 +27,10 @@
             </tr>
 
             <?php
+            if (!empty($history_by_name_str)){ //TODO
+                var_dump($history_by_name_str);
+
+            }
 
             $load_count = 0; // counter for each item
 
@@ -30,9 +41,10 @@
                 if (count($orders_history) < 25){
                     $history_count = count($orders_history); // show all items in order history if their count is no greater than 25
                 }else{
-                    $history_count = 25; // else show only latest 25 TODO load all 
+                    $history_count = 25; // else show only latest 25 TODO load all
                     ?>
-                    echo "<a href='index.php?page=history&load_history=all'>LOAD ALL!</a>";
+
+                    <a href='index.php?page=history&load_history=all'>LOAD ALL!</a>;
                     <?php
                 }
 
