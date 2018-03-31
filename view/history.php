@@ -29,6 +29,8 @@
             <?php
             if (!empty($history_by_name_str)){ //TODO
                 var_dump($history_by_name_str);
+                echo "<hr>";
+                var_dump($orders_history);
 
             }
 
