@@ -2,7 +2,7 @@
     <div id="search_forms"  class="inline_block border left">
 
     <form action="index.php?page=search" method="post">
-        <input type="text" name="search_bar_input" placeholder="search for keywords" >
+        <input type="text" name="search_bar_input" placeholder="search for item name" >
         <input type="submit" name="search_bar_button" value="Search">
     </form>
 
@@ -10,7 +10,7 @@
     <form action="index.php?page=search" method="POST">
         <div  class="inline_block top-30 bottom-30 aside-5 border left">
         <?php
-            $characteristic = ["colors"=>$all_colors , "materials"=>$all_materials , "subcategory" => $all_subcategories ,"styles" => $all_styles ,"collections" => $all_collections];
+            $characteristic = ["colors"=>$all_colors , "materials"=>$all_materials , "subcategory" => $all_subcategories ,"styles" => $all_styles ,"sale_info_state" => $all_collections];
                 foreach ($characteristic as $characteristic_name => $all_values){ ?>
                     <fieldset>
                         <legend>Choose <?= $characteristic_name ?></legend>

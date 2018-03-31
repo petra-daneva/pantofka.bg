@@ -27,30 +27,9 @@
             </tr>
 
             <?php
-            if (!empty($history_by_name_str)){ //TODO
-                var_dump($history_by_name_str);
-                echo "<hr>";
-                var_dump($orders_history);
+            $load_count = 0;
+            $history_count = 25;
 
-            }
-
-            $load_count = 0; // counter for each item
-
-            if (!isset($_GET["load_history"])){
-                $history_count = 5; // items to show
-
-            }else{
-                if (count($orders_history) < 25){
-                    $history_count = count($orders_history); // show all items in order history if their count is no greater than 25
-                }else{
-                    $history_count = 25; // else show only latest 25 TODO load all
-                    ?>
-
-                    <a href='index.php?page=history&load_history=all'>LOAD ALL!</a>;
-                    <?php
-                }
-
-            }
             foreach ($orders_history as $order) {
                 if ($load_count == $history_count) {
                     break;
@@ -94,12 +73,7 @@
             ?>
         </table>
 
-
-        <?php
-            echo "<a href='index.php?page=history&load_history'>LOAD MORE!</a>";
-
-                            ;else:
-        ?>
+        <?php ;else: ?>
 
         <h1>History is empty. Go ahead and buy something!!</h1>
     <?php endif; ?>

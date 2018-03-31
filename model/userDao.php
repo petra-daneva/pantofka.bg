@@ -103,6 +103,26 @@ function getOrdersHistory($user_id){
     return $user_orders;
 }
 
+function filterOrdersHistory($item_ids){
+    require_once "././model/dbmanager.php";
+    $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
+    $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
+    $place_holders = implode(',', array_fill(0, count($item_ids), '?'));
+    $query = $pdo->prepare("SELECT o.date , p.product_name , p.product_color , p.product_price , p.style ,
+                                             p.subcategory , p.material , s.size_number , p.product_img_name ,
+                                             p.sale_info_state , p.sale_price 
+                                            FROM pantofka.orders as o 
+                                            INNER JOIN pantofka.products as p USING (product_id)
+                                            INNER JOIN pantofka.sizes as s USING (product_id) 
+                                            WHERE p.product_id IN (". $place_holders . ")" );
+    $query->execute($item_ids);
+    $orders = array();
+    while($order = $query->fetch(PDO::FETCH_ASSOC)){
+        $orders[] = $order;
+    }
+    return $orders;
+}
+
 /**
  * getAll...() functions returns the types of specific characteristic from db. It was used for displaying all options in adv. search
  * @return array with characteristic names
@@ -188,7 +208,7 @@ function getSearchResults($colors , $materials , $subcategories , $styles , $col
     $place_holder_subcategories = implode(',', array_fill(0, count($subcategories), '?'));
     $place_holder_styles = implode(',', array_fill(0, count($styles), '?'));
     $place_holder_collections = implode(',', array_fill(0, count($collections), '?'));
-    $query = $pdo->prepare('SELECT DISTINCT product_id 
+    $query = $pdo->prepare('SELECT DISTINCT product_id , product_img_name
                                     FROM pantofka.products 
                                     WHERE product_color IN ('.$place_holder_colors.') 
                                     AND material IN ('.$place_holder_materials.')
@@ -316,7 +336,7 @@ function getHistoryByKeywords($input , $table_name){
         foreach ($input as $key_word) {
             $key_word = "%".$key_word."%";
             //name coll color size material , "product_color" , "sale_info_state" , "style" , "subcategory" , "material"
-            $query = $pdo->prepare("SELECT product_id 
+            $query = $pdo->prepare("SELECT p.product_id
                                              FROM pantofka.orders as o 
                                              JOIN pantofka.products as p USING (product_id) 
                                              WHERE p.$table_name LIKE ? ");

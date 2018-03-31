@@ -186,6 +186,8 @@ try{
     if (isset($_SESSION["logged_user"])){
         $user_id = $user_info["user_id"];
         $orders_history = getOrdersHistory($user_id);
+
+
     }
 }catch (PDOException $e){
     echo "pdo exception: " . $e->getMessage();
@@ -298,7 +300,6 @@ try{
                 }
             }
         }
-
         $advanced_search_result = getSearchResults($product_color, $material , $subcategory , $styles , $collections);
     }
 }catch (PDOException $e){
@@ -309,24 +310,46 @@ try{
 
 try{
 if (isset($_POST["search_history_button"])){
-    $input = htmlentities($_POST["search_history_input"]);
-    if (strlen($input) > 30){
+    $input_str = htmlentities($_POST["search_history_input"]);
+    if (strlen($input_str) > 30){
         setcookie("error" , "Input too long!");
         header("Location:index.php?page=history");
         die();
     }
+    if (strstr($input_str , " ")){
+        $input = explode(" " , $input_str);
+    }else{
+        $input[] = $input_str;
+    }
 
-    $input = explode(" " , $input);
-    $history_by_name_str = getHistoryByKeywords($input , "product_name");
-    $history_by_collection_str = getHistoryByKeywords($input , "sale_info_state");
-    $history_by_material_str = getHistoryByKeywords($input , "material");
+    $history_by_color_str = getResultsByKeywords($input , "product_color");
+    $history_by_name_str = getResultsByKeywords($input , "product_name");
+    $history_by_collection_str = getResultsByKeywords($input , "sale_info_state");
+    $history_by_material_str = getResultsByKeywords($input , "material");
+    $history_by_style_str = getResultsByKeywords($input , "style");
+    $history_by_subcategory_str = getResultsByKeywords($input , "subcategory");
+    $history_search_results =
+        $history_by_color_str +
+        $history_by_name_str +
+        $history_by_style_str +
+        $history_by_collection_str +
+        $history_by_material_str +
+        $history_by_subcategory_str;
 
-
-
-
+        foreach ($history_search_results as $id=>$order_result) {
+            foreach ($order_result as $key=>$item) {
+                $numeric_history_search_result[] = (int)$item;
+            }
+        }
+    $orders_history = filterOrdersHistory($numeric_history_search_result);
+    if (empty($orders_history)){
+        setcookie("error" , "Nothing was found.");
+        header("location:index.php?page=history");
+        die();
+    }
 }
-}catch (PDOException $e){
-
+}catch(PDOException $e){
+    $e->getMessage();
 }
 
 
@@ -350,6 +373,13 @@ try{
                                 $search_by_collection_str +
                                 $search_by_material_str +
                                 $search_by_subcategory_str;
+
+        if (empty($search_by_results)){
+            echo "here";
+            setcookie("nested_error" , "Nothing was found");
+            header("Location:index.php?page=search");
+            die();
+        }
     }
 }catch (PDOException $e){
 

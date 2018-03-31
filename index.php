@@ -7,9 +7,11 @@
     $message = "";
     $error = "";
     $subcategory = "";
+    $nested_error = "";
 
     $message = isset($COOKIE["message"])?htmlentities($_COOKIE["message"]):"";
     $error = isset($_COOKIE["error"])?htmlentities($_COOKIE["error"]):"";
+    $nested_error = isset($_COOKIE["nested_error"])?htmlentities($_COOKIE["nested_error"]):"";
 
     $subcategory = isset($_GET["subcategory"])? htmlentities($_GET["subcategory"]):"men";
     setcookie("add_to_subcategory", $subcategory);
@@ -29,6 +31,7 @@
 
     setcookie("error");
     setcookie("message");
+    setcookie("nested_error");
     setcookie("email");
     setcookie("email_exists");
     setcookie("first_name");
