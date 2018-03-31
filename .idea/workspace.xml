@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1f623020-bea1-4138-9720-227fec9b515e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/default.css" afterPath="$PROJECT_DIR$/assets/default.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controller/userController.php" afterPath="$PROJECT_DIR$/controller/userController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/userDao.php" afterPath="$PROJECT_DIR$/model/userDao.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/view/history.php" afterPath="$PROJECT_DIR$/view/history.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/view/search.php" afterPath="$PROJECT_DIR$/view/search.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/productDao.php" afterPath="$PROJECT_DIR$/model/productDao.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/view/display_subcategory_page.php" afterPath="$PROJECT_DIR$/view/display_subcategory_page.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/view/search_result.php" afterPath="$PROJECT_DIR$/view/search_result.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,40 +15,40 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="search.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/view/search.php">
+      <file leaf-file-name="productDao.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model/productDao.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="452">
-              <caret line="39" column="10" lean-forward="false" selection-start-line="39" selection-start-column="10" selection-end-line="39" selection-end-column="10" />
-              <folding />
+            <state relative-caret-position="95">
+              <caret line="141" column="60" lean-forward="false" selection-start-line="141" selection-start-column="60" selection-end-line="141" selection-end-column="60" />
+              <folding>
+                <marker date="1522498443405" expanded="true" signature="329:498" ph="SELECT count... products" />
+                <marker date="1522498443405" expanded="true" signature="1106:1281" ph="INSERT INTO pantofka.products... " />
+                <marker date="1522498443405" expanded="true" signature="1896:1971" ph="INSERT INTO sizes... " />
+                <marker date="1522498443405" expanded="true" signature="2631:2833" ph="UPDATE panto... " />
+                <marker date="1522498443405" expanded="true" signature="3168:3253" ph="UPDATE panto... " />
+                <marker date="1522498443405" expanded="true" signature="3490:3565" ph="INSERT INTO sizes... " />
+                <marker date="1522498443405" expanded="true" signature="4092:4247" ph="SELECT p.pro... products" />
+                <marker date="1522498443405" expanded="true" signature="4423:4498" ph="INSERT INTO sizes... " />
+                <marker date="1522498443405" expanded="true" signature="5051:5082" ph="SELECT * FRO... products" />
+                <marker date="1522498443405" expanded="true" signature="5590:5724" ph="SELECT s.siz... products" />
+                <marker date="1522498443405" expanded="true" signature="6240:6472" ph="SELECT count... products" />
+                <marker date="1522498443405" expanded="true" signature="7343:7531" ph="SELECT produ... products" />
+                <marker date="1522498443405" expanded="true" signature="8308:8494" ph="INSERT INTO pantofka.orders... " />
+                <marker date="1522498443405" expanded="true" signature="8402:8487" ph="SELECT s.siz... sizes" />
+                <marker date="1522498443405" expanded="true" signature="8656:8770" ph="UPDATE panto... " />
+                <marker date="1522498443405" expanded="true" signature="9468:9541" ph="UPDATE panto... " />
+                <marker date="1522498443405" expanded="true" signature="9919:10134" ph="SELECT produ... products" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="productDao.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model/productDao.php">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="111" column="0" lean-forward="false" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
-              <folding>
-                <marker date="1522482838911" expanded="true" signature="329:498" ph="SELECT count... products" />
-                <marker date="1522482838911" expanded="true" signature="1106:1281" ph="INSERT INTO pantofka.products... " />
-                <marker date="1522482838911" expanded="true" signature="1896:1971" ph="INSERT INTO sizes... " />
-                <marker date="1522482838911" expanded="true" signature="2631:2833" ph="UPDATE panto... " />
-                <marker date="1522482838911" expanded="true" signature="3168:3253" ph="UPDATE panto... " />
-                <marker date="1522482838911" expanded="true" signature="3490:3565" ph="INSERT INTO sizes... " />
-                <marker date="1522482838911" expanded="true" signature="4092:4247" ph="SELECT p.pro... products" />
-                <marker date="1522482838911" expanded="true" signature="4423:4498" ph="INSERT INTO sizes... " />
-                <marker date="1522482838911" expanded="true" signature="5051:5082" ph="SELECT * FRO... products" />
-                <marker date="1522482838911" expanded="true" signature="5590:5724" ph="SELECT s.siz... products" />
-                <marker date="1522482838911" expanded="true" signature="6228:6460" ph="SELECT count... products" />
-                <marker date="1522482838911" expanded="true" signature="7313:7488" ph="SELECT produ... products" />
-                <marker date="1522482838911" expanded="true" signature="8206:8392" ph="INSERT INTO pantofka.orders... " />
-                <marker date="1522482838911" expanded="true" signature="8300:8385" ph="SELECT s.siz... sizes" />
-                <marker date="1522482838911" expanded="true" signature="8554:8668" ph="UPDATE panto... " />
-                <marker date="1522482838911" expanded="true" signature="9366:9439" ph="UPDATE panto... " />
-                <marker date="1522482838911" expanded="true" signature="9817:10032" ph="SELECT produ... products" />
-              </folding>
+            <state relative-caret-position="1220">
+              <caret line="111" column="10" lean-forward="false" selection-start-line="111" selection-start-column="10" selection-end-line="111" selection-end-column="10" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -70,8 +66,18 @@
       <file leaf-file-name="search_result.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/view/search_result.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="24" lean-forward="true" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
+            <state relative-caret-position="132">
+              <caret line="112" column="0" lean-forward="false" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="edit_product.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/view/edit_product.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="541">
+              <caret line="83" column="6" lean-forward="true" selection-start-line="83" selection-start-column="6" selection-end-line="83" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -80,11 +86,19 @@
       <file leaf-file-name="display_subcategory_page.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/view/display_subcategory_page.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="85" column="56" lean-forward="false" selection-start-line="85" selection-start-column="56" selection-end-line="85" selection-end-column="56" />
-              <folding>
-                <marker date="1522482734819" expanded="true" signature="2507:2574" ph="..." />
-              </folding>
+            <state relative-caret-position="384">
+              <caret line="118" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="add_product.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/view/add_product.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-106">
+              <caret line="63" column="139" lean-forward="false" selection-start-line="63" selection-start-column="139" selection-end-line="63" selection-end-column="139" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -120,6 +134,15 @@
                 <marker date="1522482892724" expanded="true" signature="2382:2488" ph="SELECT user_... users" />
                 <marker date="1522482892724" expanded="true" signature="3194:3347" ph="UPDATE panto... " />
                 <marker date="1522482892724" expanded="true" signature="4031:4426" ph="SELECT o.dat... orders" />
+                <marker date="1522482892724" expanded="true" signature="5057:5109" ph="SELECT DISTI... products" />
+                <marker date="1522482892724" expanded="true" signature="5506:5553" ph="SELECT DISTI... products" />
+                <marker date="1522482892724" expanded="true" signature="5959:6003" ph="SELECT DISTI... products" />
+                <marker date="1522482892724" expanded="true" signature="6402:6456" ph="SELECT DISTI... products" />
+                <marker date="1522482892724" expanded="true" signature="6877:6927" ph="SELECT DISTI... products" />
+                <marker date="1522482892724" expanded="true" signature="8170:8683" ph="SELECT DISTI... products" />
+                <marker date="1522482892724" expanded="true" signature="10226:10322" ph="SELECT produ... products" />
+                <marker date="1522482892724" expanded="true" signature="12148:12220" ph="SELECT produ... products" />
+                <marker date="1522482892724" expanded="true" signature="14008:14263" ph="SELECT produ... orders" />
               </folding>
             </state>
           </provider>
@@ -148,8 +171,8 @@
         <option value="$PROJECT_DIR$/view/my_search.php" />
         <option value="$PROJECT_DIR$/view/my_search_results.php" />
         <option value="$PROJECT_DIR$/model/userDao.php" />
-        <option value="$PROJECT_DIR$/view/display_subcategory_page.php" />
         <option value="$PROJECT_DIR$/controller/productsController.php" />
+        <option value="$PROJECT_DIR$/view/display_subcategory_page.php" />
         <option value="$PROJECT_DIR$/model/productDao.php" />
         <option value="$PROJECT_DIR$/view/search_result.php" />
       </list>
@@ -258,12 +281,12 @@
       <workItem from="1522228704705" duration="11712000" />
       <workItem from="1522244971756" duration="890000" />
       <workItem from="1522268659154" duration="6013000" />
-      <workItem from="1522412076466" duration="15587000" />
+      <workItem from="1522412076466" duration="19002000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58534000" />
+    <option name="totallyTimeSpent" value="61949000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="76" y="0" width="1297" height="735" extended-state="0" />
@@ -338,6 +361,15 @@
             <marker date="1522482892724" expanded="true" signature="2382:2488" ph="SELECT user_... users" />
             <marker date="1522482892724" expanded="true" signature="3194:3347" ph="UPDATE panto... " />
             <marker date="1522482892724" expanded="true" signature="4031:4426" ph="SELECT o.dat... orders" />
+            <marker date="1522482892724" expanded="true" signature="5057:5109" ph="SELECT DISTI... products" />
+            <marker date="1522482892724" expanded="true" signature="5506:5553" ph="SELECT DISTI... products" />
+            <marker date="1522482892724" expanded="true" signature="5959:6003" ph="SELECT DISTI... products" />
+            <marker date="1522482892724" expanded="true" signature="6402:6456" ph="SELECT DISTI... products" />
+            <marker date="1522482892724" expanded="true" signature="6877:6927" ph="SELECT DISTI... products" />
+            <marker date="1522482892724" expanded="true" signature="8170:8683" ph="SELECT DISTI... products" />
+            <marker date="1522482892724" expanded="true" signature="10226:10322" ph="SELECT produ... products" />
+            <marker date="1522482892724" expanded="true" signature="12148:12220" ph="SELECT produ... products" />
+            <marker date="1522482892724" expanded="true" signature="14008:14263" ph="SELECT produ... orders" />
           </folding>
         </state>
       </provider>
@@ -395,23 +427,23 @@
         <state relative-caret-position="2924">
           <caret line="172" column="43" lean-forward="false" selection-start-line="172" selection-start-column="43" selection-end-line="172" selection-end-column="43" />
           <folding>
-            <marker date="1522482838911" expanded="true" signature="329:498" ph="SELECT count... products" />
-            <marker date="1522482838911" expanded="true" signature="1106:1281" ph="INSERT INTO pantofka.products... " />
-            <marker date="1522482838911" expanded="true" signature="1896:1971" ph="INSERT INTO sizes... " />
-            <marker date="1522482838911" expanded="true" signature="2631:2833" ph="UPDATE panto... " />
-            <marker date="1522482838911" expanded="true" signature="3168:3253" ph="UPDATE panto... " />
-            <marker date="1522482838911" expanded="true" signature="3490:3565" ph="INSERT INTO sizes... " />
-            <marker date="1522482838911" expanded="true" signature="4092:4247" ph="SELECT p.pro... products" />
-            <marker date="1522482838911" expanded="true" signature="4423:4498" ph="INSERT INTO sizes... " />
-            <marker date="1522482838911" expanded="true" signature="5051:5082" ph="SELECT * FRO... products" />
-            <marker date="1522482838911" expanded="true" signature="5590:5724" ph="SELECT s.siz... products" />
-            <marker date="1522482838911" expanded="true" signature="6228:6460" ph="SELECT count... products" />
-            <marker date="1522482838911" expanded="true" signature="7313:7488" ph="SELECT produ... products" />
-            <marker date="1522482838911" expanded="true" signature="8206:8392" ph="INSERT INTO pantofka.orders... " />
-            <marker date="1522482838911" expanded="true" signature="8300:8385" ph="SELECT s.siz... sizes" />
-            <marker date="1522482838911" expanded="true" signature="8554:8668" ph="UPDATE panto... " />
-            <marker date="1522482838911" expanded="true" signature="9366:9439" ph="UPDATE panto... " />
-            <marker date="1522482838911" expanded="true" signature="9817:10032" ph="SELECT produ... products" />
+            <marker date="1522498443405" expanded="true" signature="329:498" ph="SELECT count... products" />
+            <marker date="1522498443405" expanded="true" signature="1106:1281" ph="INSERT INTO pantofka.products... " />
+            <marker date="1522498443405" expanded="true" signature="1896:1971" ph="INSERT INTO sizes... " />
+            <marker date="1522498443405" expanded="true" signature="2631:2833" ph="UPDATE panto... " />
+            <marker date="1522498443405" expanded="true" signature="3168:3253" ph="UPDATE panto... " />
+            <marker date="1522498443405" expanded="true" signature="3490:3565" ph="INSERT INTO sizes... " />
+            <marker date="1522498443405" expanded="true" signature="4092:4247" ph="SELECT p.pro... products" />
+            <marker date="1522498443405" expanded="true" signature="4423:4498" ph="INSERT INTO sizes... " />
+            <marker date="1522498443405" expanded="true" signature="5051:5082" ph="SELECT * FRO... products" />
+            <marker date="1522498443405" expanded="true" signature="5590:5724" ph="SELECT s.siz... products" />
+            <marker date="1522498443405" expanded="true" signature="6240:6472" ph="SELECT count... products" />
+            <marker date="1522498443405" expanded="true" signature="7343:7531" ph="SELECT produ... products" />
+            <marker date="1522498443405" expanded="true" signature="8308:8494" ph="INSERT INTO pantofka.orders... " />
+            <marker date="1522498443405" expanded="true" signature="8402:8487" ph="SELECT s.siz... sizes" />
+            <marker date="1522498443405" expanded="true" signature="8656:8770" ph="UPDATE panto... " />
+            <marker date="1522498443405" expanded="true" signature="9468:9541" ph="UPDATE panto... " />
+            <marker date="1522498443405" expanded="true" signature="9919:10134" ph="SELECT produ... products" />
           </folding>
         </state>
       </provider>
@@ -460,9 +492,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1394">
           <caret line="82" column="78" lean-forward="false" selection-start-line="82" selection-start-column="78" selection-end-line="82" selection-end-column="78" />
-          <folding>
-            <marker date="1522482734819" expanded="true" signature="2507:2574" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -492,6 +522,15 @@
             <marker date="1522482892724" expanded="true" signature="2382:2488" ph="SELECT user_... users" />
             <marker date="1522482892724" expanded="true" signature="3194:3347" ph="UPDATE panto... " />
             <marker date="1522482892724" expanded="true" signature="4031:4426" ph="SELECT o.dat... orders" />
+            <marker date="1522482892724" expanded="true" signature="5057:5109" ph="SELECT DISTI... products" />
+            <marker date="1522482892724" expanded="true" signature="5506:5553" ph="SELECT DISTI... products" />
+            <marker date="1522482892724" expanded="true" signature="5959:6003" ph="SELECT DISTI... products" />
+            <marker date="1522482892724" expanded="true" signature="6402:6456" ph="SELECT DISTI... products" />
+            <marker date="1522482892724" expanded="true" signature="6877:6927" ph="SELECT DISTI... products" />
+            <marker date="1522482892724" expanded="true" signature="8170:8683" ph="SELECT DISTI... products" />
+            <marker date="1522482892724" expanded="true" signature="10226:10322" ph="SELECT produ... products" />
+            <marker date="1522482892724" expanded="true" signature="12148:12220" ph="SELECT produ... products" />
+            <marker date="1522482892724" expanded="true" signature="14008:14263" ph="SELECT produ... orders" />
           </folding>
         </state>
       </provider>
@@ -533,23 +572,23 @@
         <state relative-caret-position="2516">
           <caret line="148" column="129" lean-forward="false" selection-start-line="148" selection-start-column="129" selection-end-line="148" selection-end-column="129" />
           <folding>
-            <marker date="1522482838911" expanded="true" signature="329:498" ph="SELECT count... products" />
-            <marker date="1522482838911" expanded="true" signature="1106:1281" ph="INSERT INTO pantofka.products... " />
-            <marker date="1522482838911" expanded="true" signature="1896:1971" ph="INSERT INTO sizes... " />
-            <marker date="1522482838911" expanded="true" signature="2631:2833" ph="UPDATE panto... " />
-            <marker date="1522482838911" expanded="true" signature="3168:3253" ph="UPDATE panto... " />
-            <marker date="1522482838911" expanded="true" signature="3490:3565" ph="INSERT INTO sizes... " />
-            <marker date="1522482838911" expanded="true" signature="4092:4247" ph="SELECT p.pro... products" />
-            <marker date="1522482838911" expanded="true" signature="4423:4498" ph="INSERT INTO sizes... " />
-            <marker date="1522482838911" expanded="true" signature="5051:5082" ph="SELECT * FRO... products" />
-            <marker date="1522482838911" expanded="true" signature="5590:5724" ph="SELECT s.siz... products" />
-            <marker date="1522482838911" expanded="true" signature="6228:6460" ph="SELECT count... products" />
-            <marker date="1522482838911" expanded="true" signature="7313:7488" ph="SELECT produ... products" />
-            <marker date="1522482838911" expanded="true" signature="8206:8392" ph="INSERT INTO pantofka.orders... " />
-            <marker date="1522482838911" expanded="true" signature="8300:8385" ph="SELECT s.siz... sizes" />
-            <marker date="1522482838911" expanded="true" signature="8554:8668" ph="UPDATE panto... " />
-            <marker date="1522482838911" expanded="true" signature="9366:9439" ph="UPDATE panto... " />
-            <marker date="1522482838911" expanded="true" signature="9817:10032" ph="SELECT produ... products" />
+            <marker date="1522498443405" expanded="true" signature="329:498" ph="SELECT count... products" />
+            <marker date="1522498443405" expanded="true" signature="1106:1281" ph="INSERT INTO pantofka.products... " />
+            <marker date="1522498443405" expanded="true" signature="1896:1971" ph="INSERT INTO sizes... " />
+            <marker date="1522498443405" expanded="true" signature="2631:2833" ph="UPDATE panto... " />
+            <marker date="1522498443405" expanded="true" signature="3168:3253" ph="UPDATE panto... " />
+            <marker date="1522498443405" expanded="true" signature="3490:3565" ph="INSERT INTO sizes... " />
+            <marker date="1522498443405" expanded="true" signature="4092:4247" ph="SELECT p.pro... products" />
+            <marker date="1522498443405" expanded="true" signature="4423:4498" ph="INSERT INTO sizes... " />
+            <marker date="1522498443405" expanded="true" signature="5051:5082" ph="SELECT * FRO... products" />
+            <marker date="1522498443405" expanded="true" signature="5590:5724" ph="SELECT s.siz... products" />
+            <marker date="1522498443405" expanded="true" signature="6240:6472" ph="SELECT count... products" />
+            <marker date="1522498443405" expanded="true" signature="7343:7531" ph="SELECT produ... products" />
+            <marker date="1522498443405" expanded="true" signature="8308:8494" ph="INSERT INTO pantofka.orders... " />
+            <marker date="1522498443405" expanded="true" signature="8402:8487" ph="SELECT s.siz... sizes" />
+            <marker date="1522498443405" expanded="true" signature="8656:8770" ph="UPDATE panto... " />
+            <marker date="1522498443405" expanded="true" signature="9468:9541" ph="UPDATE panto... " />
+            <marker date="1522498443405" expanded="true" signature="9919:10134" ph="SELECT produ... products" />
           </folding>
         </state>
       </provider>
@@ -605,9 +644,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="13" column="49" lean-forward="false" selection-start-line="13" selection-start-column="49" selection-end-line="13" selection-end-column="49" />
-          <folding>
-            <marker date="1522482734819" expanded="true" signature="2507:2574" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -659,26 +696,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/view/edit_product.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1411">
-          <caret line="83" column="6" lean-forward="true" selection-start-line="83" selection-start-column="6" selection-end-line="83" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/view/edit_profile.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="58" lean-forward="false" selection-start-line="2" selection-start-column="58" selection-end-line="2" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/view/add_product.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1071">
-          <caret line="63" column="139" lean-forward="false" selection-start-line="63" selection-start-column="139" selection-end-line="63" selection-end-column="139" />
           <folding />
         </state>
       </provider>
@@ -750,14 +771,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1887">
-          <caret line="111" column="10" lean-forward="false" selection-start-line="111" selection-start-column="10" selection-end-line="111" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/view/search.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="452">
@@ -798,6 +811,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/controller/productsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="438">
+          <caret line="296" column="0" lean-forward="false" selection-start-line="296" selection-start-column="0" selection-end-line="296" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1220">
+          <caret line="111" column="10" lean-forward="false" selection-start-line="111" selection-start-column="10" selection-end-line="111" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/edit_product.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="541">
+          <caret line="83" column="6" lean-forward="true" selection-start-line="83" selection-start-column="6" selection-end-line="83" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/add_product.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-106">
+          <caret line="63" column="139" lean-forward="false" selection-start-line="63" selection-start-column="139" selection-end-line="63" selection-end-column="139" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/model/userDao.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="149">
@@ -808,58 +853,57 @@
             <marker date="1522482892724" expanded="true" signature="2382:2488" ph="SELECT user_... users" />
             <marker date="1522482892724" expanded="true" signature="3194:3347" ph="UPDATE panto... " />
             <marker date="1522482892724" expanded="true" signature="4031:4426" ph="SELECT o.dat... orders" />
+            <marker date="1522482892724" expanded="true" signature="5057:5109" ph="SELECT DISTI... products" />
+            <marker date="1522482892724" expanded="true" signature="5506:5553" ph="SELECT DISTI... products" />
+            <marker date="1522482892724" expanded="true" signature="5959:6003" ph="SELECT DISTI... products" />
+            <marker date="1522482892724" expanded="true" signature="6402:6456" ph="SELECT DISTI... products" />
+            <marker date="1522482892724" expanded="true" signature="6877:6927" ph="SELECT DISTI... products" />
+            <marker date="1522482892724" expanded="true" signature="8170:8683" ph="SELECT DISTI... products" />
+            <marker date="1522482892724" expanded="true" signature="10226:10322" ph="SELECT produ... products" />
+            <marker date="1522482892724" expanded="true" signature="12148:12220" ph="SELECT produ... products" />
+            <marker date="1522482892724" expanded="true" signature="14008:14263" ph="SELECT produ... orders" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/productDao.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="141" column="60" lean-forward="false" selection-start-line="141" selection-start-column="60" selection-end-line="141" selection-end-column="60" />
+          <folding>
+            <marker date="1522498443405" expanded="true" signature="329:498" ph="SELECT count... products" />
+            <marker date="1522498443405" expanded="true" signature="1106:1281" ph="INSERT INTO pantofka.products... " />
+            <marker date="1522498443405" expanded="true" signature="1896:1971" ph="INSERT INTO sizes... " />
+            <marker date="1522498443405" expanded="true" signature="2631:2833" ph="UPDATE panto... " />
+            <marker date="1522498443405" expanded="true" signature="3168:3253" ph="UPDATE panto... " />
+            <marker date="1522498443405" expanded="true" signature="3490:3565" ph="INSERT INTO sizes... " />
+            <marker date="1522498443405" expanded="true" signature="4092:4247" ph="SELECT p.pro... products" />
+            <marker date="1522498443405" expanded="true" signature="4423:4498" ph="INSERT INTO sizes... " />
+            <marker date="1522498443405" expanded="true" signature="5051:5082" ph="SELECT * FRO... products" />
+            <marker date="1522498443405" expanded="true" signature="5590:5724" ph="SELECT s.siz... products" />
+            <marker date="1522498443405" expanded="true" signature="6240:6472" ph="SELECT count... products" />
+            <marker date="1522498443405" expanded="true" signature="7343:7531" ph="SELECT produ... products" />
+            <marker date="1522498443405" expanded="true" signature="8308:8494" ph="INSERT INTO pantofka.orders... " />
+            <marker date="1522498443405" expanded="true" signature="8402:8487" ph="SELECT s.siz... sizes" />
+            <marker date="1522498443405" expanded="true" signature="8656:8770" ph="UPDATE panto... " />
+            <marker date="1522498443405" expanded="true" signature="9468:9541" ph="UPDATE panto... " />
+            <marker date="1522498443405" expanded="true" signature="9919:10134" ph="SELECT produ... products" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/view/display_subcategory_page.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="85" column="56" lean-forward="false" selection-start-line="85" selection-start-column="56" selection-end-line="85" selection-end-column="56" />
-          <folding>
-            <marker date="1522482734819" expanded="true" signature="2507:2574" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controller/productsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="296" column="0" lean-forward="false" selection-start-line="296" selection-start-column="0" selection-end-line="296" selection-end-column="0" />
+        <state relative-caret-position="384">
+          <caret line="118" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/productDao.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="111" column="0" lean-forward="false" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
-          <folding>
-            <marker date="1522482838911" expanded="true" signature="329:498" ph="SELECT count... products" />
-            <marker date="1522482838911" expanded="true" signature="1106:1281" ph="INSERT INTO pantofka.products... " />
-            <marker date="1522482838911" expanded="true" signature="1896:1971" ph="INSERT INTO sizes... " />
-            <marker date="1522482838911" expanded="true" signature="2631:2833" ph="UPDATE panto... " />
-            <marker date="1522482838911" expanded="true" signature="3168:3253" ph="UPDATE panto... " />
-            <marker date="1522482838911" expanded="true" signature="3490:3565" ph="INSERT INTO sizes... " />
-            <marker date="1522482838911" expanded="true" signature="4092:4247" ph="SELECT p.pro... products" />
-            <marker date="1522482838911" expanded="true" signature="4423:4498" ph="INSERT INTO sizes... " />
-            <marker date="1522482838911" expanded="true" signature="5051:5082" ph="SELECT * FRO... products" />
-            <marker date="1522482838911" expanded="true" signature="5590:5724" ph="SELECT s.siz... products" />
-            <marker date="1522482838911" expanded="true" signature="6228:6460" ph="SELECT count... products" />
-            <marker date="1522482838911" expanded="true" signature="7313:7488" ph="SELECT produ... products" />
-            <marker date="1522482838911" expanded="true" signature="8206:8392" ph="INSERT INTO pantofka.orders... " />
-            <marker date="1522482838911" expanded="true" signature="8300:8385" ph="SELECT s.siz... sizes" />
-            <marker date="1522482838911" expanded="true" signature="8554:8668" ph="UPDATE panto... " />
-            <marker date="1522482838911" expanded="true" signature="9366:9439" ph="UPDATE panto... " />
-            <marker date="1522482838911" expanded="true" signature="9817:10032" ph="SELECT produ... products" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/view/search_result.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="24" lean-forward="true" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
+        <state relative-caret-position="132">
+          <caret line="112" column="0" lean-forward="false" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
           <folding />
         </state>
       </provider>

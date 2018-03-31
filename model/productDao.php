@@ -125,20 +125,21 @@ function getSizesQuantity ($product_id){
 
 }
 
-function sizeExists($product_name, $product_color , $material , $style, $subcategory, $size_number){
-
-    require_once "././model/dbmanager.php";
-    $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
-    $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
-    $query = $pdo->prepare('SELECT count(*) as size_exists FROM pantofka.products as p JOIN sizes as s ON p.product_id = s.size_id WHERE (p.product_name = ?  AND p.product_color= ?  AND p.material= ?  AND p.style= ?  AND p.subcategory= ? AND s.size_number = ?)');
-    $query->execute(array($product_name,  $product_color , $material , $style, $subcategory, $size_number));
-    $query_result = $query->fetch(PDO::FETCH_ASSOC);
-    return boolval($query_result["size_exists"]);
-}
+//function sizeExists($product_name, $product_color , $material , $style, $subcategory, $size_number){
+//
+//    require_once "././model/dbmanager.php";
+//    $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
+//    $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
+//    $query = $pdo->prepare('SELECT count(*) as size_exists FROM pantofka.products as p JOIN sizes as s ON p.product_id = s.size_id WHERE (p.product_name = ?  AND p.product_color= ?  AND p.material= ?  AND p.style= ?  AND p.subcategory= ? AND s.size_number = ?)');
+//    $query->execute(array($product_name,  $product_color , $material , $style, $subcategory, $size_number));
+//    $query_result = $query->fetch(PDO::FETCH_ASSOC);
+//    return boolval($query_result["size_exists"]);
+//}
 
 
 /**
- * This function returns an array containing product_img_name , product_id , product_name , product_color , material, style , product_price, sale_info_state, sale_price of
+ * This function returns an array containing product_img_name , product_id , product_name , product_color , material,
+ * style , product_price, sale_info_state, sale_price, sizes of
  * specific product (! ONE PRODUCT !) by given its id. If the id does not exists in db the function will return false.
  *
  * @param $product_id String
@@ -148,9 +149,10 @@ function getProductData($product_id){
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
     $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
-    $query = $pdo->prepare("SELECT product_img_name , product_id , product_name , product_color , material, style , product_price, sale_info_state, sale_price  FROM pantofka.products WHERE product_id = ?");
+    $query = $pdo->prepare("SELECT product_img_name , product_id , product_name , product_color , material, style , product_price, sale_info_state, sale_price, subcategory  FROM pantofka.products WHERE product_id = ?");
     $query->execute(array($product_id));
     $query_result = $query->fetch(PDO::FETCH_ASSOC);
+    $query_result["sizes"]= getSizesQuantity($product_id);
 
     return $query_result;
 }
