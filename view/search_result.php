@@ -6,6 +6,8 @@
 <section>
 
     <?php if (!empty($advanced_search_result)){ ?>
+
+    <h1 class="error center"><?= $nested_error ?></h1>
         <h1>Search results</h1>
         <div class="products_page">
             <div class="show_products">
@@ -109,15 +111,14 @@
 
         <?php
 
+
     }
-
-    elseif (!empty($search_by_results)){
-
+    elseif(!empty($search_by_results)){
         foreach ($search_by_results as $item) {
-
             echo var_dump($item);
             echo "<br>";
         }
+
         }
     else{
             ?>
