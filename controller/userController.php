@@ -343,10 +343,13 @@ try{
         $search_by_name_str = getResultsByKeywords($input , "product_name");
         $search_by_collection_str = getResultsByKeywords($input , "sale_info_state");
         $search_by_material_str = getResultsByKeywords($input , "material");
-
-
-
-
+        $search_by_style_str = getResultsByKeywords($input , "style");
+        $search_by_subcategory_str = getResultsByKeywords($input , "subcategory");
+        $search_by_results =    $search_by_name_str +
+                                $search_by_style_str +
+                                $search_by_collection_str +
+                                $search_by_material_str +
+                                $search_by_subcategory_str;
     }
 }catch (PDOException $e){
 

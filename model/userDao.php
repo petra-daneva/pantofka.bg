@@ -103,6 +103,10 @@ function getOrdersHistory($user_id){
     return $user_orders;
 }
 
+/**
+ * getAll...() functions returns the types of specific characteristic from db. It was used for displaying all options in adv. search
+ * @return array with characteristic names
+ */
 function getAllColors(){
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
@@ -164,13 +168,13 @@ function getAllSubcategories(){
 }
 
 /**
- *
+ * This function returns all possible combination of unique items from db in array. It was used in advanced search.
  * @param $colors
  * @param $materials
  * @param $subcategories
  * @param $styles
  * @param $collections
- * @return array
+ * @return array with ids
  */
 function getSearchResults($colors , $materials , $subcategories , $styles , $collections)
 {
@@ -235,10 +239,19 @@ function getSearchResultsFor($characteristic_value , $characteristic_name)
 
 }
 
-//$input , "product_name"
-function getResultsByKeywords($input , $table_name)
-{
+/**
+ * This function, by given array of keywords and specific name of a table returns the ids of all products,
+ * containing parts of different keywords.  The parameter table_name is passed by userController.
+ * I am not sure if it was okay to put it like this in query , but as far as my logic goes it cant bring a problem like this.
+ * I done it like this so i can re-use the function for every table, instead of copy-pasting it
+ *
+ * @param $input
+ * @param $table_name
+ * @return array with id's
+ */
+function getResultsByKeywords($input , $table_name){
     try{
+        //Validation of table name input, coming from controller.
         if ($table_name != "product_name" &&
             $table_name != "product_color" &&
             $table_name != "sale_info_state" &&
@@ -254,13 +267,16 @@ function getResultsByKeywords($input , $table_name)
     $pdo->beginTransaction();
     $search_result = array();
     foreach ($input as $key_word) {
+        //Since i want to use parametrized values and at the same time to check if string is part of other string
+        //I add %s outside the query and pass the keyword with them.That way i can check for every word.
         $key_word = "%".$key_word."%";
-        //name coll color size material , "product_color" , "sale_info_state" , "style" , "subcategory" , "material"
         $query = $pdo->prepare("SELECT product_id FROM pantofka.products as p WHERE p.$table_name LIKE ? ");
-        var_dump($query);
         $query->execute(array($key_word));
         while ($some_product  = $query->fetch(PDO::FETCH_ASSOC)){
-            $search_result[] = $some_product ;
+            $id = $some_product["product_id"];
+            //I am puting the id as a key so the next time i use the function, if i do merging for example,
+            // it will be easier for me to filter unique elements
+            $search_result[$id] = $some_product ;
         }
     }
     $pdo->commit();
@@ -275,6 +291,12 @@ function getResultsByKeywords($input , $table_name)
 
 }
 
+/**
+ * Same as getResultsByKeywords() , with the only difference of searching in orders table , instead of products's one.
+ * @param $input
+ * @param $table_name
+ * @return array
+ */
 function getHistoryByKeywords($input , $table_name){
 
     try{
@@ -301,7 +323,8 @@ function getHistoryByKeywords($input , $table_name){
                                              WHERE p.$table_name LIKE ? ");
             $query->execute(array($key_word));
             while ($some_product  = $query->fetch(PDO::FETCH_ASSOC)){
-                $search_result[] = $some_product ;
+                $id = $some_product["product_id"];
+                $search_result[$id] = $some_product ;
             }
         }
         $pdo->commit();
