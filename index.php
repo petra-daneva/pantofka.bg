@@ -107,7 +107,7 @@
 
                     }else{
 
-                        if ($page == "login"||  $page == "register" || $page = "product_info" ||$page == "logout" ||$page == "main"|| $page == "cart" ||$page == "favorites" || $page == "search"|| $page == "search_result" ){
+                        if ($page == "login"||  $page == "register" || $page = "product_info" ||$page == "logout" ||$page == "main"|| $page == "cart" ||$page == "favorites" || $page == "search"|| $page == "search_result" || $page == "my_search"|| $page == "my_search_result" ){
 
                             $page_link = './view/' . htmlentities($_GET['page']) . '.php';
                             include_once $page_link;

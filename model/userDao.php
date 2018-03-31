@@ -226,6 +226,7 @@ function getSearchResultsFor($characteristic_value , $characteristic_name)
     */
     $query = $pdo->prepare('SELECT product_id FROM pantofka.products where '.$characteristic_name .' IN ('.$place_holders.')');
     $query->execute($params);
+    $search_result = [];
     while ($some_product  = $query->fetch(PDO::FETCH_ASSOC)){
         $search_result[] = $some_product ;
     }

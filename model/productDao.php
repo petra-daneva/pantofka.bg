@@ -108,6 +108,8 @@ function getProducts(){
     return $products;
 }
 
+
+
 function getSizesQuantity ($product_id){
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
@@ -152,6 +154,9 @@ function getProductData($product_id){
 
     return $query_result;
 }
+
+
+
 
 /**
  * Insert an row in orders table. Returns nothing.

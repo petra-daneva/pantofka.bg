@@ -83,7 +83,7 @@
                     <?php
                     if ($total_quantity == 0){
                     ?>
-                    <h3 class="price">Product is out stock!</h3>
+                    <h3 class="price">Product is out of stock!</h3>
 
                     <?php
                     }
