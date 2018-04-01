@@ -89,7 +89,7 @@ function getOrdersHistory($user_id){
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
     $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
-    $query = $pdo->prepare("SELECT  o.date , p.product_name ,p.product_color,p.product_price,
+    $query = $pdo->prepare("SELECT  o.date ,p.product_id ,  p.product_name ,p.product_color,p.product_price,
             p.style , p.subcategory , p.material , s.size_number,p.product_img_name, sale_info_state, sale_price
             FROM pantofka.orders as o 
             JOIN pantofka.sizes as s USING (size_id)
@@ -108,7 +108,7 @@ function filterOrdersHistory($item_ids){
     $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
     $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
     $place_holders = implode(',', array_fill(0, count($item_ids), '?'));
-    $query = $pdo->prepare("SELECT o.date , p.product_name , p.product_color , p.product_price , p.style ,
+    $query = $pdo->prepare("SELECT o.date ,p.product_id, p.product_name , p.product_color , p.product_price , p.style ,
                                              p.subcategory , p.material , s.size_number , p.product_img_name ,
                                              p.sale_info_state , p.sale_price 
                                             FROM pantofka.orders as o 
@@ -187,6 +187,32 @@ function getAllSubcategories(){
     return $subcategories;
 }
 
+function getAllSizes($men = null, $women = null, $boys = null , $girls = null){
+    $params = [ $men , $women , $boys , $girls ];
+    $place_holders = implode(',', array_fill(0, count($params), '?'));
+    require_once "././model/dbmanager.php";
+    $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
+    $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
+    $query = $pdo->prepare("SELECT DISTINCT s.size_number FROM pantofka.sizes as s 
+                                    CROSS JOIN pantofka.products as p USING  (product_id)
+                                    WHERE p.subcategory IN (".$place_holders.") ORDER BY s.size_number ASC");
+    $query->execute($params);
+    while($size = $query->fetch(PDO::FETCH_ASSOC)){
+        $sizes[] = $size;
+    }
+    return $sizes;
+}
+
+function getInfPrice(){
+    require_once "././model/dbmanager.php";
+    $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
+    $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
+    $query = $pdo->prepare("SELECT MAX(product_price) as maximum FROM pantofka.products");
+    $query->execute();
+    $infPrice = $query->fetch(PDO::FETCH_ASSOC);
+    return $infPrice["maximum"];
+}
+
 /**
  * This function returns all possible combination of unique items from db in array. It was used in advanced search.
  * @param $colors
@@ -196,7 +222,7 @@ function getAllSubcategories(){
  * @param $collections
  * @return array with ids
  */
-function getSearchResults($colors , $materials , $subcategories , $styles , $collections)
+function getSearchResults($colors , $materials , $subcategories , $styles , $collections , $sizes , $sup_price , $inf_price)
 {
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
@@ -208,16 +234,21 @@ function getSearchResults($colors , $materials , $subcategories , $styles , $col
     $place_holder_subcategories = implode(',', array_fill(0, count($subcategories), '?'));
     $place_holder_styles = implode(',', array_fill(0, count($styles), '?'));
     $place_holder_collections = implode(',', array_fill(0, count($collections), '?'));
-    $query = $pdo->prepare('SELECT DISTINCT product_id , product_img_name
-                                    FROM pantofka.products 
-                                    WHERE product_color IN ('.$place_holder_colors.') 
-                                    AND material IN ('.$place_holder_materials.')
-                                    AND subcategory IN ('.$place_holder_subcategories.') 
-                                    AND sale_info_state IN ('.$place_holder_collections.')
-                                    AND style IN ('.$place_holder_styles.') 
+    $place_holder_sizes = implode(',', array_fill(0, count($sizes), '?'));
+
+    $query = $pdo->prepare('SELECT DISTINCT p.product_id
+                                    FROM pantofka.products as p
+                                    CROSS JOIN pantofka.sizes as s USING (product_id)
+                                    WHERE s.size_number IN ('.$place_holder_sizes.') AND s.size_quantity > ?
+                                    AND p.product_color IN ('.$place_holder_colors.') 
+                                    AND p.material IN ('.$place_holder_materials.')
+                                    AND p.subcategory IN ('.$place_holder_subcategories.') 
+                                    AND p.sale_info_state IN ('.$place_holder_collections.')
+                                    AND p.style IN ('.$place_holder_styles.') 
+                                    AND p.product_price > ? AND p.product_price < ? AND (p.sale_price < ? OR p.sale_price IS NULL )
                                   ');
 
-    $merged = array_merge($colors , $materials , $subcategories ,$collections, $styles); // Assoc
+    $merged = array_merge( $sizes , [0] , $colors , $materials , $subcategories ,$collections, $styles , [$sup_price] , [$inf_price] , [$inf_price]); // Assoc
     $merged = array_values($merged); // Numeric
     $query->execute($merged);
     $search_result = array();

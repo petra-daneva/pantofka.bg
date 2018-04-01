@@ -5,10 +5,7 @@
 ?>
 <section>
 
-    <?php if (!empty($advanced_search_result)){
-
-
-        ?>
+    <?php if (!empty($advanced_search_result)){ ?>
 
     <h1 class="error center"><?= $nested_error ?></h1>
         <h1>Search results</h1>
@@ -112,13 +109,8 @@
             </div>
         </div>
 
-        <?php
-
-
-    }
-    elseif(!empty($search_by_results)){
+        <?php } elseif(!empty($search_by_results)){
 ?>
-
 
             <h1 class="error center"><?= $nested_error ?></h1>
             <h1>Search results</h1>
@@ -211,28 +203,13 @@
                                     }
                                 }
                                 ?>
-
                             </form>
-
                         </div>
 
-                        <?php
-                    }
-                    ?>
+                        <?php } ?>
                 </div>
             </div>
-
-            <?php
-
-
-    }
-
-    else{
-            ?>
+        <?php } else{ ?>
             <h1 class="error">Nothing found</h1>
-        <?php
-    }
-    ?>
-
+        <?php } ?>
 </section>
-

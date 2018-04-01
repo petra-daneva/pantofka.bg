@@ -1,6 +1,4 @@
 <?php
-
-
     $subcategory_name = htmlentities($_GET['products']);
     $name = str_replace("_" , " " , $subcategory_name);
  ?>

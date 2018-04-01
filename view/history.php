@@ -29,12 +29,14 @@
             <?php
             $load_count = 0;
             $history_count = 25;
+            $product_id = "";
 
             foreach ($orders_history as $order) {
                 if ($load_count == $history_count) {
                     break;
                 }
                 $load_count++;
+                $product_id = $order["product_id"];
                 $picture_link = "./assets/products_imgs/" . $order["product_img_name"];
                 ?>
                 <tr>
@@ -53,7 +55,7 @@
                     <td class="aside-5"><?= $order["material"] ?> </td>
                     <td class="aside-5"><?= $order["size_number"] ?> </td>
 
-                    <td><a href=<?= $picture_link ?>target='_blank' class='clear_link'> <img
+                    <td class="aside-5"><a href='index.php?page=product_info&product_id=<?= $product_id ?>' target='_blank' class='clear_link'> <img
                                     src=<?= $picture_link ?> class='icon_img'> </a></td>
                 </tr>
                 <!--//                echo "<tr>";-->

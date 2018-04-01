@@ -27,12 +27,13 @@
                else{
                    $_SESSION["cart_price"] += $item_data["product_price"];
                }
+                $product_id = $item_data["product_id"];
                 $picture_link = "./assets/products_imgs/" . $item_data["product_img_name"];
                 ?>
                 <tr class='center'>
 
-                <td class="aside-5"> <a href=<?=$picture_link?>target='_blank' class='clear_link'> <img src=<?=$picture_link?> class='icon_img'> </a></td>
-                <td class="aside-5"><?= $item_data["product_name"]?></td>
+                    <td class="aside-5"><a href='index.php?page=product_info&product_id=<?= $product_id ?>' target='_blank' class='clear_link'> <img
+                                    src=<?= $picture_link ?> class='icon_img'> </a></td>                <td class="aside-5"><?= $item_data["product_name"]?></td>
                 <td class="aside-5"><?= $item_data["product_color"]?> </td>
                 <td class="aside-5"><?= $item_data["material"]?> </td>
                 <td class="aside-5"><?= $item_data["style"]?></td>
