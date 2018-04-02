@@ -7,9 +7,9 @@
 <div class="products_page" >
 
     <?php if( isset($_SESSION["logged_user"]) && $user_info["is_admin"] == 1 && ($subcategory_name === "women" || $subcategory_name === "men" || $subcategory_name === "girls" || $subcategory_name === "boys")): ?>
-
+        <div class="page_title">
         <a id="link" href="index.php?page=add_product&subcategory=<?=$subcategory_name?>"><img src="assets/icons/add.png" id="add-product-icon">  Add product </a>
-
+        </div>
     <?php endif; ?>
 
     <div class="page_title">
@@ -62,9 +62,9 @@
 
         <form action="" method="post">
 
-            <div>
+            <div class="product_type">
                 Choose Size:
-                <select name="size" id="">
+                <select style="display: inline-block" name="size" id="">
                     <?php
                     $total_quantity = 0;
                     foreach ($product["sizes"] as $size) {
@@ -82,15 +82,18 @@
                 if ($total_quantity == 0){
                     ?>
                     <h3 class="price">Product is out of stock!</h3>
-
+                    <?php
+                }
+                else{
+                    ?>
+                    <h3><br></h3>
                     <?php
                 }
                 ?>
             </div>
-
             <input type="hidden" name="product_id" value="<?= $product["product_id"] ?>">
             <input type="hidden" name="product_img_name" value="<?= $product["product_img_name"] ?>">
-
+            <div class="div_buttons">
             <input class="buttons" type="submit" name="add_to_cart" value="Add to cart">
             <input class="buttons" type="submit" name="add_to_favorites" value="Add to favorites">
             <?php
@@ -100,6 +103,7 @@
                     ?>
                     <input class="buttons" type="submit" name="edit_product" value="Edit product">
                     <input class="buttons" type="submit" name="delete_product" value="Delete product">
+            </div>
                     <?php
                 }
             }

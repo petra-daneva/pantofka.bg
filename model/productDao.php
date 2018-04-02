@@ -98,7 +98,8 @@ function getProducts(){
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $row = $pdo->query('SELECT * FROM pantofka.products');
+    $row = $pdo->query('SELECT product_id, product_name, product_color, product_price, product_img_name,
+ sale_info_state, style, subcategory, material, sale_price  FROM pantofka.products');
     $products = [];
     While ($query_result = $row->fetch(PDO::FETCH_ASSOC)) {
         $query_result["sizes"] = getSizesQuantity($query_result["product_id"]);
@@ -212,11 +213,12 @@ function getProductsOutOfStock(){
        $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
        $pdo->beginTransaction();
-       $row = $pdo->query('SELECT product_img_name , product_id , product_name , product_color , material, style , product_price  FROM pantofka.products
-JOIN pantofka.sizes as s USING (product_id) WHERE s.size_quantity <= 0 &&  product_id = ?;');
+       $row = $pdo->query('SELECT (SUM(s.size_quantity)) as sum_quantity,  p.product_id, p.product_name, p.product_color, p.product_price, p.product_img_name,
+ p.sale_info_state, p.style, p.subcategory, p.material, p.sale_price FROM pantofka.products as p JOIN sizes as s ON p.product_id = s.product_id GROUP BY s.product_id
+HAVING sum_quantity <= 0
+');
        $products = [];
        while ($query_result = $row->fetch(PDO::FETCH_ASSOC)) {
-           $query_result["sizes"] = getSizesQuantity($query_result["product_id"]);
            $products[] = $query_result;
          }
      $pdo->commit();

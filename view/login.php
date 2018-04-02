@@ -1,16 +1,18 @@
-<div id="login-form">
+<div id="form-page">
+    <div class="form">
 
-        <form action="index.php" method="post" class="bottom-30">
+        <form class="login-form" action="index.php" method="post" >
 
             <input type="email" name="email" placeholder="Email" value="<?= $email ?>" required> <br>
 
             <input type="password" name="password" placeholder="Password" required> <br>
 
-            <input type="submit" name="login_button" value="Log in">
-
+            <input class="button" type="submit" name="login_button" value="Log in">
+            <p class="message">Not registered? <a href="index.php?page=register">Create an account</a></p>
         </form>
 
-    <a href="index.php?page=register">In case you don't have a profile yet!</a>
+
+    </div>
 
 </div>
 

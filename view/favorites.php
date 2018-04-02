@@ -23,7 +23,7 @@
                 ?>
                 <tr class='center'>
 
-                    <td class="aside-5"><a href='index.php?page=product_info&product_id=<?= $product_id ?>' target='_blank' class='clear_link'> <img
+                    <td class="aside-5"><a href='index.php?page=product_info&product_id=<?= $product_id ?>'  class='clear_link'> <img
                                     src=<?= $picture_link ?> class='icon_img'> </a></td>
                     <td class="aside-5"><?= $item_data["product_name"] ?></td>
                     <td class="aside-5"><?= $item_data["product_color"] ?> </td>
@@ -38,8 +38,7 @@
 
 
                     <td class='black'><a href='index.php?page=favorites&remove_favorites=<?=$item_no?>'> REMOVE </a></td>
-                    <td class='black'><a
-                                href='index.php?page=favorites&move_to_cart=<?= $item_no ?>&size=<?= $item_data["size"] ?>&product_id=<?= $item_data["product_id"] ?>'>
+                    <td class='black'><a href='index.php?page=favorites&move_to_cart=<?= $item_no ?>&size=<?= $item_data["size"] ?>&product_id=<?= $item_data["product_id"] ?>'>
                             MOVE TO CART </a></td>
 
                 </tr>
