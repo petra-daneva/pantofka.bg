@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1f623020-bea1-4138-9720-227fec9b515e" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/products_imgs/Petra-20180409073212pm.png" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/css/default.css" afterPath="$PROJECT_DIR$/assets/css/default.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controller/productsController.php" afterPath="$PROJECT_DIR$/controller/productsController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controller/userController.php" afterPath="$PROJECT_DIR$/controller/userController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/userDao.php" afterPath="$PROJECT_DIR$/model/userDao.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/view/cart.php" afterPath="$PROJECT_DIR$/view/cart.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/view/favorites.php" afterPath="$PROJECT_DIR$/view/favorites.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/view/history.php" afterPath="$PROJECT_DIR$/view/history.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/view/search.php" afterPath="$PROJECT_DIR$/view/search.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -118,8 +109,8 @@
       <file leaf-file-name="productsController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controller/productsController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="608">
-              <caret line="421" column="1" lean-forward="false" selection-start-line="421" selection-start-column="1" selection-end-line="421" selection-end-column="1" />
+            <state relative-caret-position="192">
+              <caret line="395" column="0" lean-forward="true" selection-start-line="395" selection-start-column="0" selection-end-line="395" selection-end-column="0" />
               <folding>
                 <element signature="e#6625#6677#0#PHP" expanded="false" />
                 <element signature="e#10920#10995#0#PHP" expanded="false" />
@@ -389,12 +380,12 @@
       <workItem from="1522268659154" duration="6013000" />
       <workItem from="1522412076466" duration="36131000" />
       <workItem from="1523087601650" duration="8394000" />
-      <workItem from="1523257077448" duration="52158000" />
+      <workItem from="1523257077448" duration="52694000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="139630000" />
+    <option name="totallyTimeSpent" value="140166000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="-4" width="1374" height="748" extended-state="6" />
@@ -850,8 +841,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/controller/productsController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="608">
-          <caret line="421" column="1" lean-forward="false" selection-start-line="421" selection-start-column="1" selection-end-line="421" selection-end-column="1" />
+        <state relative-caret-position="192">
+          <caret line="395" column="0" lean-forward="true" selection-start-line="395" selection-start-column="0" selection-end-line="395" selection-end-column="0" />
           <folding>
             <element signature="e#6625#6677#0#PHP" expanded="false" />
             <element signature="e#10920#10995#0#PHP" expanded="false" />
