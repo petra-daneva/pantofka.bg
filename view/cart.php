@@ -1,4 +1,4 @@
-<section>
+<section class="min-height-400">
 
     <?php if(isset($_SESSION["cart"]) && !empty($_SESSION["cart"])): ?>
 
@@ -39,9 +39,8 @@
                 <td class="aside-5"><?= $item_data["style"]?></td>
                 <td class="aside-5"><?php if ($item_data["sale_info_state"] === "sale"){ echo $item_data["sale_price"];}else {echo $item_data["product_price"];} ?>  </td>
                 <td class="aside-5"><?= $item_data["size"]?></td>
-
-                <td class='black'> <a href='index.php?page=cart&remove_cart=<?=$item_no?>'> REMOVE </a> </td>
-             </tr>
+                <td><button ><a href='index.php?page=cart&remove_cart=<?=$item_no?>' class="clear_link "> <span class='text_black'>REMOVE </span> </a> </button> </td>
+                </tr>
 <?php
             }
 
@@ -53,7 +52,7 @@
         <?php if (isset($_SESSION["logged_user"])): ?>
 
             <form action="index.php" method="post">
-                <input type="submit" name="buy_cart" value="Buy">
+                <input type="submit" name="buy_cart" value="Buy" style="width: 30px">
             </form>
 
             <?php ;else: ?>

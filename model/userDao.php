@@ -225,6 +225,7 @@ function getInfPrice(){
  */
 function getSearchResults($colors , $materials , $subcategories , $styles , $collections , $sizes , $sup_price , $inf_price)
 {
+
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -237,26 +238,44 @@ function getSearchResults($colors , $materials , $subcategories , $styles , $col
     $place_holder_collections = implode(',', array_fill(0, count($collections), '?'));
     $place_holder_sizes = implode(',', array_fill(0, count($sizes), '?'));
 
-    $query = $pdo->prepare('SELECT DISTINCT p.product_id , p.product_name, p.product_color, p.product_price, 
-                                    p.product_img_name,p.sale_info_state, p.style, p.subcategory, p.material, p.sale_price 
+    try{
+    $pdo->beginTransaction();
+    $query_for_ids = $pdo->prepare('SELECT DISTINCT p.product_id as id
                                     FROM pantofka.products as p
                                     CROSS JOIN pantofka.sizes as s USING (product_id)
-                                    WHERE s.size_number IN ('.$place_holder_sizes.') AND s.size_quantity > ?
+                                    WHERE s.size_number IN ('.$place_holder_sizes.')
                                     AND p.product_color IN ('.$place_holder_colors.') 
                                     AND p.material IN ('.$place_holder_materials.')
                                     AND p.subcategory IN ('.$place_holder_subcategories.') 
                                     AND p.sale_info_state IN ('.$place_holder_collections.')
                                     AND p.style IN ('.$place_holder_styles.') 
-                                    AND p.product_price > ? AND p.product_price < ? AND (p.sale_price < ? OR p.sale_price IS NULL )
+                                    AND p.product_price > ? AND p.product_price <= ? AND (p.sale_price <= ? OR p.sale_price IS NULL )
                                   ');
 
-    $merged = array_merge( $sizes , [0] , $colors , $materials , $subcategories ,$collections, $styles , [$sup_price] , [$inf_price] , [$inf_price]); // Assoc
+    $merged = array_merge( $sizes , $colors , $materials , $subcategories ,$collections, $styles , [$sup_price] , [$inf_price] , [$inf_price]); // Assoc
     $merged = array_values($merged); // Numeric
-    $query->execute($merged);
+    $query_for_ids->execute($merged);
+
     $search_result = array();
-    while ($some_product = $query->fetch(PDO::FETCH_ASSOC)){
-        $search_result[] = $some_product ;
-    };
+    $ids = array();
+    while ($product = $query_for_ids->fetch(PDO::FETCH_ASSOC)){
+        $ids[] = $product["id"];
+    }
+
+    foreach ($ids as $id){
+        $query_for_data = $pdo->prepare("SELECT p.product_id , p.product_name, p.product_color, p.product_price,
+                                                 p.product_img_name,p.sale_info_state, p.style,
+                                                 p.subcategory, p.material, p.sale_price FROM pantofka.products as p 
+                                                 WHERE product_id = $id");
+        $query_for_data->execute();
+        $item = $query_for_data->fetch(PDO::FETCH_ASSOC);
+        $search_result[] = $item;
+    }
+    $pdo->commit();
+    }catch (PDOexeption $e){
+        $this->e->rollback();
+        throw $e;
+    }
     return $search_result;
 }
 
@@ -300,12 +319,14 @@ function getResultsByKeywordStr($input){
     $ids_that_match = array();
     foreach ($input as $key_word) {
         $search_result = array();
-
         foreach ($attributes as $table_name) {
             //Since i want to use parametrized values and at the same time to check if string is part of other string
             //I add %s outside the query and pass the keyword with them.That way i can check for every word.
             $key_word = "%".$key_word."%";
-            $query = $pdo->prepare("SELECT p.product_id FROM pantofka.orders as o JOIN pantofka.products as p WHERE p.$table_name LIKE ?");
+            $query = $pdo->prepare("SELECT p.product_id 
+                                            FROM pantofka.orders as o 
+                                            JOIN pantofka.products as p 
+                                            WHERE p.$table_name LIKE ?");
             $query->execute(array($key_word));
             while ($some_product = $query->fetch(PDO::FETCH_ASSOC)){
                 $id = $some_product["product_id"];
@@ -315,7 +336,12 @@ function getResultsByKeywordStr($input){
             }
         }
     }
-    $search_result = array_unique( array_diff_assoc($ids_that_match, array_unique( $ids_that_match )));
+    if(count(array_unique($ids_that_match)) === count($ids_that_match) && count($ids_that_match) !== 0){ // Special case
+        $search_result = $ids_that_match;
+    }else{
+        $search_result = array_unique( array_diff_assoc($ids_that_match, array_unique( $ids_that_match )));
+    }
+
     return $search_result;
 }
 
@@ -344,22 +370,38 @@ function getResultsByKeywords($input , $table_name){
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->beginTransaction();
+    $search_result_ids = array();
     $search_result = array();
     foreach ($input as $key_word) {
         //Since i want to use parametrized values and at the same time to check if string is part of other string
         //I add %s outside the query and pass the keyword with them.That way i can check for every word.
         $key_word = "%".$key_word."%";
-        $query = $pdo->prepare("SELECT product_id FROM pantofka.products as p WHERE p.$table_name LIKE ? ");
+        $query = $pdo->prepare("SELECT product_id as id FROM pantofka.products as p WHERE p.$table_name LIKE ? ");
         $query->execute(array($key_word));
         while ($some_product  = $query->fetch(PDO::FETCH_ASSOC)){
-            $id = $some_product["product_id"];
+            $id = $some_product["id"];
             //I am puting the id as a key so the next time i use the function, if i do merging for example,
             // it will be easier for me to filter unique elements
-            $search_result[$id] = $some_product ;
+            $search_result_ids[] = $id ;
         }
     }
-    return $search_result;
-    }catch (Exception $ex){
+    foreach ($search_result_ids as $id){
+        $query_for_data = $pdo->prepare("SELECT p.product_id , p.product_name, p.product_color, p.product_price,
+                                                 p.product_img_name,p.sale_info_state, p.style,
+                                                 p.subcategory, p.material, p.sale_price FROM pantofka.products as p 
+                                                 WHERE product_id = $id");
+        $query_for_data->execute();
+        $item = $query_for_data->fetch(PDO::FETCH_ASSOC);
+        $search_result[] = $item;
+
+    }
+        $pdo->commit();
+        return $search_result;
+    }catch (PDOexeption $e){
+        $this->e->rollback();
+        throw $e;
+    } catch (Exception $ex){
         echo $ex->getMessage();
     }
 }

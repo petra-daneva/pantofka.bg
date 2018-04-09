@@ -169,7 +169,9 @@ footer{
     margin: 0;
 
 }
-
+.text_black{
+    color: black !important;
+}
 
 .black {
     background-color: black;
@@ -370,4 +372,9 @@ width: 100%;
     color: white;
     font-size: 35px;
     cursor: pointer;
+}
+
+
+.min-height-400{
+    min-height: 400px;
 }
