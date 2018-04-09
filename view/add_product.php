@@ -1,12 +1,9 @@
-
 <?php
 setcookie("add_to_subcategory", $_GET["subcategory"])?>
 
 <h1 class="error center"> <?= isset($_COOKIE["error"])?htmlentities($_COOKIE["error"]):"" ?> </h1>
 
-
-
-<section>
+<section class="centered-section">
     <div id="add_product">
        <h2> Add product for category:</h2>
         <a href="index.php?page=add_product&subcategory=women">WOMEN</a>

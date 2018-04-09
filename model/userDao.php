@@ -108,7 +108,7 @@ function filterOrdersHistory($item_ids){
     $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
     $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
     $place_holders = implode(',', array_fill(0, count($item_ids), '?'));
-    $query = $pdo->prepare("SELECT o.date ,p.product_id, p.product_name , p.product_color , p.product_price , p.style ,
+    $query = $pdo->prepare("SELECT  o.date ,p.product_id, p.product_name , p.product_color , p.product_price , p.style ,
                                              p.subcategory , p.material , s.size_number , p.product_img_name ,
                                              p.sale_info_state , p.sale_price 
                                             FROM pantofka.orders as o 
@@ -197,6 +197,7 @@ function getAllSizes($men = null, $women = null, $boys = null , $girls = null){
                                     CROSS JOIN pantofka.products as p USING  (product_id)
                                     WHERE p.subcategory IN (".$place_holders.") ORDER BY s.size_number ASC");
     $query->execute($params);
+    $sizes = array();
     while($size = $query->fetch(PDO::FETCH_ASSOC)){
         $sizes[] = $size;
     }
@@ -236,7 +237,8 @@ function getSearchResults($colors , $materials , $subcategories , $styles , $col
     $place_holder_collections = implode(',', array_fill(0, count($collections), '?'));
     $place_holder_sizes = implode(',', array_fill(0, count($sizes), '?'));
 
-    $query = $pdo->prepare('SELECT DISTINCT p.product_id
+    $query = $pdo->prepare('SELECT DISTINCT p.product_id , p.product_name, p.product_color, p.product_price, 
+                                    p.product_img_name,p.sale_info_state, p.style, p.subcategory, p.material, p.sale_price 
                                     FROM pantofka.products as p
                                     CROSS JOIN pantofka.sizes as s USING (product_id)
                                     WHERE s.size_number IN ('.$place_holder_sizes.') AND s.size_quantity > ?
@@ -290,6 +292,33 @@ function getSearchResultsFor($characteristic_value , $characteristic_name)
 
 }
 
+function getResultsByKeywordStr($input){
+    require_once "././model/dbmanager.php";
+    $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $attributes = ["product_name" , "product_color" , "sale_info_state" , "style" , "subcategory" , "material"];
+    $ids_that_match = array();
+    foreach ($input as $key_word) {
+        $search_result = array();
+
+        foreach ($attributes as $table_name) {
+            //Since i want to use parametrized values and at the same time to check if string is part of other string
+            //I add %s outside the query and pass the keyword with them.That way i can check for every word.
+            $key_word = "%".$key_word."%";
+            $query = $pdo->prepare("SELECT p.product_id FROM pantofka.orders as o JOIN pantofka.products as p WHERE p.$table_name LIKE ?");
+            $query->execute(array($key_word));
+            while ($some_product = $query->fetch(PDO::FETCH_ASSOC)){
+                $id = $some_product["product_id"];
+                //I am puting the id as a key so the next time i use the function, if i do merging for example,
+                // it will be easier for me to filter unique elements
+                $ids_that_match[] = $id;
+            }
+        }
+    }
+    $search_result = array_unique( array_diff_assoc($ids_that_match, array_unique( $ids_that_match )));
+    return $search_result;
+}
+
 /**
  * This function, by given array of keywords and specific name of a table returns the ids of all products,
  * containing parts of different keywords.  The parameter table_name is passed by userController.
@@ -315,7 +344,6 @@ function getResultsByKeywords($input , $table_name){
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $pdo->beginTransaction();
     $search_result = array();
     foreach ($input as $key_word) {
         //Since i want to use parametrized values and at the same time to check if string is part of other string
@@ -330,16 +358,10 @@ function getResultsByKeywords($input , $table_name){
             $search_result[$id] = $some_product ;
         }
     }
-    $pdo->commit();
     return $search_result;
-    }catch (PDOException $e){
-      echo $e->getMessage();
-      $e->rollback();
-        throw $e;
     }catch (Exception $ex){
-       echo $ex->getMessage();
+        echo $ex->getMessage();
     }
-
 }
 
 /**
@@ -349,8 +371,8 @@ function getResultsByKeywords($input , $table_name){
  * @return array
  */
 function getHistoryByKeywords($input , $table_name){
-
     try{
+        //Validation of table name input, coming from controller.
         if ($table_name != "product_name" &&
             $table_name != "product_color" &&
             $table_name != "sale_info_state" &&
@@ -363,30 +385,22 @@ function getHistoryByKeywords($input , $table_name){
         require_once "././model/dbmanager.php";
         $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $pdo->beginTransaction();
         $search_result = array();
         foreach ($input as $key_word) {
+            //Since i want to use parametrized values and at the same time to check if string is part of other string
+            //I add %s outside the query and pass the keyword with them.That way i can check for every word.
             $key_word = "%".$key_word."%";
-            //name coll color size material , "product_color" , "sale_info_state" , "style" , "subcategory" , "material"
-            $query = $pdo->prepare("SELECT p.product_id
-                                             FROM pantofka.orders as o 
-                                             JOIN pantofka.products as p USING (product_id) 
-                                             WHERE p.$table_name LIKE ? ");
+            $query = $pdo->prepare("SELECT p.product_id FROM pantofka.orders as o JOIN pantofka.products as p WHERE p.$table_name LIKE ? ");
             $query->execute(array($key_word));
             while ($some_product  = $query->fetch(PDO::FETCH_ASSOC)){
                 $id = $some_product["product_id"];
+                //I am puting the id as a key so the next time i use the function, if i do merging for example,
+                // it will be easier for me to filter unique elements
                 $search_result[$id] = $some_product ;
             }
         }
-        $pdo->commit();
         return $search_result;
-    }catch (PDOException $e){
-       // $e->rollback();
-        throw $e;
-        echo $e->getMessage();
-
     }catch (Exception $ex){
         echo $ex->getMessage();
     }
-
 }

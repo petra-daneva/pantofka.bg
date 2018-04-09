@@ -87,7 +87,7 @@ function saveSize($product_name, $size_number, $size_quantity, $product_color , 
 }
 
 /**
- * This function returns all the data for products that are in stock (size quantity > 0)!
+ * This function returns all the data for every product in db!
  *
  * @return array
  */
@@ -99,7 +99,7 @@ function getProducts(){
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $row = $pdo->query('SELECT product_id, product_name, product_color, product_price, product_img_name,
- sale_info_state, style, subcategory, material, sale_price  FROM pantofka.products');
+                                  sale_info_state, style, subcategory, material, sale_price  FROM pantofka.products');
     $products = [];
     While ($query_result = $row->fetch(PDO::FETCH_ASSOC)) {
         $query_result["sizes"] = getSizesQuantity($query_result["product_id"]);

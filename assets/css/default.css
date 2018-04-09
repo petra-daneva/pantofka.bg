@@ -1,28 +1,17 @@
 /* General Default Style */
-*{
-    margin:0;
-    padding:0;
-    /* outline: none;
-     border: 0 none; */
-    box-sizing: border-box;
-}
-body{
-    background: #ffffff;
-    color: #000000;
-    font-weight: 300;
-    font-size: 13px;
-    overflow-x: hidden;
-    width:  100%;
-    margin: 0 auto;
-}
-#container {
-    width: 1170px;
-    margin: auto;
-}
+
+
 header{
     height: 220px;
+    width: 100%;
     background-color: #000000;
     display: block;
+}
+footer{
+    height: 70px;
+    width: 100%;
+    background-color: #000000;
+    color: white;
 }
 
 #favorite-icon{
@@ -37,117 +26,26 @@ header{
     margin-top: 5px;
     clear: both;
 }
-footer{
-    height: 70px;
-    background-color: #000000;
-    color: white;
-}
-a{
-    color: inherit;
-}
-a:link {
-    text-decoration: none;
-}
 
-a:visited {
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-a:active {
-    text-decoration: underline;
-}
-a:link,a:visited {
-    background-color: #000000;
-    color: white;
-    padding: 14px 25px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-}
-
-a:hover, a:active {
-    color: #e1e1e1;
-}
-a img{
-    border: none;
-}
-ul{
-    list-style-type: none;
-}
-#logo{
+#logo a{
     font-size: 7em;
     font-weight: 100;
-    background-color: transparent;
+    background-color: transparent !important;
     margin-top: 25px;
     position: absolute;
 }
 #logo:hover{
-    background-color: transparent;
+    background-color: transparent !important;
 }
 
 #navigation-products{
     background-color: rgba(49, 49, 49, 0.67);
-
 }
+
 #navigation-products a{
     background-color: transparent;
 
 }
-
-
-
-/* Search */
-
-#search{
-    z-index: 100;
-    position: absolute;
-    width: inherit;
-    margin: auto;
-}
-
-#search-bar{
-    width: inherit;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    font-size: 13px;
-    background-color: white;
-    background-image: url("https://www.shareicon.net/data/512x512/2015/10/03/110917_search_512x512.png");
-    background-size: 45px;
-    background-position: right;
-    background-repeat: no-repeat;
-    padding: 12px 20px 12px 40px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
-}
-
-#search-suggestions{
-    height: auto;
-    width: inherit;
-    background-color: rgba(255, 255, 255, 0.95);
-    padding:15px;
-    border: 1px solid lightgray;
-
-}
-#search-suggestions ul{
-
-    margin-top: 0;
-}
-
-#search-suggestions ul li{
-    padding:15px 0;
-    list-style: none;
-}
-
-#search-suggestions ul li a{
-    text-decoration: none;
-    color: dimgrey;
-}
-
 
 .clear{
     clear: both;
@@ -171,6 +69,16 @@ ul{
 .center{
     text-align: center;
 }
+.centered-section{
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+
+.left-section{
+    margin: 0 auto 0 0;
+    padding: 10px;
+}
 
 .bottom-30{
     margin-bottom: 30px;
@@ -183,7 +91,7 @@ ul{
     padding: 0 15px;
 }
 
-.inline_black{
+.inline_block{
     display: inline-block; !important;
 }
 
@@ -203,19 +111,17 @@ ul{
 
 }
 .shown_products{
-    width:18%;
-
-    min-height: 380px;
-    display: inline-block;
+    width:15em;
+    height: auto;
+    padding: 0 5px;
     float: left;
     margin: 1%;
 }
 .shown_products:hover{
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.51);
-    border-left: 1px solid rgba(42, 42, 42, 0.51);
 }
 .show_products{
-    margin: 5px 2px ;
+
 }
 .product_img{
     width: 90%;
@@ -237,6 +143,7 @@ ul{
 }
 
 .product_size{
+    text-align: center;
     width: 100%;
 }
 .sizes{
@@ -247,27 +154,11 @@ ul{
 }
 .buttons{
     text-align: center;
-    background: #575757;
-    border:0 none;
-    cursor:pointer;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    margin: 5px;
-    color: white;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.51);
-
-}
-.buttons:hover{
-    background: #ff000a;
-
-
 }
 
 .icon_img{
     height: 100px;
     width: auto;
-
-
 }
 
 .clear_link:link{
@@ -279,9 +170,6 @@ ul{
 
 }
 
-table tr td{
-    border: 1px solid black;
-}
 
 .black {
     background-color: black;
@@ -303,6 +191,7 @@ table tr td{
 }
 
 #show_product{
+    width: auto;
     text-decoration: none;
     background-color: transparent;
     color: black;
@@ -342,7 +231,9 @@ table tr td{
     text-align: center;
     font-size:  1.5em;
 
-
+}
+#search_forms{
+    min-height: 100%;
 }
 
 .search_page{
@@ -354,7 +245,6 @@ table tr td{
 }
 .shown_searched_products{
     width:23%;
-
     min-height: 400px;
     display: inline-block;
     float: left;
@@ -372,13 +262,14 @@ table tr td{
 }
 
 .div_buttons{
+    width: 50%;
+    display: inline;
+
     text-align: center;
 }
 .page_title{
     text-align: center;
 }
-
-
 
 
 .form-page {
@@ -396,31 +287,16 @@ table tr td{
     text-align: center;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
-.form input, .form select {
-    font-family:  sans-serif;
-    outline: 0;
-    background: #f9f8f9;
-    width: 100%;
-    border: 0;
-    margin: 0 0 15px;
-    padding: 10px;
-    box-sizing: border-box;
-    font-size: 1em;
-}
+
 .form .button {
-    font-family: sans-serif;
     text-transform: uppercase;
     outline: 0;
     background: #dbdadb;
     width: 100%;
     border: 0;
-    padding: 15px;
-    color: #505050;
-    font-size: 1em;
-    cursor: pointer;
 }
 .form .button:hover{
-    background: rgba(255, 0, 12, 0.71);
+    background: rgba(255, 42, 46, 0.53);
     color: #000000;
 }
 
@@ -436,3 +312,63 @@ table tr td{
     font-size: 1.2em;
 }
 
+/** --- gallery
+
+/* The grid: Four equal columns that floats next to each other */
+.column-gallery {
+    float: left;
+    width: 25%;
+    padding: 10px;
+}
+
+/* Style the images inside the grid */
+.column-gallery img {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.column-gallery img:hover {
+    opacity: 1;
+}
+.row-gallery{
+    width: 100%;
+}
+/* Clear floats after the columns */
+.row-gallery:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* The expanding image container (positioning is needed to position the close button and the text) */
+.container-gallery {
+    display: none;
+}
+
+.img-gallery-wrapper{
+    width: 30px;
+    height: auto;
+}
+
+.img-gallery{
+    height: 100%;
+    width: auto;
+}
+/* Expanding image text */
+#imgtext {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    color: white;
+    font-size: 20px;
+}
+
+/* Closable button inside the image */
+.closebtn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: white;
+    font-size: 35px;
+    cursor: pointer;
+}

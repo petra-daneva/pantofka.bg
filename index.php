@@ -44,16 +44,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Pantofka</title>
-    <link rel="stylesheet" href="assets/default.css" type="text/css">
+
+    <!-- Basic Page Needs
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <title> Pantofka </title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="./assets/css/default.css">
+    <link rel="stylesheet" href="./assets/css/normalize.css">
+    <link rel="stylesheet" href="./assets/css/skeleton.css">
+
+
+    <!-- Favicon
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="image/png" href="./assets/icons/favicon.png">
+
 </head>
-    <body>
-        <div id="container" class="bottom-30">
+<body>
+
+<!-- Primary Page Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<div class="container">
+    <div class="row">
+        <div class="">
             <?php
-
-
-
             $not_triggered = true;
             $myErrorHandler = function ($errno, $errstr) use (&$not_triggered ){
                 if ($not_triggered  == true){
@@ -67,7 +93,7 @@
                 }
             };
 
-            set_error_handler($myErrorHandler,E_ALL|E_STRICT);
+           // set_error_handler($myErrorHandler,E_ALL|E_STRICT);
 
             if (!isset($_SESSION["logged_user"])){
                     require_once "view/guest_navigation.php";
@@ -82,8 +108,8 @@
 
             <?php if (!empty($error) || !empty($message)): ?>
 
-                <h1 class="error center"> <?= $error ?> </h1>
-                <h1 class="message center"> <?= $message ?> </h1>
+                <h6 class="error center"> <?= $error ?> </h6>
+                <h6 class="message center"> <?= $message ?> </h6>
 
             <?php endif;
 
@@ -143,5 +169,12 @@
                 require_once "./view/footer.html";
 
             ?>
-    </body>
+
+        </div>
+    </div>
+</div>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
 </html>

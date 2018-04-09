@@ -2,13 +2,12 @@
 
     <?php if(!empty($orders_history)):  ?>
 
-        <form action="index.php?page=history" method="post">
-
-            <input type="text" name="search_history_input" placeholder="search for keywords" >
-            <input type="submit" name="search_history_button" value="Search">
-
-        </form>
-
+        <div class="inline_block left">
+            <form action="index.php?page=history" method="post">
+                <input type="text" name="search_history_input" placeholder="Search for keywords" >
+                <input type="submit" name="search_history_button" value="Search">
+            </form>
+        </div>
         <table class="bottom-30 clear center">
 
             <tr  class="bottom-30 clear center aside-5">

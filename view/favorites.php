@@ -49,7 +49,7 @@
         </table>
 
         <?php ;else: ?>
-        <h1> Looks like you don't have favorite products yet. Go ahead and add something!!</h1>
+        <h5> Looks like you don't have favorite products yet. Go ahead and add something!!</h5>
     <?php endif; ?>
 
 </section>
