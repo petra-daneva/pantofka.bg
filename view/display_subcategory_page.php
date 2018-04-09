@@ -1,7 +1,7 @@
 <?php
-    $subcategory_name = htmlentities($_GET['products']);
-    $name = str_replace("_" , " " , $subcategory_name);
- ?>
+$subcategory_name = htmlentities($_GET['products']);
+$name = str_replace("_", " ", $subcategory_name);
+?>
 
 <!-- -------------------------- Whole section wrapper --------------------------------->
 <section class="inline_block" style="width: 100%">
@@ -38,3 +38,4 @@
     </div>
     <!-- END Section Wrapper-->
 </section>
+

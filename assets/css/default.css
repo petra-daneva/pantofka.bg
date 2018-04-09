@@ -213,7 +213,7 @@ footer{
     width: 45%;
 }
 .img img{
-width: 100%;
+    width: 100%;
 }
 .name {
     text-align: center;
@@ -266,6 +266,7 @@ width: 100%;
 .div_buttons{
     width: 50%;
     display: inline;
+
     text-align: center;
 }
 .page_title{
