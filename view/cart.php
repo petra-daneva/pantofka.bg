@@ -9,7 +9,7 @@
                 <th class="aside-5">Image</th>
                 <th class="aside-5">Product name</th>
                 <th class="aside-5">Product color </th>
-                <th class="aside-5"> Material </th>
+                <th class="aside-5">Material </th>
                 <th class="aside-5">Shoe type</th>
                 <th class="aside-5">Price</th>
                 <th class="aside-5">Size</th>
@@ -64,6 +64,7 @@
 
         <?php ;else: ?>
 
-        <h1>Cart is empty. Go ahead and add something!!</h1>
+        <h5>Cart is empty. Go ahead and add something!!</h5>
     <?php endif; ?>
 
+</section>

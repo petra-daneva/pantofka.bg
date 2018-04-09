@@ -1,10 +1,4 @@
-<?php if ($error || $email_exists): ?>
-
-    <h1 class="error center"> <?= $error ?> </h1>
-    <h1 class="error center"> <?= $email_exists ?> </h1>
-
-<?php endif; ?>
-<div class="form-page">
+<div class="centered-section form-page">
     <div class="form">
 
         <form   action="index.php" method="post">

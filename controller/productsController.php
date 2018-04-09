@@ -1,10 +1,237 @@
 <?php
 require_once "./controller/../model/productDao.php";
+require_once "./controller/../model/userDao.php";
 
 
-$products = getProducts();
 $error = "";
+// ==================================================== Displaying products ====================================================================
+try{
+    if(isset($_GET["products"]) && !isset($_POST["advanced_search"])){
+        //Returns product_id, product_name, product_color, product_price, product_img_name,sale_info_state, style, subcategory, material, sale_price
+        $products = getProducts();
+    }
+}catch (PDOException $e){
+    echo "pdo exception: " . $e->getMessage();
+}
 
+// All data needed for displaying the search view
+if (isset($_GET["page"] ) || isset($_GET["products"])) {
+    $search_must_be_shown = false;
+    if (isset($_GET["page"] )){
+        if ($_GET["page"] == "search_result" || $_GET["page"] == "search"){
+            $search_must_be_shown = true;
+        }
+    }
+    if ( isset($_GET["products"])){
+        $search_must_be_shown = true;
+    }
+
+    if ($search_must_be_shown == true){
+        try {
+            $all_colors = getAllColors();
+        } catch (PDOException $e) {
+            $all_colors = $e->getMessage();
+        }
+
+        try {
+            $all_materials = getAllMaterials();
+        } catch (PDOException $e) {
+            $all_materials = $e->getMessage();
+        }
+
+        try {
+            $all_collections = getAllCollections();
+        } catch (PDOException $e) {
+            $all_collections = $e->getMessage();
+        }
+
+        try {
+            $all_styles = getAllStyles();
+        } catch (PDOException $e) {
+            $all_styles = $e->getMessage();
+        }
+
+        try {
+            $all_subcategories = getAllSubcategories();
+        } catch (PDOException $e) {
+            $all_subcategories = $e->getMessage();
+        }
+
+        try {
+            if (isset($_GET["page"])){
+                $all_sizes = getAllSizes("men", "women" , "boys", "girls");
+            }else{
+                if ($_GET["products"] == "men"){
+                    $all_sizes = getAllSizes("men", null , null, null);
+                }elseif ($_GET["products"] == "women"){
+                    $all_sizes = getAllSizes(null, "women" , null, null);
+                }elseif ($_GET["products"] == "boys"){
+                    $all_sizes = getAllSizes(null, null , "boys", null);
+                }elseif ($_GET["products"] == "girls"){
+                    $all_sizes = getAllSizes(null, null , null, "girls");
+                }else{
+                    $all_sizes = getAllSizes("men", "women" , "boys", "girls");
+                }
+            }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+
+        $sup_price = 0;
+
+        try{ //max price
+            $inf_price = getInfPrice();
+        }catch (PDOException $e){
+            echo $e->getMessage();
+        }
+    }
+}
+
+//  ==== Filter =====
+try{
+    if (isset($_POST["advanced_search"])){
+        $product_color = array();
+        if (isset($_POST["colors"])){
+            $product_color = ($_POST["colors"]);
+        }else{
+            foreach ($all_colors as $single_color) {
+                foreach ($single_color as $item) {
+                    $val =  $single_color["product_color"];
+                    $product_color[$val] = $single_color["product_color"];
+                }
+            }
+        }
+
+        $material = array();
+        if (isset($_POST["materials"])){
+            $material = ($_POST["materials"]);
+        }else{
+            foreach ($all_materials as $single_material) {
+                foreach ($single_material as $item) {
+                    $val = $single_material["material"];
+                    $material[$val] = $val;
+                }
+            }
+        }
+
+        $subcategory = array();
+        if (isset($_POST["subcategory"])){
+            $subcategory = ($_POST["subcategory"]);
+        }else{
+            foreach ($all_subcategories as $single_subcategory) {
+                foreach ($single_subcategory as $item) {
+                    $val = $single_subcategory["subcategory"];
+                    $subcategory[$val] = $val;
+                }
+            }
+        }
+
+        $styles = array();
+        if (isset($_POST["style"])){
+            $styles = ($_POST["style"]);
+        }else{
+            foreach ($all_styles as $single_style) {
+                foreach ($single_style as $item) {
+                    $val = $single_style["style"];
+                    $styles[$val] = $val;
+                }
+            }
+        }
+
+
+        $collections = array();
+        if (isset($_POST["sale_info_state"])){
+            $collections = ($_POST["sale_info_state"]);
+        }else{
+            foreach ($all_collections as $single_collection) {
+                foreach ($single_collection as $item) {
+                    $val = $single_collection["sale_info_state"];
+                    $collections[$val] = $val;
+                }
+            }
+        }
+
+
+        $sizes = array();
+        if (isset($_POST["sizes"])){
+            $sizes = $_POST["sizes"];
+        }else{
+            foreach ($all_sizes as $single_size) {
+                foreach ($single_size as $item) {
+                    $val = $single_size["size_number"];
+                    $sizes[$val] = $val;
+                }
+            }
+        }
+        if (isset($_POST["users_inf_price"])){
+            $users_inf_price = $_POST["users_inf_price"];
+            if (empty($users_inf_price) || $users_inf_price < 0 || $users_inf_price > $inf_price || !is_numeric($users_inf_price)){
+                $users_inf_price = $inf_price;
+            }
+        }else{
+            $users_inf_price = $inf_price; // inf_price is the largest price in db
+        }
+
+        if (isset($_POST["users_sup_price"])){
+            $users_sup_price = $_POST["users_sup_price"];
+            if (empty($users_sup_price) || $users_sup_price < 0 || $users_sup_price > $inf_price || !is_numeric($users_sup_price)){
+                $users_sup_price = $sup_price;
+            }
+            if ($users_sup_price > $users_inf_price){
+                $temp = $users_sup_price;
+                $users_sup_price = $users_inf_price;
+                $users_inf_price = $temp;
+
+            }
+        }else{
+            $users_sup_price = $sup_price; // inf_price is the largest price in db
+        }
+        $products = getSearchResults($product_color, $material , $subcategory , $styles , $collections , $sizes , $users_sup_price , $users_inf_price);
+        if (empty($products)){
+            setcookie("nested_error" , "Nothing was found");
+            header("Location:index.php?page=search_results");
+            die();
+        }
+
+    }
+}catch (PDOException $e){
+   echo $e->getMessage();
+}
+
+
+//  ==== Keyword =====
+
+try{
+    if (isset($_POST["search_bar_button"])){
+        $input = htmlentities($_POST["search_bar_input"]);
+        if (strlen($input) > 30){
+            setcookie("error" , "Input too long!");
+            header("Location:index.php?page=search");
+            die();
+        }
+
+        $input = explode(" " , $input);
+        $search_by_name_str = getResultsByKeywords($input , "product_name");
+        $search_by_collection_str = getResultsByKeywords($input , "sale_info_state");
+        $search_by_material_str = getResultsByKeywords($input , "material");
+        $search_by_style_str = getResultsByKeywords($input , "style");
+        $search_by_subcategory_str = getResultsByKeywords($input , "subcategory");
+        $products = $search_by_name_str +
+            $search_by_style_str +
+            $search_by_collection_str +
+            $search_by_material_str +
+            $search_by_subcategory_str;
+
+        if (empty($products)){
+            setcookie("nested_error" , "Nothing was found");
+            header("Location:index.php?page=search_results");
+            die();
+        }
+    }
+}catch (PDOException $e){
+   echo $e->getMessage();
+}
+// ===================================================================================================================================
 
 try {
     if (isset($_POST["add_product"])) {
@@ -81,7 +308,7 @@ try {
     }
 
 } catch (PDOException $e) {
-    echo "pdo exeption: " . $e->getMessage();
+    echo "pdo exception: " . $e->getMessage();
 
 };
 
@@ -154,14 +381,11 @@ try {
     }
 
 } catch (PDOException $e) {
-    echo "pdo exeption: " . $e->getMessage();
-
-
+    echo "pdo exception: " . $e->getMessage();
 };
 
 if (isset($_SESSION["cart"])) {
     $cart_items = &$_SESSION["cart"];
-
 } else {
     $cart_items = array();
 }
@@ -195,12 +419,10 @@ if (isset($_GET["remove_favorites"])) {
     $item_no = htmlentities($_GET["remove_favorites"]);
     unset($favorites_items[$item_no]);
     unset($_SESSION["favorites"][$item_no]);
-
 }
 
 try {
     if (isset($_POST["add_to_cart"])) {
-
         //Terry
         if (isset($_POST["size"])) {
             $product_id = htmlentities($_POST["product_id"]);
@@ -210,7 +432,6 @@ try {
             $product_to_cart["size"] = $product_size;
             $_SESSION["cart"][] = $product_to_cart;
         }
-
     }
 
 } catch (PDOException $e) {

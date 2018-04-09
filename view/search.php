@@ -1,14 +1,14 @@
-<section class="inline_block">
-    <div id="search_forms"  class="inline_block border left">
+<section class="left-section">
+    <div id="search_forms">
 
     <form action="index.php?page=search" method="post">
-        <input type="text" name="search_bar_input" placeholder="search for item name" > <br>
-        <input type="submit" name="search_bar_button" value="Search">
+        <input type="text" name="search_bar_input" placeholder="Search here" >
+        <input type="submit" name="search_bar_button" value="Go!">
     </form>
 
 
-    <form action="index.php?page=search" method="POST">
-        <div  class="inline_block top-30 bottom-30 aside-5 border left">
+    <form action="index.php?page=search_result" method="POST">
+        <div  class="column inline_block">
         <?php
             $characteristic = ["colors"=>$all_colors , "materials"=>$all_materials , "subcategory" => $all_subcategories ,"styles" => $all_styles ,"sale_info_state" => $all_collections  ,"sizes" => $all_sizes];
                 foreach ($characteristic as $characteristic_name => $all_values){ ?>
@@ -34,15 +34,11 @@
 
                     </fieldset>
                 <br>
-                <input type="submit" name="advanced_search" value="Search">
+                <input type="submit" name="advanced_search" value="Filter">
                 </div>
     </form>
 
+
     </div>
 
-    <?php if (isset($_GET["page"])): ?>
-    <div id="result_from_search" class="inline_block top-30 bottom-30 aside-5 width_auto border">
-        <?php require_once "search_result.php"; ?>
-    </div>
-    <?php endif; ?>
-
+</section>

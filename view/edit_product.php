@@ -1,6 +1,6 @@
-<div id="add_product">
+<div id="centered-section">
     <a href="index.php?products=out_of_stock"> Out of stock </a>
-    <div class="form-page">
+    <div class="centered-section">
         <div class="form">
             <form action="index.php?page=main" method="post" enctype="multipart/form-data">
                 Product name: <input type="text" name="product_name"
@@ -13,8 +13,6 @@
                 <input type="hidden" name="product_img_name"
                        value="<?= $_SESSION["edit_product"]["product_img_name"] ?>">
                 Choose another image: <input type="file" name="product_img_name" accept="image/*"><br>
-
-
 
                 Product color : <select name="product_color" required>
                     <option value="white" <?php if ($_SESSION["edit_product"]["product_color"] === "white") { ?> selected <?php } ?> >

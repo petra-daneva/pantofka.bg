@@ -1,4 +1,4 @@
-<div class="form-page">
+<div class="centered-section form-page">
 
     <div class="form">
 

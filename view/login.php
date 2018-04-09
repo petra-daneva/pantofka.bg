@@ -1,4 +1,4 @@
-<div id="form-page">
+<div class="form-page centered-section">
     <div class="form">
 
         <form class="login-form" action="index.php" method="post" >
