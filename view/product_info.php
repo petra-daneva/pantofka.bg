@@ -17,25 +17,25 @@ if (isset($_GET["product_id"])) {
                     <h3><?= $product["product_name"] ?></h3><br>
                 </div>
                 <div class="info">
-                    <h4>Product type: <?= $product["style"] ?></h4>
+                    <h5>Product type: <?= $product["style"] ?></h5>
                 </div>
                 <div class="info">
-                    <h4>Product color <?= $product["product_color"] ?></h4>
+                    <h5>Product color <?= $product["product_color"] ?></h5>
                 </div>
                 <div class="info">
-                    <h4>Product material: <?= $product["material"] ?></h4><br>
+                    <h5>Product material: <?= $product["material"] ?></h5><br>
                 </div>
                 <div class="prices">
 
                     <?php
                     if ($product["sale_info_state"] === "sale") {
                         ?>
-                        <h3> Was <span class="line-trough"> <?= $product["product_price"] ?></span> Now: <span
-                                    class="prices"> <?= $product["sale_price"] ?></span> levs </h3>
+                        <h5> Was <span class="line-trough"> <?= $product["product_price"] ?></span> Now: <span
+                                    class="prices"> <?= $product["sale_price"] ?></span> levs </h5>
                         <?php
                     } else {
                         ?>
-                        <h3> Price: <span class="prices "> <?= $product["product_price"] ?> levs</span></h3>
+                        <h5> Price: <span class="prices "> <?= $product["product_price"] ?> levs</span></h5>
                         <?php
                     }
                     ?>
@@ -44,18 +44,29 @@ if (isset($_GET["product_id"])) {
                 <form action="" method="post">
 
                     <div class="info">
-                        <h4 style="display: inline-block; text-align: center">Choose Size:</h4>
-                        <select style="display: inline-block" name="size" id="">
+                        <h6 class="sizes">Size: </h6>
+                        <select class="sizes" style="display: inline-block" name="size" id="">
                             <?php
-                            foreach ($product["sizes"] as $size) {
-
-                                if ($size["size_quantity"] > 0): ?>
+                            $total_quantity = 0;
+                            foreach ($product["sizes"] as $size){
+                                $total_quantity = $total_quantity + $size["size_quantity"];
+                                if ($size["size_quantity"] > 0) {
+                                    ?>
                                     <option value="<?= $size["size_number"] ?>"> <?= $size["size_number"] ?> </option>
-                                <?php endif;
+                                <?php }
                             }
-
                             ?>
                         </select>
+                        <?php
+                        if ($total_quantity == 0){
+                            ?> <h6 class="price">Product is out of stock!</h6>  <?php
+                        }
+                        else{
+                            ?>
+                            <h6 class="price">&nbsp</h6>
+                            <?php
+
+                        }?>
                     </div>
                     <br>
 

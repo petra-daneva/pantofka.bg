@@ -1,4 +1,4 @@
-<section>
+<section class="page">
 
     <?php if(isset($_SESSION["cart"]) && !empty($_SESSION["cart"])): ?>
 

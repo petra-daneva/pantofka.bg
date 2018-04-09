@@ -231,7 +231,6 @@ try{
 }catch (PDOException $e){
    echo $e->getMessage();
 }
-// ===================================================================================================================================
 
 try {
     if (isset($_POST["add_product"])) {
@@ -246,11 +245,11 @@ try {
         $sizes = [];
         $min_size = 0;
         $max_size = 0;
-        if ($subcategory === "girls" || $_GET["subcategory"] === "boys") {
+        if ($subcategory === "girls" || $subcategory === "boys") {
             $min_size = 25;
-            $max_size = 33;
+            $max_size = 34;
         } elseif ($subcategory === "women") {
-            $min_size = 34;
+            $min_size = 35;
             $max_size = 42;
         } elseif ($subcategory === "men") {
             $min_size = 40;

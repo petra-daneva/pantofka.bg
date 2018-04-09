@@ -1,6 +1,6 @@
 <?php
 $subcategory_name = htmlentities($_GET['products']);
-$name = str_replace("_", " ", $subcategory_name);
+$name = str_replace("_" , " " , $subcategory_name);
 ?>
 
 <!-- -------------------------- Whole section wrapper --------------------------------->
@@ -15,10 +15,10 @@ $name = str_replace("_", " ", $subcategory_name);
                     <h6 class="inline_block left">
                         <a href="index.php?page=add_product&subcategory=<?=$subcategory_name?>" class=""> Add new product </a>
                     </h6>
-                    <?php endif; ?>
+                <?php endif; ?>
             </span>
-            <!-- -------------------------- Page title --------------------------------->
-            <span class="column center">
+        <!-- -------------------------- Page title --------------------------------->
+        <span class="column center">
                 <h3> <?= strtoupper($name) ?> products</h3>
             </span>
         <!-- -------------------------- Products & Search --------------------------------->
@@ -30,11 +30,11 @@ $name = str_replace("_", " ", $subcategory_name);
 
         <!-- -------------------------- Displaying products here --------------------------------->
 
-            <!-- -------------------------- Product boxes --------------------------------->
-            <?php require_once "display_products.php"; ?>
-            <!-- -------------------------- END of product box --------------------------------->
+        <!-- -------------------------- Product boxes --------------------------------->
+        <?php require_once "display_products.php"; ?>
+        <!-- -------------------------- END of product box --------------------------------->
 
-    <!-- -------------------------- END Products & Search --------------------------------->
+        <!-- -------------------------- END Products & Search --------------------------------->
     </div>
     <!-- END Section Wrapper-->
 </section>

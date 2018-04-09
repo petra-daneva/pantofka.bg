@@ -11,9 +11,8 @@ function productExists($product_name, $product_color , $material , $style, $subc
 }
 
 function saveProduct( $product_name, $sizes, $product_color , $material , $style, $subcategory, $product_price,$sale_info_state, $product_img_name){
-   try {
-
-       require_once "././model/dbmanager.php";
+//    try{   // Something is wrong here .. PDO exception --> No active transaction
+    require_once "././model/dbmanager.php";
        $pdo = new PDO(PDO_CONNECTION_DNS, PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD);
        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
        $query = $pdo->prepare('INSERT INTO pantofka.products ( product_name, product_color , material , style, subcategory, product_price, sale_info_state, product_img_name) VALUES (?, ?, ? ,? , ?, ?, ?, ?)');
@@ -27,13 +26,11 @@ function saveProduct( $product_name, $sizes, $product_color , $material , $style
            $query = $pdo->prepare('INSERT INTO sizes (size_number, size_quantity, product_id) Values (?, ?, ?)');
            $query->execute(array($size["size_number"], $size["size_quantity"], $product_id));
        }
-   $pdo->commit();
-    }
-    catch (PDOException $e){
-    $pdo->rollBack();
-    throw $e;
-}
-
+//        $pdo->commit();
+//    }catch (PDOException $e){
+//        $pdo->rollBack();
+//        throw $e;
+//    }
 }
 
 function  changeProduct($product_id, $product_name, $product_color, $material, $style , $subcategory , $product_price, $sale_info_state, $product_img_name, $sale_price, $sizes, $new_size ){
