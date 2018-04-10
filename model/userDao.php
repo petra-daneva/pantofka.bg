@@ -269,6 +269,7 @@ function getSearchResults($colors , $materials , $subcategories , $styles , $col
                                                  WHERE product_id = $id");
         $query_for_data->execute();
         $item = $query_for_data->fetch(PDO::FETCH_ASSOC);
+        $item["sizes"] = getSizesQuantity($item["product_id"]);
         $search_result[] = $item;
     }
     $pdo->commit();
@@ -304,6 +305,7 @@ function getSearchResultsFor($characteristic_value , $characteristic_name)
     $query->execute($params);
     $search_result = [];
     while ($some_product  = $query->fetch(PDO::FETCH_ASSOC)){
+
         $search_result[] = $some_product ;
     }
 
@@ -393,6 +395,7 @@ function getResultsByKeywords($input , $table_name){
                                                  WHERE product_id = $id");
         $query_for_data->execute();
         $item = $query_for_data->fetch(PDO::FETCH_ASSOC);
+        $item["sizes"] = getSizesQuantity($item["product_id"]);
         $search_result[] = $item;
 
     }

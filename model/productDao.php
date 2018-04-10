@@ -147,7 +147,10 @@ function getProductData($product_id){
     require_once "././model/dbmanager.php";
     $pdo = new PDO(PDO_CONNECTION_DNS , PDO_CONNECTION_USERNAME, PDO_CONNECTION_PASSWORD );
     $pdo->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION);
-    $query = $pdo->prepare("SELECT product_img_name , product_id , product_name , product_color , material, style , product_price, sale_info_state, sale_price, subcategory  FROM pantofka.products WHERE product_id = ?");
+    $query = $pdo->prepare("SELECT product_img_name , product_id , product_name , product_color ,
+ material, style , product_price, sale_info_state, sale_price, subcategory 
+  FROM pantofka.products 
+  WHERE product_id = ?");
     $query->execute(array($product_id));
     $query_result = $query->fetch(PDO::FETCH_ASSOC);
     $query_result["sizes"]= getSizesQuantity($product_id);

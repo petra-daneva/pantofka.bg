@@ -1,5 +1,6 @@
 <nav class="clear right">
 
+
     <a href="index.php?page=edit_profile">EDIT PROFILE</a>
 
     <a href="index.php?page=history">HISTORY</a>

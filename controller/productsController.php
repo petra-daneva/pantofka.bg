@@ -5,27 +5,27 @@ require_once "./controller/../model/userDao.php";
 
 $error = "";
 // ==================================================== Displaying products ====================================================================
-try{
-        //Returns product_id, product_name, product_color, product_price, product_img_name,sale_info_state, style, subcategory, material, sale_price
-        $products = getProducts();
+try {
+    //Returns product_id, product_name, product_color, product_price, product_img_name,sale_info_state, style, subcategory, material, sale_price
+    $products = getProducts();
 
-}catch (PDOException $e){
+} catch (PDOException $e) {
     echo "pdo exception: " . $e->getMessage();
 }
 
 // All data needed for displaying the search view
-if (isset($_GET["page"] ) || isset($_GET["products"])) {
+if (isset($_GET["page"]) || isset($_GET["products"])) {
     $search_must_be_shown = false;
-    if (isset($_GET["page"] )){
-        if ($_GET["page"] == "search_result" || $_GET["page"] == "search"){
+    if (isset($_GET["page"])) {
+        if ($_GET["page"] == "search_result" || $_GET["page"] == "search") {
             $search_must_be_shown = true;
         }
     }
-    if ( isset($_GET["products"])){
+    if (isset($_GET["products"])) {
         $search_must_be_shown = true;
     }
 
-    if ($search_must_be_shown == true){
+    if ($search_must_be_shown == true) {
         try {
             $all_colors = getAllColors();
         } catch (PDOException $e) {
@@ -57,19 +57,19 @@ if (isset($_GET["page"] ) || isset($_GET["products"])) {
         }
 
         try {
-            if (isset($_GET["page"])){
-                $all_sizes = getAllSizes("men", "women" , "boys", "girls");
-            }else{
-                if ($_GET["products"] == "men"){
-                    $all_sizes = getAllSizes("men", null , null, null);
-                }elseif ($_GET["products"] == "women"){
-                    $all_sizes = getAllSizes(null, "women" , null, null);
-                }elseif ($_GET["products"] == "boys"){
-                    $all_sizes = getAllSizes(null, null , "boys", null);
-                }elseif ($_GET["products"] == "girls"){
-                    $all_sizes = getAllSizes(null, null , null, "girls");
-                }else{
-                    $all_sizes = getAllSizes("men", "women" , "boys", "girls");
+            if (isset($_GET["page"])) {
+                $all_sizes = getAllSizes("men", "women", "boys", "girls");
+            } else {
+                if ($_GET["products"] == "men") {
+                    $all_sizes = getAllSizes("men", null, null, null);
+                } elseif ($_GET["products"] == "women") {
+                    $all_sizes = getAllSizes(null, "women", null, null);
+                } elseif ($_GET["products"] == "boys") {
+                    $all_sizes = getAllSizes(null, null, "boys", null);
+                } elseif ($_GET["products"] == "girls") {
+                    $all_sizes = getAllSizes(null, null, null, "girls");
+                } else {
+                    $all_sizes = getAllSizes("men", "women", "boys", "girls");
                 }
             }
         } catch (PDOException $e) {
@@ -78,34 +78,34 @@ if (isset($_GET["page"] ) || isset($_GET["products"])) {
 
         $sup_price = 0;
 
-        try{ //max price
+        try { //max price
             $inf_price = getInfPrice();
-        }catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e->getMessage();
         }
     }
 }
 
 //  ==== Filter =====
-try{
-    if (isset($_POST["advanced_search"])){
+try {
+    if (isset($_POST["advanced_search"])) {
         $products = array();
         $product_color = array();
-        if (isset($_POST["colors"])){
+        if (isset($_POST["colors"])) {
             $product_color = ($_POST["colors"]);
-        }else{
+        } else {
             foreach ($all_colors as $single_color) {
                 foreach ($single_color as $item) {
-                    $val =  $single_color["product_color"];
+                    $val = $single_color["product_color"];
                     $product_color[$val] = $single_color["product_color"];
                 }
             }
         }
 
         $material = array();
-        if (isset($_POST["materials"])){
+        if (isset($_POST["materials"])) {
             $material = ($_POST["materials"]);
-        }else{
+        } else {
             foreach ($all_materials as $single_material) {
                 foreach ($single_material as $item) {
                     $val = $single_material["material"];
@@ -115,9 +115,9 @@ try{
         }
 
         $subcategory = array();
-        if (isset($_POST["subcategory"])){
+        if (isset($_POST["subcategory"])) {
             $subcategory = ($_POST["subcategory"]);
-        }else{
+        } else {
             foreach ($all_subcategories as $single_subcategory) {
                 foreach ($single_subcategory as $item) {
                     $val = $single_subcategory["subcategory"];
@@ -127,9 +127,9 @@ try{
         }
 
         $styles = array();
-        if (isset($_POST["style"])){
+        if (isset($_POST["style"])) {
             $styles = ($_POST["style"]);
-        }else{
+        } else {
             foreach ($all_styles as $single_style) {
                 foreach ($single_style as $item) {
                     $val = $single_style["style"];
@@ -140,9 +140,9 @@ try{
 
 
         $collections = array();
-        if (isset($_POST["sale_info_state"])){
+        if (isset($_POST["sale_info_state"])) {
             $collections = ($_POST["sale_info_state"]);
-        }else{
+        } else {
             foreach ($all_collections as $single_collection) {
                 foreach ($single_collection as $item) {
                     $val = $single_collection["sale_info_state"];
@@ -153,9 +153,9 @@ try{
 
 
         $sizes = array();
-        if (isset($_POST["sizes"])){
+        if (isset($_POST["sizes"])) {
             $sizes = $_POST["sizes"];
-        }else{
+        } else {
             foreach ($all_sizes as $single_size) {
                 foreach ($single_size as $item) {
                     $val = $single_size["size_number"];
@@ -163,61 +163,61 @@ try{
                 }
             }
         }
-        if (isset($_POST["users_inf_price"])){
+        if (isset($_POST["users_inf_price"])) {
             $users_inf_price = $_POST["users_inf_price"];
-            if (empty($users_inf_price) || $users_inf_price < 0 || $users_inf_price > $inf_price || !is_numeric($users_inf_price)){
+            if (empty($users_inf_price) || $users_inf_price < 0 || $users_inf_price > $inf_price || !is_numeric($users_inf_price)) {
                 $users_inf_price = $inf_price;
             }
-        }else{
+        } else {
             $users_inf_price = $inf_price; // inf_price is the largest price in db
         }
 
-        if (isset($_POST["users_sup_price"])){
+        if (isset($_POST["users_sup_price"])) {
             $users_sup_price = $_POST["users_sup_price"];
-            if (empty($users_sup_price) || $users_sup_price < 0 || $users_sup_price > $inf_price || !is_numeric($users_sup_price)){
+            if (empty($users_sup_price) || $users_sup_price < 0 || $users_sup_price > $inf_price || !is_numeric($users_sup_price)) {
                 $users_sup_price = $sup_price;
             }
-            if ($users_sup_price > $users_inf_price){
+            if ($users_sup_price > $users_inf_price) {
                 $temp = $users_sup_price;
                 $users_sup_price = $users_inf_price;
                 $users_inf_price = $temp;
 
             }
-        }else{
+        } else {
             $users_sup_price = $sup_price; // inf_price is the largest price in db
         }
-        $products = getSearchResults($product_color, $material , $subcategory , $styles , $collections , $sizes , $users_sup_price , $users_inf_price);
+        $products = getSearchResults($product_color, $material, $subcategory, $styles, $collections, $sizes, $users_sup_price, $users_inf_price);
 
-        if (empty($products)){
-            setcookie("nested_error" , "Nothing was found");
+        if (empty($products)) {
+            setcookie("nested_error", "Nothing was found");
             header("Location:index.php?page=search_result");
             die();
         }
 
     }
-}catch (PDOException $e){
-   echo $e->getMessage();
+} catch (PDOException $e) {
+    echo $e->getMessage();
 }
 
 
 //  ==== Keyword =====
 
-try{
-    if (isset($_POST["search_bar_button"])){
+try {
+    if (isset($_POST["search_bar_button"])) {
         $input = htmlentities($_POST["search_bar_input"]);
         $products = array();
-        if (strlen($input) > 30){
-            setcookie("error" , "Input too long!");
+        if (strlen($input) > 30) {
+            setcookie("error", "Input too long!");
             header("Location:index.php?page=search_result");
             die();
         }
 
-        $input = explode(" " , $input);
-        $search_by_name_str = getResultsByKeywords($input , "product_name");
-        $search_by_collection_str = getResultsByKeywords($input , "sale_info_state");
-        $search_by_material_str = getResultsByKeywords($input , "material");
-        $search_by_style_str = getResultsByKeywords($input , "style");
-        $search_by_subcategory_str = getResultsByKeywords($input , "subcategory");
+        $input = explode(" ", $input);
+        $search_by_name_str = getResultsByKeywords($input, "product_name");
+        $search_by_collection_str = getResultsByKeywords($input, "sale_info_state");
+        $search_by_material_str = getResultsByKeywords($input, "material");
+        $search_by_style_str = getResultsByKeywords($input, "style");
+        $search_by_subcategory_str = getResultsByKeywords($input, "subcategory");
         $products = $search_by_name_str +
             $search_by_style_str +
             $search_by_collection_str +
@@ -225,14 +225,14 @@ try{
             $search_by_subcategory_str;
 
 
-        if (empty($products)){
-            setcookie("nested_error" , "Nothing was found");
+        if (empty($products)) {
+            setcookie("nested_error", "Nothing was found");
             header("Location:index.php?page=search_result");
             die();
         }
     }
-}catch (PDOException $e){
-   echo $e->getMessage();
+} catch (PDOException $e) {
+    echo $e->getMessage();
 }
 
 try {
@@ -408,17 +408,38 @@ if (isset($_SESSION["favorites"])) {
 } else {
     $favorites_items = array();
 }
-if (isset($_GET["move_to_cart"])) {
-    if ($_GET["size"] != "") {
+
+try {
+    if (isset($_GET["move_to_cart"])) {
         $product_id = htmlentities($_GET["product_id"]);
-        $product_size = htmlentities($_GET["size"]);
-        $product_to_cart = [];
-        $product_to_cart = getProductData($product_id);
-        $product_to_cart["size"] = $product_size;
-        $_SESSION["cart"][] = $product_to_cart;
-        $item_no = htmlentities($_GET["move_to_cart"]);
+        $id_exists = false;
+
+            foreach ($cart_items as $item) {
+                foreach ($item as $key => $value) {
+                    if ($key == "product_id" && $value == $product_id) {
+                        $id_exists = true;
+                        break;
+                    }
+                }
+            }
+
+        if ($id_exists == false) {
+
+            if ($_GET["size"] != "") {
+
+                $product_size = htmlentities($_GET["size"]);
+                $product_to_cart = [];
+                $product_to_cart = getProductData($product_id);
+                $product_to_cart["size"] = $product_size;
+                $_SESSION["cart"][] = $product_to_cart;
+                $item_no = htmlentities($_GET["move_to_cart"]);
+            }
+        }
     }
+} catch (PDOException $e) {
+    echo "pdo exception: " . $e->getMessage();
 }
+
 
 if (isset($_GET["remove_favorites"])) {
     $item_no = htmlentities($_GET["remove_favorites"]);
@@ -427,15 +448,28 @@ if (isset($_GET["remove_favorites"])) {
 }
 
 try {
+
     if (isset($_POST["add_to_cart"])) {
         //Terry
-        if (isset($_POST["size"])) {
-            $product_id = htmlentities($_POST["product_id"]);
-            $product_size = htmlentities($_POST["size"]);
-            $product_to_cart = [];
-            $product_to_cart = getProductData($product_id);
-            $product_to_cart["size"] = $product_size;
-            $_SESSION["cart"][] = $product_to_cart;
+        $product_id = htmlentities($_POST["product_id"]);
+        $id_exists = false;
+        foreach ($cart_items as $item) {
+                foreach ($item as $key => $value) {
+                    if ($key == "product_id" && $value == $product_id) {
+                        $id_exists = true;
+                        break;
+                    }
+                }
+        }
+        if ($id_exists == false) {
+            // Terry
+            if (isset($_POST["size"])) {
+                $product_size = htmlentities($_POST["size"]);
+                $product_to_cart = [];
+                $product_to_cart = getProductData($product_id);
+                $product_to_cart["size"] = $product_size;
+                $_SESSION["cart"][] = $product_to_cart;
+            }
         }
     }
 

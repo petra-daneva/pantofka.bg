@@ -112,7 +112,7 @@ footer{
 
 }
 .shown_products{
-    width: 15%;
+    width: 12.5em;
     height: auto;
     padding: 0 5px;
     float: left;
@@ -128,7 +128,7 @@ footer{
     width: 90%;
     text-align: center;
     margin: 5px;
-    min-height: 10em;
+    min-height: 10.5em;
 }
 .product_img img{
     width: 100%;
@@ -211,6 +211,15 @@ footer{
     color: #ff000a;
 }
 
+.img_link {
+    width: auto;
+    text-decoration: none;
+    background-color: transparent;
+    color: black;
+    padding: 0;
+    margin: 0;
+
+}
 #show_product{
     width: auto;
     text-decoration: none;
@@ -404,4 +413,31 @@ footer{
 
 .min-height-400{
     min-height: 400px;
+}
+
+#banner {
+    width:50%;
+    text-decoration: none;
+    background-color: transparent;
+    color: black;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    float: left;
+}
+
+main{
+    width: 100%;
+}
+.banners {
+    width: 98%;
+    margin: 1%;
+    display: inline-block;
+    float: left;
+    height: 15em;
+    vertical-align: middle;
+}
+.banners:hover{
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.51);
+    border-left: 1px solid rgba(42, 42, 42, 0.51);
 }

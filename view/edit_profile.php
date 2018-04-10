@@ -1,6 +1,11 @@
-<div class="centered-section form-page">
+<div class="centered-section form-page min-height-400">
+<?php
+if (isset($_SESSION["logged_user"])) {
+    ?>
 
     <div class="form">
+
+        <h3>Hello, <?= $user_info["user_fname"] ?></h3>
 
         <form action="index.php" method="post">
 
@@ -32,6 +37,14 @@
         </form>
 
     </div>
+    <?php
+} else {
+    ?>
+    <h5>Looks like you are not logged in ... </h5> <a href="index.php?page=login">Log in here!</a>
+    <?php
+}
+?>
+
 </div>
 
 
