@@ -85,7 +85,7 @@ setcookie("add_to_subcategory", $_GET["subcategory"])?>
             ?>
 
 
-            Product price: <input type="number" name="product_price" placeholder="price" required> <br>
+            Product price: <input type="number" name="product_price" placeholder="price" step="0.01" required> <br>
             Product image<input type="file" name="product_img_name" accept="image/*"><br>
             <input type="submit" name="add_product" value="Add product">
         </form>
