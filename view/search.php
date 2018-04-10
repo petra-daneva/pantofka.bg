@@ -1,8 +1,8 @@
 <section class="left-section">
     <div id="search_forms">
 
-    <form action="index.php?page=search" method="post">
-        <input type="text" name="search_bar_input" placeholder="Search here" >
+    <form action="index.php?page=search_result" method="post">
+        <input type="text" name="search_bar_input" placeholder="Search by name" >
         <input type="submit" name="search_bar_button" value="Go!">
     </form>
 

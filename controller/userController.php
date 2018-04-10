@@ -208,6 +208,11 @@ if (isset($_POST["search_history_button"])){
 
     $history_search_results[] = getResultsByKeywordStr($input);
 
+    if (empty($history_search_results[0])){
+        setcookie("error" , "Nothing was found");
+        header("Location:index.php?page=history");
+        die();
+    }
  /*   $history_by_color_str = getResultsByKeywords($input , "product_color");
    $history_by_name_str = getResultsByKeywords($input , "product_name");
     $history_by_collection_str = getResultsByKeywords($input , "sale_info_state");

@@ -1,4 +1,6 @@
-<section class="page">
+
+<section class="min-height-400">
+
 
     <?php if(isset($_SESSION["favorites"]) && !empty($_SESSION["favorites"])): ?>
 
@@ -37,9 +39,9 @@
                     <td class="aside-5"><?= $item_data["size"] ?></td>
 
 
-                    <td class='black'><a href='index.php?page=favorites&remove_favorites=<?=$item_no?>'> REMOVE </a></td>
-                    <td class='black'><a href='index.php?page=favorites&move_to_cart=<?= $item_no ?>&size=<?= $item_data["size"] ?>&product_id=<?= $item_data["product_id"] ?>'>
-                            MOVE TO CART </a></td>
+                    <td><button ><a href='index.php?page=favorites&remove_favorites=<?=$item_no?>' class="clear_link "> <span class='text_black'>REMOVE </span> </a> </button> </td>
+                    <td><button><a href='index.php?page=favorites&move_to_cart=<?= $item_no ?>&size=<?= $item_data["size"] ?>&product_id=<?= $item_data["product_id"] ?>'  class="clear_link">
+                                <span class='text_black'> MOVE TO CART </span>  </a></button></td>
 
                 </tr>
 

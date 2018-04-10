@@ -6,10 +6,9 @@ require_once "./controller/../model/userDao.php";
 $error = "";
 // ==================================================== Displaying products ====================================================================
 try{
-    if(isset($_GET["products"]) && !isset($_POST["advanced_search"])){
         //Returns product_id, product_name, product_color, product_price, product_img_name,sale_info_state, style, subcategory, material, sale_price
         $products = getProducts();
-    }
+
 }catch (PDOException $e){
     echo "pdo exception: " . $e->getMessage();
 }
@@ -90,6 +89,7 @@ if (isset($_GET["page"] ) || isset($_GET["products"])) {
 //  ==== Filter =====
 try{
     if (isset($_POST["advanced_search"])){
+        $products = array();
         $product_color = array();
         if (isset($_POST["colors"])){
             $product_color = ($_POST["colors"]);
@@ -187,9 +187,10 @@ try{
             $users_sup_price = $sup_price; // inf_price is the largest price in db
         }
         $products = getSearchResults($product_color, $material , $subcategory , $styles , $collections , $sizes , $users_sup_price , $users_inf_price);
+
         if (empty($products)){
             setcookie("nested_error" , "Nothing was found");
-            header("Location:index.php?page=search_results");
+            header("Location:index.php?page=search_result");
             die();
         }
 
@@ -204,9 +205,10 @@ try{
 try{
     if (isset($_POST["search_bar_button"])){
         $input = htmlentities($_POST["search_bar_input"]);
+        $products = array();
         if (strlen($input) > 30){
             setcookie("error" , "Input too long!");
-            header("Location:index.php?page=search");
+            header("Location:index.php?page=search_result");
             die();
         }
 
@@ -222,9 +224,10 @@ try{
             $search_by_material_str +
             $search_by_subcategory_str;
 
+
         if (empty($products)){
             setcookie("nested_error" , "Nothing was found");
-            header("Location:index.php?page=search_results");
+            header("Location:index.php?page=search_result");
             die();
         }
     }
@@ -389,18 +392,22 @@ if (isset($_SESSION["cart"])) {
     $cart_items = array();
 }
 
+
+if (isset($_SESSION["cart"])) {
+    $cart_items = &$_SESSION["cart"];
+} else {
+    $cart_items = array();
+}
 if (isset($_GET["remove_cart"])) {
     $item_no = htmlentities($_GET["remove_cart"]);
     unset($cart_items[$item_no]);
     unset($_SESSION["cart"][$item_no]);
 }
-
 if (isset($_SESSION["favorites"])) {
     $favorites_items = &$_SESSION["favorites"];
 } else {
     $favorites_items = array();
 }
-
 if (isset($_GET["move_to_cart"])) {
     if ($_GET["size"] != "") {
         $product_id = htmlentities($_GET["product_id"]);
@@ -411,7 +418,6 @@ if (isset($_GET["move_to_cart"])) {
         $_SESSION["cart"][] = $product_to_cart;
         $item_no = htmlentities($_GET["move_to_cart"]);
     }
-
 }
 
 if (isset($_GET["remove_favorites"])) {

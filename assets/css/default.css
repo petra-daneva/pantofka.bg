@@ -188,7 +188,9 @@ footer{
     margin: 0;
 
 }
-
+.text_black{
+    color: black !important;
+}
 
 .black {
     background-color: black;
@@ -398,6 +400,8 @@ footer{
     font-size: 35px;
     cursor: pointer;
 }
-.page{
-    min-height: 25em;
+
+
+.min-height-400{
+    min-height: 400px;
 }

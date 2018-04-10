@@ -1,4 +1,4 @@
-<section>
+<section class="min-height-400">
 
     <?php if(!empty($orders_history)):  ?>
 
@@ -76,7 +76,7 @@
 
         <?php ;else: ?>
 
-        <h1>History is empty. Go ahead and buy something!!</h1>
+        <h5>History is empty. Go ahead and buy something!!</h5>
     <?php endif; ?>
 
 </section>
